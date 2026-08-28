@@ -1,0 +1,1191 @@
+(function(){if(window.__aromikaLanguageBridge)return;window.__aromikaLanguageBridge=true;document.addEventListener('click',function(e){var b=e.target.closest('[data-lang]');if(!b)return;var l=b.getAttribute('data-lang');if(l!=='ru'&&l!=='kk')return;try{localStorage.setItem('aromika-language',l)}catch(err){}document.documentElement.lang=(l==='kk'?'kk':'ru')},true)})();
+
+
+(function(){
+  function init(){
+    var root=document.getElementById('aromika-hero');
+    if(!root || root.dataset.ready==='1') return;
+    root.dataset.ready='1';
+
+    /* LANGUAGE */
+    var translations = {
+      ru: {
+        products: 'Продукция',
+        brands: 'Бренды',
+        about: 'О компании',
+        partners: 'Партнёрам',
+        contacts: 'Контакты',
+        buyOnline: 'Купить онлайн',
+        shop: 'Интернет-магазин',
+        eyebrow: 'Казахстанский производитель',
+        title1: 'Создаём',
+        title2: 'чистоту',
+        title3: 'каждый день',
+        lead: 'Бытовая химия и средства ухода собственного производства. Более 20 лет создаём продукты для повседневной жизни.',
+        viewProducts: 'Смотреть продукцию',
+        yearsExp: 'лет опыта',
+        items: 'наименований',
+        ownProduction: 'собственное<br>производство',
+        made: 'Сделано',
+        inKazakhstan: 'в Казахстане'
+      },
+      kk: {
+        products: 'Өнімдер',
+        brands: 'Брендтер',
+        about: 'Компания туралы',
+        partners: 'Серіктестерге',
+        contacts: 'Байланыс',
+        buyOnline: 'Онлайн сатып алу',
+        shop: 'Интернет-дүкен',
+        eyebrow: 'Қазақстандық өндіруші',
+        title1: 'Күн сайын',
+        title2: 'тазалық',
+        title3: 'жасаймыз',
+        lead: 'Өз өндірісіміздегі тұрмыстық химия және күтім құралдары. 20 жылдан астам уақыт бойы күнделікті өмірге арналған өнімдер жасап келеміз.',
+        viewProducts: 'Өнімдерді көру',
+        yearsExp: 'жыл тәжірибе',
+        items: 'өнім атауы',
+        ownProduction: 'өз<br>өндірісіміз',
+        made: 'Қазақстанда',
+        inKazakhstan: 'жасалған'
+      }
+    };
+
+    function setLanguage(lang){
+      if(!translations[lang]) lang='ru';
+
+      root.classList.toggle('lang-kk', lang==='kk');
+      root.setAttribute('lang', lang==='kk' ? 'kk' : 'ru');
+
+      root.querySelectorAll('[data-i18n]').forEach(function(el){
+        var key=el.getAttribute('data-i18n');
+        if(translations[lang][key] !== undefined){
+          el.textContent=translations[lang][key];
+        }
+      });
+
+      root.querySelectorAll('[data-i18n-html]').forEach(function(el){
+        var key=el.getAttribute('data-i18n-html');
+        if(translations[lang][key] !== undefined){
+          el.innerHTML=translations[lang][key];
+        }
+      });
+
+      root.querySelectorAll('[data-lang]').forEach(function(btn){
+        btn.classList.toggle('is-active', btn.getAttribute('data-lang')===lang);
+      });
+
+      try{
+        localStorage.setItem('aromika-language',lang);
+      }catch(e){}
+    }
+
+    root.querySelectorAll('[data-lang]').forEach(function(btn){
+      btn.addEventListener('click',function(){
+        setLanguage(this.getAttribute('data-lang'));
+      });
+    });
+
+    var savedLang='ru';
+    try{
+      savedLang=localStorage.getItem('aromika-language') || 'ru';
+    }catch(e){}
+    setLanguage(savedLang);
+
+    /* MENU */
+    var burger=root.querySelector('.ar-burger');
+    var menu=root.querySelector('.ar-menu');
+    var overlay=root.querySelector('.ar-overlay');
+
+    function toggleMenu(open){
+      burger.classList.toggle('open',open);
+      menu.classList.toggle('open',open);
+      overlay.classList.toggle('open',open);
+      document.body.style.overflow=open?'hidden':'';
+    }
+
+    burger.addEventListener('click',function(e){
+      e.preventDefault();
+      toggleMenu(!menu.classList.contains('open'));
+    });
+
+    overlay.addEventListener('click',function(){toggleMenu(false)});
+
+    menu.querySelectorAll('a').forEach(function(a){
+      a.addEventListener('click',function(){toggleMenu(false)});
+    });
+
+    /* ORBIT */
+    var stage=root.querySelector('.ar-stage');
+    var items=[
+      stage.querySelector('.ar-wash'),
+      stage.querySelector('.ar-perfect'),
+      stage.querySelector('.ar-maxi'),
+      stage.querySelector('.ar-prachka')
+    ];
+
+    var factors=[1.04,1,1.02,1.16];
+    var N=items.length;
+    var TWO=Math.PI*2;
+    var STEP=TWO/N;
+    var FRONT=Math.PI/2;
+
+    var current=FRONT-STEP;
+    var target=current;
+    var from=current;
+    var start=0;
+    var duration=4200;
+    var moving=false;
+    var raf=0;
+
+    function norm(a){
+      while(a>Math.PI)a-=TWO;
+      while(a<-Math.PI)a+=TWO;
+      return a;
+    }
+
+    function ease(t){
+      return -(Math.cos(Math.PI*t)-1)/2;
+    }
+
+    function draw(){
+      var w=stage.clientWidth||650;
+      var h=stage.clientHeight||625;
+      var cx=w*.5, cy=h*.47;
+      var rx=w*.34, ry=h*.19;
+      var depth=[];
+
+      items.forEach(function(el,i){
+        var a=i*STEP+current;
+        var x=cx+Math.cos(a)*rx;
+        var y=cy+Math.sin(a)*ry;
+        var d=(Math.sin(a)+1)/2;
+        var scale=(.68+d*.35)*factors[i];
+        var rot=Math.cos(a)*7;
+
+        el.style.transform=
+          'translate3d('+
+          (x-el.offsetWidth/2)+'px,'+
+          (y-el.offsetHeight*.72)+'px,'+
+          (d*90)+'px) scale('+scale+') rotate('+rot+'deg)';
+
+        el.style.opacity=.60+d*.40;
+        el.style.filter=
+          'brightness('+(.91+d*.09)+') saturate('+(.82+d*.18)+')';
+
+        depth.push({el:el,d:d});
+      });
+
+      depth.sort(function(a,b){return a.d-b.d});
+      depth.forEach(function(x,i){x.el.style.zIndex=3+i});
+    }
+
+    function frame(now){
+      if(!moving)return;
+
+      var t=(now-start)/duration;
+
+      if(t>=1){
+        current=target;
+        moving=false;
+        draw();
+        return;
+      }
+
+      current=from+(target-from)*ease(t);
+      draw();
+      raf=requestAnimationFrame(frame);
+    }
+
+    function go(next){
+      if(moving){
+        cancelAnimationFrame(raf);
+      }
+
+      from=current;
+      target=current+norm(next-current);
+      start=performance.now();
+      moving=true;
+      raf=requestAnimationFrame(frame);
+    }
+
+    function rotate(dir){
+      go(target-dir*STEP);
+    }
+
+    function front(index){
+      go(FRONT-index*STEP);
+    }
+
+    draw();
+
+    /* desktop hover + click/tap */
+    items.forEach(function(el,i){
+      el.addEventListener('mouseenter',function(){
+        if(matchMedia('(hover:hover)').matches) front(i);
+      });
+
+      el.addEventListener('click',function(e){
+        e.preventDefault();
+        front(i);
+      });
+    });
+
+    /* swipe */
+    var sx=0,sy=0;
+
+    stage.addEventListener('pointerdown',function(e){
+      if(e.pointerType==='mouse')return;
+      sx=e.clientX;
+      sy=e.clientY;
+    });
+
+    stage.addEventListener('pointerup',function(e){
+      if(e.pointerType==='mouse')return;
+
+      var dx=e.clientX-sx;
+      var dy=e.clientY-sy;
+
+      if(Math.abs(dx)>40 && Math.abs(dx)>Math.abs(dy)){
+        rotate(dx<0?1:-1);
+      }
+    });
+
+    /* mobile auto motion */
+    if(matchMedia('(max-width:980px)').matches){
+      setInterval(function(){
+        if(!moving && !document.hidden) rotate(1);
+      },8000);
+    }
+
+    window.addEventListener('resize',draw,{passive:true});
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',init);
+  }else{
+    init();
+  }
+
+  setTimeout(init,500);
+})();
+
+
+
+(function(){
+  function initAromikaProducts(){
+    var root=document.getElementById('products');
+    if(!root || root.dataset.arpReady==='1') return;
+    root.dataset.arpReady='1';
+
+    var dict={
+      ru:{
+        kicker:'Продукция',
+        title1:'Всё необходимое',
+        title2:'для чистоты и ухода',
+        intro:'Средства для дома и ежедневного ухода, разработанные для решения конкретных задач.',
+
+        laundryTitle:'Стирка',
+        laundryText:'Гели, порошки, кондиционеры, отбеливатели и пятновыводители.',
+
+        dishesTitle:'Мытьё посуды',
+        dishesText:'Гели для эффективного удаления жира и ежедневного ухода за посудой.',
+
+        cleaningTitle:'Уборка',
+        cleaningText:'Средства для кухни, ванной, стекла и различных поверхностей.',
+
+        bodyTitle:'Уход за телом',
+        bodyText:'Гели для душа, жидкое и крем-мыло для ежедневного использования.',
+
+        hairTitle:'Уход за волосами',
+        hairText:'Шампуни и средства ухода для различных типов волос.',
+
+        allTitle:'Вся продукция',
+        allText:'Перейти в интернет-магазин и посмотреть полный ассортимент.'
+      },
+
+      kk:{
+        kicker:'Өнімдер',
+        title1:'Тазалық пен күтімге',
+        title2:'қажеттінің бәрі',
+        intro:'Үйге және күнделікті күтімге арналған, нақты міндеттерді шешуге әзірленген өнімдер.',
+
+        laundryTitle:'Кір жуу',
+        laundryText:'Кір жууға арналған гельдер, ұнтақтар, кондиционерлер, ағартқыштар және дақ кетіргіштер.',
+
+        dishesTitle:'Ыдыс жуу',
+        dishesText:'Майды тиімді кетіруге және ыдысты күнделікті жууға арналған гельдер.',
+
+        cleaningTitle:'Тазалау',
+        cleaningText:'Асүйге, жуынатын бөлмеге, әйнекке және әртүрлі беттерге арналған тазартқыш құралдар.',
+
+        bodyTitle:'Дене күтімі',
+        bodyText:'Күнделікті қолдануға арналған душ гельдері, сұйық және крем-сабын.',
+
+        hairTitle:'Шаш күтімі',
+        hairText:'Әртүрлі шаш түрлеріне арналған сусабындар мен күтім құралдары.',
+
+        allTitle:'Барлық өнімдер',
+        allText:'Интернет-дүкенге өтіп, толық ассортиментті көру.'
+      }
+    };
+
+    function setLanguage(lang){
+      if(!dict[lang]) lang='ru';
+
+      root.classList.toggle('arp-lang-kk',lang==='kk');
+      root.setAttribute('lang',lang==='kk'?'kk':'ru');
+
+      root.querySelectorAll('[data-arp-i18n]').forEach(function(el){
+        var key=el.getAttribute('data-arp-i18n');
+        if(dict[lang][key]!==undefined){
+          el.textContent=dict[lang][key];
+        }
+      });
+    }
+
+    var lang='ru';
+
+    try{
+      lang=localStorage.getItem('aromika-language')||'ru';
+    }catch(e){}
+
+    setLanguage(lang);
+
+    /* Sync with RU / KZ buttons from the Hero block */
+    document.addEventListener('click',function(e){
+      var btn=e.target.closest('[data-lang]');
+      if(!btn) return;
+
+      var newLang=btn.getAttribute('data-lang');
+
+      if(newLang==='ru' || newLang==='kk'){
+        setLanguage(newLang);
+      }
+    });
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',initAromikaProducts);
+  }else{
+    initAromikaProducts();
+  }
+
+  setTimeout(initAromikaProducts,500);
+})();
+
+
+
+(function(){
+  function initAromikaBrands(){
+    var root=document.getElementById('brands');
+    if(!root || root.dataset.arbReady==='1') return;
+    root.dataset.arbReady='1';
+
+    var dict={
+      ru:{
+        kicker:'Наши бренды',
+        title1:'Разные задачи.',
+        title2:'Один стандарт качества.',
+        intro:'Линейки Aromika для разных сценариев ухода за домом, стирки и ежедневной чистоты.',
+        perfectText:'Широкая линейка средств для стирки, уборки и ежедневного ухода.',
+        washText:'Практичные средства для стирки и поддержания чистоты в доме.',
+        maxiText:'Линейка средств для интенсивной и эффективной стирки.',
+        prachkaText:'Средства для повседневной стирки и ухода за бельём.',
+        antibakText:'Антибактериальная линейка для чистоты белья и дома.',
+        viewBrand:'Смотреть продукты'
+      },
+      kk:{
+        kicker:'Біздің брендтер',
+        title1:'Әртүрлі міндеттер.',
+        title2:'Бір сапа стандарты.',
+        intro:'Үй күтімі, кір жуу және күнделікті тазалықтың әртүрлі міндеттеріне арналған Aromika желілері.',
+        perfectText:'Кір жууға, үй тазалауға және күнделікті күтімге арналған кең өнім желісі.',
+        washText:'Кір жууға және үйдегі тазалықты сақтауға арналған практикалық құралдар.',
+        maxiText:'Қарқынды әрі тиімді кір жууға арналған өнімдер желісі.',
+        prachkaText:'Күнделікті кір жууға және киім күтіміне арналған құралдар.',
+        antibakText:'Киім мен үй тазалығына арналған бактерияға қарсы өнімдер желісі.',
+        viewBrand:'Өнімдерді көру'
+      }
+    };
+
+    function setLang(lang){
+      if(!dict[lang]) lang='ru';
+      root.classList.toggle('arb-lang-kk',lang==='kk');
+      root.setAttribute('lang',lang==='kk'?'kk':'ru');
+
+      root.querySelectorAll('[data-arb-i18n]').forEach(function(el){
+        var key=el.getAttribute('data-arb-i18n');
+        if(dict[lang][key]!==undefined){
+          el.textContent=dict[lang][key];
+        }
+      });
+    }
+
+    var lang='ru';
+    try{
+      lang=localStorage.getItem('aromika-language')||'ru';
+    }catch(e){}
+
+    setLang(lang);
+
+    document.addEventListener('click',function(e){
+      var btn=e.target.closest('[data-lang]');
+      if(!btn) return;
+
+      var next=btn.getAttribute('data-lang');
+      if(next==='ru' || next==='kk') setLang(next);
+    });
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',initAromikaBrands);
+  }else{
+    initAromikaBrands();
+  }
+
+  setTimeout(initAromikaBrands,500);
+})();
+
+
+
+(function(){
+
+  function initAromikaAbout(){
+
+    var root=document.getElementById('about-company');
+
+    if(!root || root.dataset.araReady==='1') return;
+
+    root.dataset.araReady='1';
+
+
+    /* --------------------------
+       LANGUAGE
+    -------------------------- */
+
+    var dict={
+
+      ru:{
+        kicker:'О компании',
+        title1:'Создаём продукты',
+        title2:'в Казахстане с 2005 года',
+
+        lead:'Aromika объединяет собственное производство, дистрибуцию и развитую логистическую сеть. Мы создаём бытовую химию и косметическую продукцию для ежедневного использования.',
+
+        more:'Подробнее о компании',
+
+        since:'Собственное производство',
+        yearCaption:'год запуска собственного производства',
+
+        stat1:'лет на рынке Казахстана',
+        stat2:'наименований продукции',
+        stat3:'структурных подразделений',
+        stat4small:'Головной офис',
+        stat4:'Костанай',
+
+        processSmall:'От идеи до покупателя',
+        processTitle:'Единая система производства и дистрибуции',
+
+        p1:'Разработка',
+        p2:'Производство',
+        p3:'Логистика',
+        p4:'Дистрибуция'
+      },
+
+
+      kk:{
+        kicker:'Компания туралы',
+        title1:'Өнімдерді Қазақстанда',
+        title2:'2005 жылдан бері өндіреміз',
+
+        lead:'Aromika өз өндірісін, дистрибуцияны және дамыған логистикалық желіні біріктіреді. Біз күнделікті қолдануға арналған тұрмыстық химия мен косметикалық өнімдер шығарамыз.',
+
+        more:'Компания туралы толығырақ',
+
+        since:'Өз өндірісіміз',
+        yearCaption:'өз өндірісіміз іске қосылған жыл',
+
+        stat1:'Қазақстан нарығындағы жыл',
+        stat2:'өнім атауы',
+        stat3:'құрылымдық бөлімше',
+        stat4small:'Бас кеңсе',
+        stat4:'Қостанай',
+
+        processSmall:'Идеядан сатып алушыға дейін',
+        processTitle:'Өндіріс пен дистрибуцияның бірыңғай жүйесі',
+
+        p1:'Әзірлеу',
+        p2:'Өндіріс',
+        p3:'Логистика',
+        p4:'Дистрибуция'
+      }
+
+    };
+
+
+    function setLang(lang){
+
+      if(!dict[lang]) lang='ru';
+
+      root.classList.toggle(
+        'ara-lang-kk',
+        lang==='kk'
+      );
+
+      root.setAttribute(
+        'lang',
+        lang==='kk' ? 'kk' : 'ru'
+      );
+
+
+      root
+        .querySelectorAll('[data-ara-i18n]')
+        .forEach(function(el){
+
+          var key=
+            el.getAttribute('data-ara-i18n');
+
+          if(dict[lang][key]!==undefined){
+            el.textContent=dict[lang][key];
+          }
+
+        });
+
+    }
+
+
+    var lang='ru';
+
+    try{
+      lang=
+        localStorage.getItem('aromika-language')
+        || 'ru';
+    }catch(e){}
+
+    setLang(lang);
+
+
+    document.addEventListener(
+      'click',
+      function(e){
+
+        var btn=
+          e.target.closest('[data-lang]');
+
+        if(!btn) return;
+
+        var next=
+          btn.getAttribute('data-lang');
+
+        if(next==='ru' || next==='kk'){
+          setLang(next);
+        }
+
+      }
+    );
+
+
+    /* --------------------------
+       COUNTERS
+    -------------------------- */
+
+    var counters=
+      root.querySelectorAll('.ara-counter');
+
+    var alreadyPlayed=false;
+
+
+    function animateCounters(){
+
+      if(alreadyPlayed) return;
+
+      alreadyPlayed=true;
+
+
+      counters.forEach(function(counter){
+
+        var target=
+          parseInt(
+            counter.getAttribute('data-target'),
+            10
+          );
+
+        var duration=1500;
+        var start=null;
+
+
+        function tick(time){
+
+          if(!start) start=time;
+
+          var progress=
+            Math.min(
+              (time-start)/duration,
+              1
+            );
+
+          var eased=
+            1-Math.pow(1-progress,3);
+
+          counter.textContent=
+            Math.floor(
+              target*eased
+            );
+
+          if(progress<1){
+            requestAnimationFrame(tick);
+          }else{
+            counter.textContent=target;
+          }
+
+        }
+
+        requestAnimationFrame(tick);
+
+      });
+
+    }
+
+
+    if('IntersectionObserver' in window){
+
+      var observer=
+        new IntersectionObserver(
+          function(entries){
+
+            entries.forEach(function(entry){
+
+              if(entry.isIntersecting){
+
+                animateCounters();
+
+                observer.disconnect();
+
+              }
+
+            });
+
+          },
+          {
+            threshold:.25
+          }
+        );
+
+      observer.observe(
+        root.querySelector('.ara-stats')
+      );
+
+    }else{
+
+      animateCounters();
+
+    }
+
+  }
+
+
+  if(document.readyState==='loading'){
+
+    document.addEventListener(
+      'DOMContentLoaded',
+      initAromikaAbout
+    );
+
+  }else{
+
+    initAromikaAbout();
+
+  }
+
+
+  setTimeout(
+    initAromikaAbout,
+    500
+  );
+
+})();
+
+
+
+(function(){
+  function initARPQ(){
+    var root=document.getElementById('production-quality');
+    if(!root || root.dataset.arpqReady==='1') return;
+    root.dataset.arpqReady='1';
+
+    var dict={
+      ru:{
+        kicker:'Производство и качество',
+        title1:'От идеи',
+        title2:'до готового продукта',
+        intro:'Собственное производство позволяет контролировать ключевые этапы создания продукта — от разработки до выпуска готовой продукции.',
+        coreSmall:'Собственное производство',
+        coreText:'Казахстан',
+        s1title:'Разработка',
+        s1text:'Создание и совершенствование рецептур будущих продуктов.',
+        s2title:'Производство',
+        s2text:'Выпуск продукции на собственной производственной площадке.',
+        s3title:'Контроль качества',
+        s3text:'Контроль ключевых параметров на этапах производственного процесса.',
+        s4title:'Готовый продукт',
+        s4text:'Упаковка и подготовка продукции к дальнейшей дистрибуции.',
+        statement:'Контроль внутри единой производственной системы помогает сохранять стабильность продукта от партии к партии.',
+        more:'Подробнее о производстве'
+      },
+      kk:{
+        kicker:'Өндіріс және сапа',
+        title1:'Идеядан',
+        title2:'дайын өнімге дейін',
+        intro:'Өз өндірісіміз өнімді әзірлеуден бастап дайын өнімді шығаруға дейінгі негізгі кезеңдерді бақылауға мүмкіндік береді.',
+        coreSmall:'Өз өндірісіміз',
+        coreText:'Қазақстан',
+        s1title:'Әзірлеу',
+        s1text:'Болашақ өнімдердің рецептураларын жасау және жетілдіру.',
+        s2title:'Өндіріс',
+        s2text:'Өнімдерді өз өндірістік алаңымызда шығару.',
+        s3title:'Сапаны бақылау',
+        s3text:'Өндірістік үдерістің негізгі кезеңдеріндегі параметрлерді бақылау.',
+        s4title:'Дайын өнім',
+        s4text:'Өнімді қаптау және одан әрі дистрибуцияға дайындау.',
+        statement:'Бірыңғай өндірістік жүйедегі бақылау өнім сапасының партиядан партияға тұрақтылығын сақтауға көмектеседі.',
+        more:'Өндіріс туралы толығырақ'
+      }
+    };
+
+    function setLang(lang){
+      if(!dict[lang]) lang='ru';
+      root.classList.toggle('arpq-lang-kk',lang==='kk');
+      root.setAttribute('lang',lang==='kk'?'kk':'ru');
+      root.querySelectorAll('[data-arpq-i18n]').forEach(function(el){
+        var key=el.getAttribute('data-arpq-i18n');
+        if(dict[lang][key]!==undefined) el.textContent=dict[lang][key];
+      });
+    }
+
+    var lang='ru';
+    try{lang=localStorage.getItem('aromika-language')||'ru'}catch(e){}
+    setLang(lang);
+
+    document.addEventListener('click',function(e){
+      var btn=e.target.closest('[data-lang]');
+      if(!btn)return;
+      var next=btn.getAttribute('data-lang');
+      if(next==='ru'||next==='kk')setLang(next);
+    });
+
+    if('IntersectionObserver' in window){
+      var io=new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            root.querySelectorAll('.arpq-step').forEach(function(el,i){
+              el.animate(
+                [
+                  {opacity:0,transform:'translateY(22px)'},
+                  {opacity:1,transform:'translateY(0)'}
+                ],
+                {duration:650,delay:i*110,easing:'cubic-bezier(.22,1,.36,1)',fill:'both'}
+              );
+            });
+            io.disconnect();
+          }
+        });
+      },{threshold:.18});
+      io.observe(root.querySelector('.arpq-stage'));
+    }
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',initARPQ);
+  }else{
+    initARPQ();
+  }
+  setTimeout(initARPQ,500);
+})();
+
+
+
+(function(){
+ function initArg(){
+  var root=document.getElementById('geography');
+  if(!root||root.dataset.argReady==='1')return;
+  root.dataset.argReady='1';
+
+  var branches=[{"id":"kostanay","ru":"Костанай","kk":"Қостанай","address_ru":"Северная промзона, 184","address_kk":"Солтүстік өнеркәсіп аймағы, 184","email":"info@aromika.info","phone":"+7 (7142) 52-40-44","lat":53.2144,"lon":63.6246,"hq":true,"x":389.2,"y":112.9},{"id":"rudny","ru":"Рудный","kk":"Рудный","address_ru":"ул. 50 лет Октября, 24","address_kk":"50 лет Октября көшесі, 24","email":"west-2002@mail.ru","phone":"+7 701 720-78-13","lat":52.9729,"lon":63.1168,"x":379.8,"y":119.0},{"id":"shymkent","ru":"Шымкент","kk":"Шымкент","address_ru":"ул. Толе би, 43Б","address_kk":"Төле би көшесі, 43Б","email":"shymkent_dir@aromika.info","phone":"+7 705 198-76-68","lat":42.3417,"lon":69.5901,"x":499.5,"y":387.6},{"id":"aktau","ru":"Актау","kk":"Ақтау","address_ru":"3 мкр., 157Д, база «Араз»","address_kk":"3 шағынаудан, 157Д, «Араз» базасы","email":"aktau_sv2@aromika.info","phone":"+7 707 330-58-60","lat":43.6532,"lon":51.1975,"x":159.5,"y":354.4},{"id":"zhezkazgan","ru":"Жезказган","kk":"Жезқазған","address_ru":"ул. Асылбекова, 95","address_kk":"Асылбеков көшесі, 95","email":"zheskazgan_dir@aromika.info","phone":"+7 777 394-29-65","lat":47.7964,"lon":67.702,"x":464.6,"y":249.7},{"id":"aktobe","ru":"Актобе","kk":"Ақтөбе","address_ru":"ул. Черепанова, 1Г","address_kk":"Черепанов көшесі, 1Г","email":"aktobe_dir@aromika.info","phone":"+7 705 820-11-86","lat":50.2839,"lon":57.1669,"x":269.8,"y":186.9},{"id":"astana","ru":"Астана","kk":"Астана","address_ru":"шоссе Караганда — Астана, 3/6","address_kk":"Қарағанды — Астана тасжолы, 3/6","email":"aromika_astana@mail.ru","phone":"+7 701 527-03-61","lat":51.1694,"lon":71.4491,"x":533.9,"y":164.5},{"id":"semey","ru":"Семей","kk":"Семей","address_ru":"ул. Красный Пильщик, 34","address_kk":"Красный Пильщик көшесі, 34","email":"semej@aromika.info","phone":"+7 747 829-10-54","lat":50.4111,"lon":80.2275,"x":696.1,"y":183.7},{"id":"oskemen","ru":"Усть-Каменогорск","kk":"Өскемен","address_ru":"ул. Абая, 189","address_kk":"Абай көшесі, 189","email":"ust_kamenogorsk@aromika.info","phone":"+7 705 150-85-26","lat":49.9483,"lon":82.6275,"x":740.5,"y":195.4},{"id":"kokshetau","ru":"Кокшетау","kk":"Көкшетау","address_ru":"Северная промзона, 5У","address_kk":"Солтүстік өнеркәсіп аймағы, 5У","email":"kokchetav@aromika.info","phone":"+7 705 658-37-85","lat":53.2833,"lon":69.3833,"x":495.7,"y":111.1},{"id":"atyrau","ru":"Атырау","kk":"Атырау","address_ru":"ул. Канцева, 2А","address_kk":"Канцев көшесі, 2А","email":"atyrau_dir@aromika.info","phone":"+7 701 901-33-34","lat":47.0945,"lon":51.9238,"x":172.9,"y":267.5},{"id":"almaty","ru":"Алматы","kk":"Алматы","address_ru":"ул. Бурундайская, 93В","address_kk":"Бурундайская көшесі, 93В","email":"aromika-almaty@mail.ru","phone":"+7 747 318-17-05","lat":43.2389,"lon":76.8897,"x":634.4,"y":364.9},{"id":"karaganda","ru":"Караганда","kk":"Қарағанды","address_ru":"ул. Сакена Сейфуллина, 105А","address_kk":"Сәкен Сейфуллин көшесі, 105А","email":"aaromika@mail.ru","phone":"+7 747 325-83-32","lat":49.8064,"lon":73.0855,"x":564.1,"y":199.0},{"id":"taldykorgan","ru":"Талдыкорган","kk":"Талдықорған","address_ru":"ул. Ракишева, 6, офис 2Б","address_kk":"Рақышев көшесі, 6, 2Б кеңсе","email":"Taldykorgan_dir@aromika.info","phone":"+7 777 022-32-89","lat":45.0156,"lon":78.3739,"x":661.9,"y":320.0},{"id":"pavlodar","ru":"Павлодар","kk":"Павлодар","address_ru":"ул. Карла Маркса, 328","address_kk":"Карл Маркс көшесі, 328","email":"aromikapvl@mail.ru","phone":"+7 705 198-76-68","lat":52.2873,"lon":76.9674,"x":635.9,"y":136.3},{"id":"zhitikara","ru":"Житикара","kk":"Жітіқара","address_ru":"11 мкр., строение 55","address_kk":"11 шағынаудан, 55 ғимарат","email":"now_west@mail.ru","phone":"+7 777 524-00-20","lat":52.1908,"lon":61.2006,"x":344.4,"y":138.7},{"id":"taraz","ru":"Тараз","kk":"Тараз","address_ru":"ул. Исатая, 1Т","address_kk":"Исатай көшесі, 1Т","email":"bakenova.anyuta@mail.ru","phone":"+7 747 469-80-85","lat":42.9,"lon":71.3667,"x":532.3,"y":373.5},{"id":"uralsk","ru":"Уральск","kk":"Орал","address_ru":"ул. Жданова, 1","address_kk":"Жданов көшесі, 1","email":"uralsk_aromika@mail.ru","phone":"+7 747 081-25-32","lat":51.2278,"lon":51.3865,"x":163.0,"y":163.0},{"id":"petropavlovsk","ru":"Петропавловск","kk":"Петропавл","address_ru":"Омское шоссе, 1","address_kk":"Омбы тасжолы, 1","email":"petropavlovsk@aromika.info","phone":"+7 777 608-92-10","lat":54.8753,"lon":69.1628,"x":491.6,"y":70.9}];
+  var dict={
+   ru:{kicker:'География Aromika',title1:'Мы рядом',title2:'по всему Казахстану',intro:'Выберите город на карте, чтобы посмотреть адрес и контакты филиала.',branch:'Филиал Aromika',route:'Построить маршрут',hq:'Головной город компании',mapCaption:'Филиалы в Казахстане',bottomText:'Нужны контакты другого подразделения?',allContacts:'Все контакты'},
+   kk:{kicker:'Aromika географиясы',title1:'Біз сізге жақынбыз',title2:'Қазақстанның түкпір-түкпірінде',intro:'Филиалдың мекенжайы мен байланыстарын көру үшін картадан қаланы таңдаңыз.',branch:'Aromika филиалы',route:'Бағыт құру',hq:'Компанияның бас қаласы',mapCaption:'Қазақстандағы филиалдар',bottomText:'Басқа бөлімшенің байланыстары керек пе?',allContacts:'Барлық байланыстар'}
+  };
+
+  var lang='ru',active=0;
+  try{lang=localStorage.getItem('aromika-language')||'ru'}catch(e){}
+
+  var pointsGroup=root.querySelector('.arg-points');
+  var strip=root.querySelector('.arg-city-strip');
+
+  branches.forEach(function(b,i){
+   var ns='http://www.w3.org/2000/svg';
+   var g=document.createElementNS(ns,'g');
+   g.setAttribute('class','arg-point');
+   g.setAttribute('tabindex','0');
+   g.setAttribute('transform','translate('+b.x+' '+b.y+')');
+   g.dataset.index=i;
+
+   var pulse=document.createElementNS(ns,'circle');
+   pulse.setAttribute('class','arg-pulse');pulse.setAttribute('r','7');
+   var dot=document.createElementNS(ns,'circle');
+   dot.setAttribute('class','arg-dot');dot.setAttribute('r','6');
+   var text=document.createElementNS(ns,'text');
+   text.setAttribute('x','12');text.setAttribute('y','4');text.textContent=b.ru;
+
+   g.appendChild(pulse);g.appendChild(dot);g.appendChild(text);
+   pointsGroup.appendChild(g);
+
+   var btn=document.createElement('button');
+   btn.type='button';btn.className='arg-city-btn';btn.dataset.index=i;btn.textContent=b.ru;
+   strip.appendChild(btn);
+
+   g.addEventListener('click',function(){select(i)});
+   g.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();select(i)}});
+   btn.addEventListener('click',function(){select(i);root.querySelector('.arg-info').scrollIntoView({behavior:'smooth',block:'nearest'})}); 
+  });
+
+  function cleanPhone(p){return p.replace(/[^+\d]/g,'')}
+
+  function select(i){
+   active=i;var b=branches[i];
+   root.querySelectorAll('.arg-point').forEach(function(el,j){el.classList.toggle('is-active',j===i)});
+   root.querySelectorAll('.arg-city-btn').forEach(function(el,j){el.classList.toggle('is-active',j===i)});
+   root.querySelector('.arg-current-num').textContent=String(i+1).padStart(2,'0');
+   root.querySelector('.arg-city').textContent=lang==='kk'?b.kk:b.ru;
+   root.querySelector('.arg-address').textContent=lang==='kk'?b.address_kk:b.address_ru;
+   var phone=root.querySelector('.arg-phone');phone.textContent=b.phone;phone.href='tel:'+cleanPhone(b.phone);
+   var email=root.querySelector('.arg-email');email.textContent=b.email;email.href='mailto:'+b.email;
+   var route=root.querySelector('.arg-route');
+   var city=lang==='kk'?b.kk:b.ru;
+   var addr=lang==='kk'?b.address_kk:b.address_ru;
+   route.href='https://www.google.com/maps/search/?api=1&query='+encodeURIComponent(city+', Kazakhstan, '+addr);
+   root.querySelector('.arg-hq-badge').classList.toggle('is-visible',!!b.hq);
+
+   var activeBtn=root.querySelector('.arg-city-btn.is-active');
+   if(activeBtn)activeBtn.scrollIntoView({behavior:'smooth',block:'nearest',inline:'center'});
+  }
+
+  function setLang(next){
+   if(!dict[next])next='ru';lang=next;
+   root.classList.toggle('arg-lang-kk',lang==='kk');
+   root.setAttribute('lang',lang==='kk'?'kk':'ru');
+   root.querySelectorAll('[data-arg-i18n]').forEach(function(el){
+    var k=el.getAttribute('data-arg-i18n');if(dict[lang][k]!==undefined)el.textContent=dict[lang][k];
+   });
+   root.querySelectorAll('.arg-point text').forEach(function(el,i){el.textContent=lang==='kk'?branches[i].kk:branches[i].ru});
+   root.querySelectorAll('.arg-city-btn').forEach(function(el,i){el.textContent=lang==='kk'?branches[i].kk:branches[i].ru});
+   select(active);
+  }
+
+  setLang(lang);select(0);
+
+  document.addEventListener('click',function(e){
+   var btn=e.target.closest('[data-lang]');if(!btn)return;
+   var next=btn.getAttribute('data-lang');if(next==='ru'||next==='kk')setLang(next);
+  });
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initArg);else initArg();
+ setTimeout(initArg,500);
+})();
+
+
+
+(function(){
+ function initARPT(){
+  var root=document.getElementById('partners-home');
+  if(!root||root.dataset.arptReady==='1')return;
+  root.dataset.arptReady='1';
+
+  var dict={
+   ru:{
+    kicker:'Партнёрам',title1:'Развиваем бизнес',title2:'вместе',
+    lead:'Aromika открыта к сотрудничеству с торговыми сетями, дистрибьюторами, HoReCa и корпоративными клиентами.',
+    cta:'Стать партнёром',center:'Партнёрская сеть',
+    n1:'Дистрибуция',n2:'Торговые сети',n4:'Корпоративные клиенты',
+    d1title:'Дистрибьюторам',d1text:'Развитие продаж продукции Aromika на региональных рынках.',
+    d2title:'Торговым сетям',d2text:'Широкий ассортимент бытовой химии и продукции ежедневного спроса.',
+    d3text:'Профессиональные решения для гостиниц, ресторанов и предприятий сервиса.',
+    d4title:'Корпоративным клиентам',d4text:'Подбор продукции под задачи бизнеса и регулярные поставки.'
+   },
+   kk:{
+    kicker:'Серіктестерге',title1:'Бизнесті',title2:'бірге дамытамыз',
+    lead:'Aromika сауда желілерімен, дистрибьюторлармен, HoReCa және корпоративтік клиенттермен ынтымақтастыққа ашық.',
+    cta:'Серіктес болу',center:'Серіктестік желі',
+    n1:'Дистрибуция',n2:'Сауда желілері',n4:'Корпоративтік клиенттер',
+    d1title:'Дистрибьюторларға',d1text:'Aromika өнімдерінің өңірлік нарықтардағы сатылымын дамыту.',
+    d2title:'Сауда желілеріне',d2text:'Тұрмыстық химия мен күнделікті сұранысқа арналған өнімдердің кең ассортименті.',
+    d3text:'Қонақүйлерге, мейрамханаларға және сервис кәсіпорындарына арналған кәсіби шешімдер.',
+    d4title:'Корпоративтік клиенттерге',d4text:'Бизнес міндеттеріне сай өнімдерді таңдау және тұрақты жеткізу.'
+   }
+  };
+
+  function setLang(lang){
+   if(!dict[lang])lang='ru';
+   root.classList.toggle('arpt-lang-kk',lang==='kk');
+   root.setAttribute('lang',lang==='kk'?'kk':'ru');
+   root.querySelectorAll('[data-arpt-i18n]').forEach(function(el){
+    var k=el.getAttribute('data-arpt-i18n');
+    if(dict[lang][k]!==undefined)el.textContent=dict[lang][k];
+   });
+  }
+  var lang='ru';try{lang=localStorage.getItem('aromika-language')||'ru'}catch(e){}
+  setLang(lang);
+  document.addEventListener('click',function(e){
+   var b=e.target.closest('[data-lang]');if(!b)return;
+   var l=b.getAttribute('data-lang');if(l==='ru'||l==='kk')setLang(l);
+  });
+
+  if('IntersectionObserver' in window){
+   var io=new IntersectionObserver(function(entries){
+    entries.forEach(function(entry){
+     if(entry.isIntersecting){
+      root.querySelectorAll('.arpt-node').forEach(function(el,i){
+       el.animate([{opacity:0,transform:'scale(.88)'},{opacity:1,transform:'scale(1)'}],
+        {duration:600,delay:120+i*100,easing:'cubic-bezier(.22,1,.36,1)',fill:'both'});
+      });
+      io.disconnect();
+     }
+    });
+   },{threshold:.2});
+   io.observe(root.querySelector('.arpt-panel'));
+  }
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initARPT);else initARPT();
+ setTimeout(initARPT,500);
+})();
+
+
+
+(function(){
+ function initARWB(){
+  var root=document.getElementById('where-buy-home');
+  if(!root||root.dataset.ready==='1')return;
+  root.dataset.ready='1';
+  var d={
+   ru:{
+    kicker:'Где купить',title1:'Выбирайте удобный',title2:'способ покупки',
+    lead:'Заказывайте продукцию Aromika в официальном интернет-магазине, через Kaspi, в мобильном приложении или выбирайте ближайшую точку продаж.',
+    official:'Официальный интернет-магазин',shopTitle:'Весь ассортимент<br>в одном месте',shopCta:'Перейти в магазин',
+    catalogKicker:'Маркетплейс',catalogTitle:'Kaspi Магазин',catalogText:'Привычное оформление заказа и удобная доставка через Kaspi.',
+    appKicker:'Мобильное приложение',appTitle:'Aromika',appText:'Покупки со смартфона — через приложение Aromika.',
+    pointsKicker:'Офлайн',pointsTitle:'Точки продаж',pointsText:'Адреса магазинов и пунктов самовывоза.',
+    delivery:'Доставка по Казахстану',pickup:'Пункты самовывоза в городах',official2:'Официальный магазин Aromika'
+   },
+   kk:{
+    kicker:'Қайдан сатып алуға болады',title1:'Өзіңізге ыңғайлы',title2:'сатып алу тәсілін таңдаңыз',
+    lead:'Aromika өнімдеріне ресми интернет-дүкенде, Kaspi арқылы, мобильді қосымшада тапсырыс беріңіз немесе жақын сату нүктесін таңдаңыз.',
+    official:'Ресми интернет-дүкен',shopTitle:'Барлық ассортимент<br>бір жерде',shopCta:'Дүкенге өту',
+    catalogKicker:'Маркетплейс',catalogTitle:'Kaspi Магазин',catalogText:'Kaspi арқылы тапсырысты ыңғайлы рәсімдеу және жеткізу.',
+    appKicker:'Мобильді қосымша',appTitle:'Aromika',appText:'Aromika қосымшасы арқылы смартфоннан сатып алыңыз.',
+    pointsKicker:'Офлайн',pointsTitle:'Сату нүктелері',pointsText:'Дүкендер мен алып кету нүктелерінің мекенжайлары.',
+    delivery:'Қазақстан бойынша жеткізу',pickup:'Қалалардағы алып кету нүктелері',official2:'Aromika ресми дүкені'
+   }
+  };
+  function setLang(l){
+   if(!d[l])l='ru';
+   root.classList.toggle('arwb-lang-kk',l==='kk');
+   root.querySelectorAll('[data-arwb-i18n]').forEach(function(el){
+    var k=el.getAttribute('data-arwb-i18n');
+    if(d[l][k]!=null) el.innerHTML=d[l][k];
+   });
+  }
+  var l='ru';try{l=localStorage.getItem('aromika-language')||'ru'}catch(e){}
+  setLang(l);
+  document.addEventListener('click',function(e){
+   var b=e.target.closest('[data-lang]');if(!b)return;
+   var x=b.getAttribute('data-lang');if(x==='ru'||x==='kk')setLang(x);
+  });
+ }
+ if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',initARWB);else initARWB();
+ setTimeout(initARWB,500);
+})();
+
+
+
+(function(){
+  var root = document.getElementById('aromika-footer');
+  if(!root) return;
+
+  var dict = {
+    ru:{
+      brandText:'Казахстанский производитель бытовой химии и косметической продукции.',
+      shopBtn:'Интернет-магазин',company:'Компания',about:'О компании',
+      production:'Производство',contacts:'Контакты',brands:'Бренды',
+      partners:'Партнёрам',distributors:'Дистрибьюторам',retail:'Торговым сетям',
+      corporate:'Корпоративным клиентам',buyers:'Покупателям',catalog:'Каталог',
+      online:'Интернет-магазин',where:'Где купить',office:'Головной офис',
+      city:'Костанай, Казахстан',phone:'Телефон',privacy:'Политика конфиденциальности',
+      feedback:'Обратная связь',top:'Наверх'
+    },
+    kk:{
+      brandText:'Қазақстандық тұрмыстық химия және косметикалық өнімдер өндірушісі.',
+      shopBtn:'Интернет-дүкен',company:'Компания',about:'Компания туралы',
+      production:'Өндіріс',contacts:'Байланыс',brands:'Брендтер',
+      partners:'Серіктестерге',distributors:'Дистрибьюторларға',retail:'Сауда желілеріне',
+      corporate:'Корпоративтік клиенттерге',buyers:'Сатып алушыларға',catalog:'Каталог',
+      online:'Интернет-дүкен',where:'Қайдан сатып алуға болады',office:'Бас кеңсе',
+      city:'Қостанай, Қазақстан',phone:'Телефон',privacy:'Құпиялық саясаты',
+      feedback:'Кері байланыс',top:'Жоғары'
+    }
+  };
+
+  function applyLanguage(lang){
+    if(lang !== 'kk') lang = 'ru';
+
+    root.setAttribute('lang', lang === 'kk' ? 'kk' : 'ru');
+    root.classList.toggle('arf-lang-kk', lang === 'kk');
+
+    root.querySelectorAll('[data-arf-i18n]').forEach(function(el){
+      var key = el.getAttribute('data-arf-i18n');
+      if(Object.prototype.hasOwnProperty.call(dict[lang], key)){
+        el.textContent = dict[lang][key];
+      }
+    });
+
+    root.querySelectorAll('[data-lang]').forEach(function(btn){
+      btn.classList.toggle('arf-active', btn.getAttribute('data-lang') === lang);
+      btn.setAttribute('aria-pressed', btn.getAttribute('data-lang') === lang ? 'true' : 'false');
+    });
+  }
+
+  function currentLanguage(){
+    try {
+      return localStorage.getItem('aromika-language') === 'kk' ? 'kk' : 'ru';
+    } catch(e) {
+      return 'ru';
+    }
+  }
+
+  applyLanguage(currentLanguage());
+
+  // One delegated listener. Works for footer buttons and RU/KZ controls in other blocks.
+  document.addEventListener('click', function(e){
+    var btn = e.target.closest('[data-lang]');
+    if(!btn) return;
+
+    var lang = btn.getAttribute('data-lang');
+    if(lang !== 'ru' && lang !== 'kk') return;
+
+    try { localStorage.setItem('aromika-language', lang); } catch(err) {}
+    applyLanguage(lang);
+
+    try {
+      window.dispatchEvent(new CustomEvent('aromika:languagechange', {detail:{lang:lang}}));
+    } catch(err) {}
+  });
+
+  // Allows other blocks to notify the footer without synthetic clicks.
+  window.addEventListener('aromika:languagechange', function(e){
+    if(e.detail && (e.detail.lang === 'ru' || e.detail.lang === 'kk')){
+      applyLanguage(e.detail.lang);
+    }
+  });
+
+  // Covers language changes made by older blocks that only update localStorage.
+  window.addEventListener('storage', function(e){
+    if(e.key === 'aromika-language') applyLanguage(currentLanguage());
+  });
+
+  var topBtn = root.querySelector('.arf-to-top');
+  if(topBtn){
+    topBtn.addEventListener('click', function(e){
+      e.preventDefault();
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
+  }
+})();
+
+
+
+(function(){
+  if(window.__aromikaMobileFinal) return;
+  window.__aromikaMobileFinal = true;
+
+  function init(){
+    var site=document.getElementById('aromika-onepiece-site');
+    if(!site) return;
+
+    /* unified section reveal; does not replace existing section animations */
+    var selectors=[
+      '#products .arp-wrap',
+      '#brands .arb-wrap',
+      '#about-company .ara-wrap',
+      '#production-quality .arpq-wrap',
+      '#geography .arg-wrap',
+      '#partners-home .arpt-wrap',
+      '#where-buy-home .arwb-wrap',
+      '#aromika-footer .arf-wrap'
+    ];
+    var nodes=[];
+    selectors.forEach(function(sel){
+      var el=site.querySelector(sel);
+      if(el){el.classList.add('am-reveal');nodes.push(el);}
+    });
+
+    if('IntersectionObserver' in window && !matchMedia('(prefers-reduced-motion:reduce)').matches){
+      var io=new IntersectionObserver(function(entries){
+        entries.forEach(function(entry){
+          if(entry.isIntersecting){
+            entry.target.classList.add('am-visible');
+            io.unobserve(entry.target);
+          }
+        });
+      },{threshold:.08,rootMargin:'0px 0px -6% 0px'});
+      nodes.forEach(function(el){io.observe(el);});
+    }else{
+      nodes.forEach(function(el){el.classList.add('am-visible');});
+    }
+
+    /* make all language controls synchronized in this one-piece version */
+    function syncLang(lang){
+      if(lang!=='ru' && lang!=='kk') lang='ru';
+      try{localStorage.setItem('aromika-language',lang);}catch(e){}
+      document.documentElement.lang=(lang==='kk'?'kk':'ru');
+      window.dispatchEvent(new CustomEvent('aromika:languagechange',{detail:{lang:lang}}));
+    }
+    document.addEventListener('click',function(e){
+      var btn=e.target.closest('[data-lang]');
+      if(!btn || !site.contains(btn)) return;
+      syncLang(btn.getAttribute('data-lang'));
+    },true);
+
+    /* hero menu safety on mobile */
+    var hero=site.querySelector('#aromika-hero');
+    if(hero){
+      var burger=hero.querySelector('.ar-burger');
+      var menu=hero.querySelector('.ar-menu');
+      var overlay=hero.querySelector('.ar-overlay');
+      function hardClose(){
+        if(burger) burger.classList.remove('open');
+        if(menu) menu.classList.remove('open');
+        if(overlay) overlay.classList.remove('open');
+        document.body.style.overflow='';
+      }
+      document.addEventListener('keydown',function(e){
+        if(e.key==='Escape') hardClose();
+      });
+      window.addEventListener('resize',function(){
+        if(window.innerWidth>980) hardClose();
+      },{passive:true});
+      window.addEventListener('pageshow',function(){document.body.style.overflow='';});
+    }
+
+    /* prevent horizontal drag from producing page overflow */
+    var scrollers=site.querySelectorAll('#geography .arg-cities');
+    scrollers.forEach(function(el){
+      el.style.touchAction='pan-x';
+    });
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',init,{once:true});
+  }else{
+    init();
+  }
+})();
