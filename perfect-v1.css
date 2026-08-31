@@ -1,0 +1,1045 @@
+html,body{margin:0;overflow-x:hidden}
+
+#perfect-page{
+ --accent:#e8194f;--accent2:#f6a0b5;--accent-soft:#fff0f4;--ink:#1a1819;--muted:#767075;
+ --bg:#f7f3f2;--card:#fff;--line:rgba(24,21,23,.10);--scene:#fff7f8;
+ background:var(--bg);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+ transition:background .45s ease,color .45s ease;
+}
+#perfect-page[data-category="fabriccare"]{--accent:#a36bc9;--accent2:#ef9ec4;--accent-soft:#f8effd;--scene:#fbf5ff}
+#perfect-page[data-category="dishes"]{--accent:#8a1635;--accent2:#ef8b42;--accent-soft:#fff3ea;--scene:#fff7f1}
+#perfect-page[data-category="men"]{--accent:#2f74d0;--accent2:#8fc9ff;--accent-soft:#edf6ff;--scene:#f2f8ff;--ink:#17191d}
+#perfect-page[data-category="perfume"]{--accent:#8f62c8;--accent2:#e27aac;--accent-soft:#f6effd;--scene:#faf4ff}
+#perfect-page *,#perfect-page *:before,#perfect-page *:after{box-sizing:border-box}
+#perfect-page a{text-decoration:none;color:inherit}
+#perfect-page button{font:inherit}
+#perfect-page img{display:block;max-width:100%}
+#perfect-page .pf-shell{width:min(calc(100% - 64px),1380px);margin:auto}
+
+#perfect-page .pf-local-nav{
+ position:sticky;top:76px;z-index:45;background:rgba(248,245,244,.92);border-bottom:1px solid var(--line);
+ backdrop-filter:blur(16px);-webkit-backdrop-filter:blur(16px)
+}
+#perfect-page .pf-local-inner{min-height:56px;display:flex;align-items:center;justify-content:space-between;gap:28px}
+#perfect-page .pf-local-logo{font-size:17px;font-weight:900;letter-spacing:-.7px;color:var(--accent)}
+#perfect-page .pf-local-links{display:flex;align-items:center;gap:7px;overflow:auto;scrollbar-width:none}
+#perfect-page .pf-local-links::-webkit-scrollbar{display:none}
+#perfect-page .pf-local-links button{
+ border:0;background:none;color:#686267;border-radius:999px;padding:9px 13px;white-space:nowrap;
+ font-size:10px;font-weight:760;cursor:pointer;transition:.28s
+}
+#perfect-page .pf-local-links button:hover,#perfect-page .pf-local-links button.is-active{background:var(--accent);color:#fff}
+
+#perfect-page .pf-showcase{position:relative;overflow:hidden;padding:64px 0 0;transition:background .45s ease}
+#perfect-page .pf-showcase-grid{position:relative;z-index:3;display:grid;grid-template-columns:minmax(0,.78fr) minmax(560px,1.22fr);gap:42px;align-items:center;min-height:690px}
+#perfect-page .pf-kicker{display:flex;align-items:center;gap:12px;margin-bottom:22px;font-size:10px;font-weight:850;letter-spacing:1.2px}
+#perfect-page .pf-kicker span{width:30px;height:2px;background:var(--accent);transition:.35s}
+#perfect-page .pf-cat-no{font-size:11px;color:var(--accent);font-weight:850;margin-bottom:11px}
+#perfect-page .pf-copy h1{margin:0;font-size:clamp(70px,7.5vw,118px);line-height:.82;letter-spacing:-5px;font-weight:850}
+#perfect-page .pf-copy h1>span{display:block;text-transform:uppercase;color:var(--accent);transition:color .45s}
+#perfect-page .pf-copy h1 em{
+ display:block;margin-top:24px;max-width:660px;color:var(--ink);font-family:Georgia,"Times New Roman",serif;
+ font-size:.43em;line-height:1.02;letter-spacing:-1.8px;font-weight:400;transition:color .35s
+}
+#perfect-page .pf-lead{max-width:590px;margin:28px 0 0;color:var(--muted);font-size:15px;line-height:1.72}
+#perfect-page .pf-actions{display:flex;gap:10px;flex-wrap:wrap;margin-top:32px}
+#perfect-page .pf-btn{min-height:52px;padding:0 21px;display:flex;align-items:center;justify-content:center;gap:22px;border-radius:999px;font-size:11px;font-weight:780;transition:.3s}
+#perfect-page .pf-btn-primary{background:var(--accent);color:#fff;box-shadow:0 13px 30px color-mix(in srgb,var(--accent) 22%,transparent)}
+#perfect-page .pf-btn-primary:hover{transform:translateY(-2px)}
+#perfect-page .pf-btn-ghost{background:var(--card);border:1px solid var(--line)}
+#perfect-page .pf-quick{display:flex;align-items:baseline;gap:8px;margin-top:42px;padding-top:18px;border-top:1px solid var(--line);max-width:430px}
+#perfect-page .pf-quick span{font-size:9px;color:#979096}
+#perfect-page .pf-quick strong{font-size:30px;line-height:1;color:var(--accent)}
+
+#perfect-page .pf-visual{position:relative;height:640px;isolation:isolate}
+#perfect-page .pf-wordmark{
+ position:absolute;left:50%;top:50%;transform:translate(-50%,-50%) rotate(-7deg);font-size:clamp(94px,10vw,155px);
+ font-weight:900;letter-spacing:-8px;color:color-mix(in srgb,var(--accent) 7%,transparent);white-space:nowrap;z-index:-3
+}
+#perfect-page .pf-ring{position:absolute;border:1px solid color-mix(in srgb,var(--accent) 20%,transparent);border-radius:50%;z-index:-2;transition:border-color .45s}
+#perfect-page .pf-ring-a{width:520px;height:520px;right:75px;top:58px}
+#perfect-page .pf-ring-b{width:380px;height:380px;right:144px;top:128px}
+
+#perfect-page .pf-products-scene{
+  position:absolute;inset:0;opacity:0;visibility:hidden;pointer-events:none;
+  perspective:1200px;transform-style:preserve-3d;touch-action:pan-y;
+  transition:opacity .32s ease,visibility .32s
+}
+#perfect-page .pf-products-scene.is-active{opacity:1;visibility:visible;pointer-events:auto}
+#perfect-page .pf-product-card{
+  position:absolute;left:0;top:0;margin:0;display:flex;align-items:flex-end;justify-content:center;
+  transform-origin:center bottom;cursor:pointer;will-change:transform,filter;
+}
+#perfect-page .pf-product-card img{
+  width:100%;height:100%;object-fit:contain;display:block;pointer-events:none;user-select:none;
+  filter:drop-shadow(0 28px 24px rgba(34,25,31,.16))
+}
+#perfect-page .pf-product-card figcaption{
+  position:absolute;left:50%;bottom:-14px;transform:translateX(-50%);
+  min-width:max-content;max-width:210px;padding:7px 11px;border-radius:999px;
+  background:rgba(255,255,255,.86);border:1px solid var(--line);backdrop-filter:blur(10px);
+  font-size:8px;font-weight:760;text-align:center;opacity:0;transition:.25s;pointer-events:none
+}
+#perfect-page .pf-product-card.is-front figcaption{opacity:1}
+
+/* individual product sizes; positioning is controlled entirely by the same orbit engine as the homepage */
+ #perfect-page .pf-series-badge{right:0;top:6px}
+
+ #perfect-page .pf-products-scene[data-scene="laundry"] .pf-p-1{width:150px;height:370px}
+ #perfect-page .pf-products-scene[data-scene="laundry"] .pf-p-2{width:180px;height:400px}
+ #perfect-page .pf-products-scene[data-scene="laundry"] .pf-p-3{width:172px;height:392px}
+ #perfect-page .pf-products-scene[data-scene="conditioners"] .pf-product-card{width:158px;height:375px}
+ #perfect-page .pf-products-scene[data-scene="dishes"] .pf-p-1{width:170px;height:380px}
+ #perfect-page .pf-products-scene[data-scene="dishes"] .pf-p-2{width:190px;height:400px}
+ #perfect-page .pf-products-scene[data-scene="men"] .pf-product-card{width:92px;height:300px}
+ #perfect-page .pf-products-scene[data-scene="perfume"] .pf-product-card{width:148px;height:365px}
+
+ #perfect-page .pf-strip-head{grid-template-columns:1fr;gap:18px}
+ #perfect-page .pf-category-cards{grid-template-columns:1fr 1fr}
+ #perfect-page .pf-category-card{min-height:116px}
+ #perfect-page .pf-category-card:nth-child(2n){border-right:0}
+ #perfect-page .pf-category-card:nth-child(n+3){border-top:1px solid var(--line)}
+}
+
+/* Running category line */
+#perfect-page .pf-marquee{
+  position:relative;z-index:8;height:66px;overflow:hidden;
+  display:flex;align-items:center;
+  border-top:1px solid var(--line);border-bottom:1px solid var(--line);
+  background:rgba(255,255,255,.40);
+}
+#perfect-page .pf-marquee-track{
+  display:flex;align-items:center;width:max-content;min-width:max-content;
+  white-space:nowrap;will-change:transform;
+  animation:pfPerfectMarquee 20s linear infinite;
+}
+#perfect-page .pf-marquee span{
+  display:block;flex:none;padding-right:34px;
+  color:color-mix(in srgb,var(--accent) 62%,transparent);
+  font-size:26px;line-height:1;font-weight:850;letter-spacing:-.8px;
+  transition:color .4s ease;
+}
+@keyframes pfPerfectMarquee{
+  from{transform:translate3d(0,0,0)}
+  to{transform:translate3d(-50%,0,0)}
+}
+html[data-aromika-theme="dark"] #perfect-page .pf-marquee{
+  background:rgba(255,255,255,.025);
+}
+@media(max-width:700px){
+  #perfect-page .pf-marquee{height:56px}
+  #perfect-page .pf-marquee span{font-size:21px;padding-right:28px}
+}
+@media(prefers-reduced-motion:reduce){
+  #perfect-page .pf-marquee-track{animation:pfPerfectMarqueeV11 17s linear infinite!important}
+}
+
+
+/* V9 — expanded category orbit sizing */
+#perfect-page .pf-products-scene[data-scene="laundry"] .pf-product-card{
+  width:190px;height:470px;
+}
+#perfect-page .pf-products-scene[data-scene="dishes"] .pf-product-card{
+  width:205px;height:470px;
+}
+@media(max-width:700px){
+  #perfect-page .pf-products-scene[data-scene="laundry"] .pf-product-card{
+    width:128px;height:330px;
+  }
+  #perfect-page .pf-products-scene[data-scene="dishes"] .pf-product-card{
+    width:138px;height:340px;
+  }
+}
+
+
+/* ---- pf-v10-category-theme-fix ---- */
+/* V10: restore full category styling and keep every UI accent synchronized with the selected category */
+#perfect-page{
+  --accent:#e61e4d;
+  --accent2:#76b82a;
+  --accent-soft:#fff0f4;
+  --theme-wash:#fff8fa;
+  --theme-strip:#fff;
+  --ink:#1a1819;
+  --muted:#767075;
+  --bg:#f7f3f2;
+  --card:#fff;
+  --line:rgba(24,21,23,.10);
+}
+#perfect-page[data-category="laundry"]{
+  --accent:#e61e4d;
+  --accent2:#73b52c;
+  --accent-soft:#fff0f4;
+  --theme-wash:#fff8fa;
+}
+#perfect-page[data-category="fabriccare"]{
+  --accent:#b84d98;
+  --accent2:#e78ab6;
+  --accent-soft:#f9eff8;
+  --theme-wash:#fcf6fb;
+}
+#perfect-page[data-category="dishes"]{
+  --accent:#d5153d;
+  --accent2:#e3b400;
+  --accent-soft:#fff5df;
+  --theme-wash:#fffaf0;
+}
+#perfect-page[data-category="men"]{
+  --accent:#1d9fc3;
+  --accent2:#58c6df;
+  --accent-soft:#edf8fc;
+  --theme-wash:#f3fbfd;
+  --ink:#17191d;
+}
+#perfect-page[data-category="perfume"]{
+  --accent:#8754bf;
+  --accent2:#df72ae;
+  --accent-soft:#f6effc;
+  --theme-wash:#fbf7ff;
+}
+
+/* local category navigation */
+#perfect-page .pf-local-nav{
+  background:color-mix(in srgb,var(--theme-wash) 92%,transparent);
+  border-bottom:1px solid var(--line);
+}
+#perfect-page .pf-local-logo{
+  color:var(--accent);
+  transition:color .42s ease;
+}
+#perfect-page .pf-local-links button{
+  border:0;
+  background:transparent;
+  color:#686267;
+  border-radius:999px;
+  padding:9px 13px;
+  white-space:nowrap;
+  font-size:10px;
+  font-weight:760;
+  cursor:pointer;
+  transition:background .3s ease,color .3s ease,transform .3s ease;
+}
+#perfect-page .pf-local-links button:hover{
+  color:var(--accent);
+  background:color-mix(in srgb,var(--accent) 8%,transparent);
+}
+#perfect-page .pf-local-links button.is-active{
+  background:var(--accent);
+  color:#fff;
+}
+
+/* hero category theme */
+#perfect-page .pf-showcase{
+  background:
+    radial-gradient(circle at 84% 17%,color-mix(in srgb,var(--accent2) 17%,transparent),transparent 28%),
+    radial-gradient(circle at 67% 69%,color-mix(in srgb,var(--accent) 8%,transparent),transparent 34%),
+    var(--theme-wash);
+  transition:background .5s ease;
+}
+#perfect-page .pf-kicker span,
+#perfect-page .pf-series-dot{
+  background:var(--accent);
+}
+#perfect-page .pf-cat-no,
+#perfect-page .pf-copy h1>span,
+#perfect-page .pf-quick strong,
+#perfect-page .pf-strip-kicker{
+  color:var(--accent);
+  transition:color .42s ease;
+}
+#perfect-page .pf-btn-primary{
+  background:var(--accent);
+  color:#fff;
+  box-shadow:0 13px 30px color-mix(in srgb,var(--accent) 22%,transparent);
+  transition:background .4s ease,box-shadow .4s ease,transform .3s ease;
+}
+#perfect-page .pf-btn-ghost{
+  background:var(--card);
+  border:1px solid color-mix(in srgb,var(--accent) 14%,var(--line));
+}
+#perfect-page .pf-wordmark{
+  color:color-mix(in srgb,var(--accent) 7%,transparent);
+  transition:color .45s ease;
+}
+#perfect-page .pf-ring{
+  border:1px solid color-mix(in srgb,var(--accent) 20%,transparent);
+  transition:border-color .45s ease;
+}
+#perfect-page .pf-series-badge{
+  position:absolute;
+  right:12px;
+  top:24px;
+  display:flex;
+  align-items:center;
+  gap:10px;
+  padding:11px 13px;
+  border-radius:16px;
+  background:rgba(255,255,255,.82);
+  border:1px solid color-mix(in srgb,var(--accent) 12%,transparent);
+  backdrop-filter:blur(12px);
+  z-index:12;
+}
+#perfect-page .pf-series-dot{
+  width:10px;
+  height:10px;
+  border-radius:50%;
+  flex:none;
+}
+#perfect-page .pf-series-badge small{
+  display:block;
+  font-size:8px;
+  color:#9a9398;
+}
+#perfect-page .pf-series-badge b{
+  display:block;
+  margin-top:2px;
+  font-size:10px;
+}
+#perfect-page .pf-orbit-hint{
+  border-color:color-mix(in srgb,var(--accent) 15%,transparent);
+  color:color-mix(in srgb,var(--accent) 70%,#5b575a);
+}
+
+/* ticker restored and synchronized */
+#perfect-page .pf-marquee{
+  position:relative;
+  z-index:8;
+  height:66px;
+  overflow:hidden;
+  display:flex;
+  align-items:center;
+  border-top:1px solid color-mix(in srgb,var(--accent) 13%,var(--line));
+  border-bottom:1px solid color-mix(in srgb,var(--accent) 13%,var(--line));
+  background:color-mix(in srgb,var(--accent-soft) 58%,#fff);
+  transition:background .42s ease,border-color .42s ease;
+}
+#perfect-page .pf-marquee-track{
+  display:flex;
+  align-items:center;
+  width:max-content;
+  min-width:max-content;
+  white-space:nowrap;
+  will-change:transform;
+  animation:pfPerfectMarquee 20s linear infinite;
+}
+#perfect-page .pf-marquee span{
+  display:block;
+  flex:none;
+  padding-right:34px;
+  color:var(--accent);
+  font-size:26px;
+  line-height:1;
+  font-weight:850;
+  letter-spacing:-.8px;
+  transition:color .42s ease;
+}
+@keyframes pfPerfectMarquee{
+  from{transform:translate3d(0,0,0)}
+  to{transform:translate3d(-50%,0,0)}
+}
+
+/* restore category section layout that was damaged in V8/V9 */
+#perfect-page .pf-category-strip{
+  padding:74px 0 88px;
+  background:var(--theme-strip);
+  transition:background .42s ease;
+}
+#perfect-page .pf-strip-head{
+  display:grid;
+  grid-template-columns:1fr 1fr;
+  gap:60px;
+  align-items:end;
+  margin-bottom:34px;
+}
+#perfect-page .pf-strip-kicker{
+  display:block;
+  margin-bottom:11px;
+  font-size:9px;
+  font-weight:850;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+#perfect-page .pf-strip-head h2{
+  margin:0;
+  font-size:clamp(38px,5vw,68px);
+  line-height:.95;
+  letter-spacing:-3px;
+}
+#perfect-page .pf-strip-head p{
+  margin:0;
+  max-width:520px;
+  color:var(--muted);
+  font-size:13px;
+  line-height:1.65;
+}
+#perfect-page .pf-category-cards{
+  display:grid;
+  grid-template-columns:repeat(5,1fr);
+  border-top:1px solid var(--line);
+  border-bottom:1px solid var(--line);
+}
+#perfect-page .pf-category-card{
+  min-height:145px;
+  padding:18px;
+  border:0;
+  border-right:1px solid var(--line);
+  background:transparent;
+  color:var(--ink);
+  text-align:left;
+  cursor:pointer;
+  position:relative;
+  transition:background .3s ease,color .3s ease,border-color .3s ease;
+}
+#perfect-page .pf-category-card:last-child{border-right:0}
+#perfect-page .pf-category-card span{
+  display:block;
+  font-size:9px;
+  color:#aaa2a8;
+  transition:color .3s ease;
+}
+#perfect-page .pf-category-card b{
+  display:block;
+  margin-top:35px;
+  font-size:14px;
+}
+#perfect-page .pf-category-card i{
+  position:absolute;
+  right:18px;
+  bottom:18px;
+  font-style:normal;
+  color:var(--card-accent,var(--accent));
+  font-size:16px;
+  transition:color .3s ease;
+}
+
+/* Each selector keeps its own category color; active selector becomes the live page color */
+#perfect-page .pf-category-card[data-category="laundry"]{--card-accent:#e61e4d}
+#perfect-page .pf-category-card[data-category="fabriccare"]{--card-accent:#b84d98}
+#perfect-page .pf-category-card[data-category="dishes"]{--card-accent:#d5153d}
+#perfect-page .pf-category-card[data-category="men"]{--card-accent:#1d9fc3}
+#perfect-page .pf-category-card[data-category="perfume"]{--card-accent:#8754bf}
+#perfect-page .pf-category-card:hover{
+  background:color-mix(in srgb,var(--card-accent) 8%,transparent);
+}
+#perfect-page .pf-category-card.is-active{
+  background:var(--accent);
+  color:#fff;
+  border-color:var(--accent);
+}
+#perfect-page .pf-category-card.is-active span,
+#perfect-page .pf-category-card.is-active i{
+  color:#fff;
+}
+
+/* full assortment CTA also follows selected category */
+#perfect-page .pf-all-products{
+  margin-top:24px;
+  padding:30px 32px;
+  border-radius:28px;
+  background:var(--accent-soft);
+  display:grid;
+  grid-template-columns:1fr auto;
+  gap:36px;
+  align-items:center;
+  border:1px solid color-mix(in srgb,var(--accent) 12%,transparent);
+  transition:background .42s ease,border-color .42s ease;
+}
+#perfect-page .pf-all-products>div>span{
+  display:block;
+  margin-bottom:9px;
+  color:var(--accent);
+  font-size:9px;
+  font-weight:850;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+#perfect-page .pf-all-products h3{
+  margin:0;
+  font-size:25px;
+  line-height:1.05;
+  letter-spacing:-1px;
+}
+#perfect-page .pf-all-products p{
+  margin:12px 0 0;
+  max-width:720px;
+  color:var(--muted);
+  font-size:12px;
+  line-height:1.6;
+}
+#perfect-page .pf-all-products>a{
+  min-height:52px;
+  padding:0 20px;
+  border-radius:999px;
+  background:var(--accent);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  gap:22px;
+  white-space:nowrap;
+  font-size:10px;
+  font-weight:800;
+  transition:background .42s ease,transform .3s ease;
+}
+#perfect-page .pf-all-products>a:hover{transform:translateY(-2px)}
+
+/* light men's treatment: same layout, only cool palette */
+#perfect-page[data-category="men"] .pf-visual:before{
+  content:"";
+  position:absolute;
+  inset:45px 0 20px;
+  border-radius:36px;
+  background:
+    radial-gradient(circle at 78% 22%,rgba(88,198,223,.23),transparent 30%),
+    radial-gradient(circle at 20% 78%,rgba(29,159,195,.07),transparent 32%),
+    linear-gradient(145deg,#fbfeff,#eef9fc);
+  z-index:-4;
+  box-shadow:inset 0 0 0 1px rgba(29,159,195,.08);
+}
+#perfect-page[data-category="men"] .pf-wordmark{
+  color:rgba(29,159,195,.055);
+}
+#perfect-page[data-category="men"] .pf-ring{
+  border-color:rgba(29,159,195,.16);
+}
+#perfect-page[data-category="men"] .pf-series-badge{
+  background:rgba(255,255,255,.86);
+  color:#17191d;
+  border-color:rgba(29,159,195,.12);
+}
+
+/* dark theme */
+html[data-aromika-theme="dark"] #perfect-page{
+  --bg:#0f1013;
+  --card:#181a1f;
+  --theme-strip:#14161a;
+  --ink:#f4f4f6;
+  --muted:#a5a5aa;
+  --line:rgba(255,255,255,.10);
+}
+html[data-aromika-theme="dark"] #perfect-page .pf-local-nav{
+  background:rgba(15,16,19,.92);
+}
+html[data-aromika-theme="dark"] #perfect-page .pf-local-links button{
+  color:#b7b8bd;
+}
+html[data-aromika-theme="dark"] #perfect-page .pf-showcase{
+  background:
+    radial-gradient(circle at 84% 17%,color-mix(in srgb,var(--accent2) 11%,transparent),transparent 28%),
+    radial-gradient(circle at 67% 69%,color-mix(in srgb,var(--accent) 7%,transparent),transparent 34%),
+    #0f1013;
+}
+html[data-aromika-theme="dark"] #perfect-page .pf-marquee{
+  background:color-mix(in srgb,var(--accent) 8%,#0f1013);
+}
+html[data-aromika-theme="dark"] #perfect-page .pf-series-badge{
+  background:rgba(24,26,31,.82);
+  color:#fff;
+}
+html[data-aromika-theme="dark"] #perfect-page .pf-orbit-hint{
+  background:rgba(22,24,29,.76);
+}
+html[data-aromika-theme="dark"] #perfect-page .pf-category-card:hover{
+  background:color-mix(in srgb,var(--card-accent) 13%,transparent);
+}
+
+/* responsive */
+@media(max-width:1100px){
+  #perfect-page .pf-category-cards{grid-template-columns:repeat(3,1fr)}
+  #perfect-page .pf-category-card:nth-child(3){border-right:0}
+  #perfect-page .pf-category-card:nth-child(n+4){border-top:1px solid var(--line)}
+}
+@media(max-width:700px){
+  #perfect-page .pf-local-nav{top:68px}
+  #perfect-page .pf-strip-head{grid-template-columns:1fr;gap:18px}
+  #perfect-page .pf-category-cards{grid-template-columns:1fr 1fr}
+  #perfect-page .pf-category-card{min-height:116px}
+  #perfect-page .pf-category-card:nth-child(3){border-right:1px solid var(--line)}
+  #perfect-page .pf-category-card:nth-child(2n){border-right:0}
+  #perfect-page .pf-category-card:nth-child(n+3){border-top:1px solid var(--line)}
+  #perfect-page .pf-all-products{grid-template-columns:1fr;padding:24px 20px;gap:20px}
+  #perfect-page .pf-all-products>a{width:100%;justify-content:space-between}
+  #perfect-page .pf-marquee{height:56px}
+  #perfect-page .pf-marquee span{font-size:21px;padding-right:28px}
+  #perfect-page .pf-series-badge{right:0;top:6px}
+}
+@media(prefers-reduced-motion:reduce){
+  #perfect-page .pf-marquee-track{animation:pfPerfectMarqueeV11 17s linear infinite!important}
+}
+
+
+/* ---- pf-v11-polish ---- */
+/* Header: exactly the homepage typography and rhythm */
+#aromika-onepiece-site #aromika-hero .ar-header,
+#aromika-onepiece-site #aromika-hero .ar-header *{
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+}
+#aromika-onepiece-site #aromika-hero .ar-nav a,
+#aromika-onepiece-site #aromika-hero .ar-shop,
+#aromika-onepiece-site #aromika-hero .ar-lang button,
+#aromika-onepiece-site #aromika-hero .ar-menu a,
+#aromika-onepiece-site #aromika-hero .ar-menu button{
+  letter-spacing:normal;
+}
+
+/* Men's series: larger bottles + tighter spacing */
+#perfect-page .pf-products-scene[data-scene="men"] .pf-product-card{
+  width:156px !important;
+  height:455px !important;
+}
+#perfect-page[data-category="men"] .pf-ring-a{
+  width:470px;height:470px;right:100px;top:82px;
+}
+#perfect-page[data-category="men"] .pf-ring-b{
+  width:340px;height:340px;right:164px;top:148px;
+}
+
+/* Dishes: one representative product per fragrance */
+#perfect-page .pf-products-scene[data-scene="dishes"] .pf-product-card{
+  width:235px !important;
+  height:520px !important;
+}
+
+/* Running line: continuous movement */
+#perfect-page .pf-marquee{
+  overflow:hidden !important;
+}
+#perfect-page .pf-marquee-track{
+  display:flex !important;
+  flex-wrap:nowrap !important;
+  width:max-content !important;
+  min-width:max-content !important;
+  white-space:nowrap !important;
+  animation:pfPerfectMarqueeV11 17s linear infinite !important;
+  animation-play-state:running !important;
+  will-change:transform;
+}
+#perfect-page .pf-marquee-track span{
+  flex:0 0 auto !important;
+  white-space:nowrap !important;
+}
+@keyframes pfPerfectMarqueeV11{
+  0%{transform:translate3d(0,0,0)}
+  100%{transform:translate3d(-50%,0,0)}
+}
+@media(max-width:700px){
+  #perfect-page .pf-products-scene[data-scene="men"] .pf-product-card{
+    width:108px !important;height:325px !important;
+  }
+  #perfect-page .pf-products-scene[data-scene="dishes"] .pf-product-card{
+    width:162px !important;height:365px !important;
+  }
+}
+
+
+/* ---- pf-v13-fabriccare ---- */
+#perfect-page[data-category="fabriccare"]{
+  --accent:#b84d98;
+  --accent2:#7d9fdb;
+  --accent-soft:#f9eff8;
+  --theme-wash:#fcf7fb;
+}
+#perfect-page .pf-category-card[data-category="fabriccare"]{--card-accent:#b84d98}
+
+/* 4 category cards */
+#perfect-page .pf-category-cards{grid-template-columns:repeat(4,1fr) !important}
+#perfect-page .pf-category-card:nth-child(4){border-right:0}
+
+/* combined conditioners + perfume orbit */
+#perfect-page .pf-products-scene[data-scene="fabriccare"] .pf-product-card{
+  width:165px !important;
+  height:425px !important;
+}
+#perfect-page .pf-products-scene[data-scene="fabriccare"] .pf-p-4,
+#perfect-page .pf-products-scene[data-scene="fabriccare"] .pf-p-5,
+#perfect-page .pf-products-scene[data-scene="fabriccare"] .pf-p-6{
+  width:150px !important;
+  height:405px !important;
+}
+@media(max-width:1100px){
+  #perfect-page .pf-category-cards{grid-template-columns:repeat(2,1fr) !important}
+  #perfect-page .pf-category-card:nth-child(2n){border-right:0}
+  #perfect-page .pf-category-card:nth-child(n+3){border-top:1px solid var(--line)}
+}
+@media(max-width:700px){
+  #perfect-page .pf-products-scene[data-scene="fabriccare"] .pf-product-card{
+    width:112px !important;height:315px !important;
+  }
+  #perfect-page .pf-products-scene[data-scene="fabriccare"] .pf-p-4,
+  #perfect-page .pf-products-scene[data-scene="fabriccare"] .pf-p-5,
+  #perfect-page .pf-products-scene[data-scene="fabriccare"] .pf-p-6{
+    width:103px !important;height:295px !important;
+  }
+}
+
+
+/* ---- pf-v14-cleaning ---- */
+#perfect-page[data-category="cleaning"]{
+  --accent:#6b8f13;--accent2:#27a9c7;--accent-soft:#f4f9e9;--theme-wash:#f8fbf1;
+}
+#perfect-page .pf-category-card[data-category="cleaning"]{--card-accent:#6b8f13}
+#perfect-page .pf-category-cards{grid-template-columns:repeat(5,1fr) !important}
+#perfect-page .pf-category-card:nth-child(4){border-right:1px solid var(--line)}
+#perfect-page .pf-category-card:nth-child(5){border-right:0}
+
+#perfect-page .pf-products-scene[data-scene="dishes"] .pf-product-card{
+  width:175px !important;height:430px !important;
+}
+#perfect-page .pf-products-scene[data-scene="cleaning"] .pf-product-card{
+  width:138px !important;height:395px !important;
+}
+#perfect-page .pf-products-scene[data-scene="cleaning"] .pf-p-3{
+  width:205px !important;height:350px !important;
+}
+#perfect-page .pf-products-scene[data-scene="cleaning"] .pf-p-4,
+#perfect-page .pf-products-scene[data-scene="cleaning"] .pf-p-7,
+#perfect-page .pf-products-scene[data-scene="cleaning"] .pf-p-8,
+#perfect-page .pf-products-scene[data-scene="cleaning"] .pf-p-9{
+  width:145px !important;height:405px !important;
+}
+@media(max-width:1100px){
+  #perfect-page .pf-category-cards{grid-template-columns:repeat(3,1fr) !important}
+  #perfect-page .pf-category-card:nth-child(3){border-right:0}
+  #perfect-page .pf-category-card:nth-child(4){border-right:1px solid var(--line);border-top:1px solid var(--line)}
+  #perfect-page .pf-category-card:nth-child(5){border-top:1px solid var(--line)}
+}
+@media(max-width:700px){
+  #perfect-page .pf-category-cards{grid-template-columns:1fr 1fr !important}
+  #perfect-page .pf-category-card:nth-child(3){border-right:1px solid var(--line)}
+  #perfect-page .pf-category-card:nth-child(4){border-right:0}
+  #perfect-page .pf-category-card:nth-child(5){border-right:1px solid var(--line)}
+  #perfect-page .pf-products-scene[data-scene="dishes"] .pf-product-card{width:118px !important;height:315px !important}
+  #perfect-page .pf-products-scene[data-scene="cleaning"] .pf-product-card{width:92px !important;height:300px !important}
+  #perfect-page .pf-products-scene[data-scene="cleaning"] .pf-p-3{width:145px !important;height:280px !important}
+  #perfect-page .pf-products-scene[data-scene="cleaning"] .pf-p-4,
+  #perfect-page .pf-products-scene[data-scene="cleaning"] .pf-p-7,
+  #perfect-page .pf-products-scene[data-scene="cleaning"] .pf-p-8,
+  #perfect-page .pf-products-scene[data-scene="cleaning"] .pf-p-9{width:98px !important;height:310px !important}
+}
+
+
+/* ---- pf-v15-usp ---- */
+#perfect-page .pf-quick{display:none!important}
+#perfect-page .pf-products-scene[data-scene="cleaning"] .pf-p-3{
+  width:275px !important;
+  height:440px !important;
+}
+#perfect-page .pf-lead{
+  max-width:670px;
+  font-size:14px;
+  line-height:1.72;
+}
+@media(max-width:700px){
+  #perfect-page .pf-products-scene[data-scene="cleaning"] .pf-p-3{
+    width:188px !important;
+    height:345px !important;
+  }
+  #perfect-page .pf-lead{
+    font-size:12.5px;
+    line-height:1.62;
+  }
+}
+
+
+/* ---- pf-v19-haircare-category ---- */
+#perfect-page[data-category="haircare"]{--accent:#cf67b3;--accent2:#f2afd7;--accent-soft:#fff1fa;--scene:#fcf7fb;--ink:#433e45}
+#perfect-page .pf-category-card[data-category="haircare"]{--card-accent:#cf67b3}
+#perfect-page .pf-products-scene[data-scene="haircare"] .pf-product-card{width:122px;height:352px}
+#perfect-page .pf-products-scene[data-scene="haircare"] .pf-p-5{width:116px;height:344px}
+#perfect-page .pf-products-scene[data-scene="haircare"] .pf-p-6,
+#perfect-page .pf-products-scene[data-scene="haircare"] .pf-p-7{width:118px;height:348px}
+#perfect-page .pf-category-cards{grid-template-columns:repeat(6,1fr)!important}
+#perfect-page .pf-category-card:nth-child(1),
+#perfect-page .pf-category-card:nth-child(2),
+#perfect-page .pf-category-card:nth-child(3),
+#perfect-page .pf-category-card:nth-child(4),
+#perfect-page .pf-category-card:nth-child(5){border-right:1px solid var(--line)}
+#perfect-page .pf-category-card:nth-child(6){border-right:0}
+#perfect-page .pf-category-card:nth-child(n+7){border-top:1px solid var(--line)}
+@media (max-width:1120px){
+  #perfect-page .pf-category-cards{grid-template-columns:repeat(3,1fr)!important}
+  #perfect-page .pf-category-card:nth-child(3),
+  #perfect-page .pf-category-card:nth-child(6){border-right:0}
+  #perfect-page .pf-category-card:nth-child(n+4){border-top:1px solid var(--line)}
+}
+@media (max-width:700px){
+  #perfect-page .pf-category-cards{grid-template-columns:repeat(2,1fr)!important}
+  #perfect-page .pf-category-card:nth-child(1),
+  #perfect-page .pf-category-card:nth-child(3),
+  #perfect-page .pf-category-card:nth-child(5){border-right:1px solid var(--line)}
+  #perfect-page .pf-category-card:nth-child(2),
+  #perfect-page .pf-category-card:nth-child(4),
+  #perfect-page .pf-category-card:nth-child(6){border-right:0}
+  #perfect-page .pf-category-card:nth-child(n+3){border-top:1px solid var(--line)}
+  #perfect-page .pf-products-scene[data-scene="haircare"] .pf-product-card{width:100px!important;height:308px!important}
+  #perfect-page .pf-products-scene[data-scene="haircare"] .pf-p-5{width:94px!important;height:300px!important}
+}
+
+
+/* ---- pf-final-review-v21 ---- */
+#perfect-page{--accent-ui:var(--accent)}
+#perfect-page[data-category="laundry"]{--accent-ui:#d91d48}
+#perfect-page[data-category="fabriccare"]{--accent-ui:#9b3f82}
+#perfect-page[data-category="dishes"]{--accent-ui:#c91439}
+#perfect-page[data-category="cleaning"]{--accent-ui:#55750d}
+#perfect-page[data-category="haircare"]{--accent-ui:#a84391}
+#perfect-page[data-category="men"]{--accent-ui:#147b99}
+#perfect-page .pf-local-links button.is-active,#perfect-page .pf-btn-primary,#perfect-page .pf-category-card.is-active,#perfect-page .pf-all-products>a{background:var(--accent-ui)!important;border-color:var(--accent-ui)!important;color:#fff!important}
+#perfect-page .pf-btn-primary{box-shadow:0 13px 30px color-mix(in srgb,var(--accent-ui) 22%,transparent)!important}
+#perfect-page .pf-local-nav{top:0!important;z-index:90!important}
+#perfect-page .pf-local-links{scrollbar-width:none;-ms-overflow-style:none}
+#perfect-page .pf-local-links::-webkit-scrollbar{display:none}
+#perfect-page .pf-showcase-grid{grid-template-columns:minmax(360px,.84fr) minmax(0,1.16fr)!important;gap:40px!important;min-height:690px!important}
+#perfect-page .pf-copy{min-width:0}
+#perfect-page .pf-lead{max-width:650px!important;font-size:14px!important;line-height:1.68!important}
+#perfect-page .pf-products-scene[data-scene="laundry"] .pf-product-card{width:188px!important;height:465px!important}
+#perfect-page .pf-products-scene[data-scene="laundry"] .pf-p-4,#perfect-page .pf-products-scene[data-scene="laundry"] .pf-p-5{width:205px!important;height:470px!important}
+#perfect-page .pf-products-scene[data-scene="fabriccare"] .pf-product-card{width:170px!important;height:425px!important}
+#perfect-page .pf-products-scene[data-scene="fabriccare"] .pf-p-4,#perfect-page .pf-products-scene[data-scene="fabriccare"] .pf-p-5,#perfect-page .pf-products-scene[data-scene="fabriccare"] .pf-p-6{width:158px!important;height:410px!important}
+#perfect-page .pf-products-scene[data-scene="dishes"] .pf-product-card{width:188px!important;height:450px!important}
+#perfect-page .pf-products-scene[data-scene="cleaning"] .pf-product-card{width:148px!important;height:405px!important}
+#perfect-page .pf-products-scene[data-scene="cleaning"] .pf-p-3{width:285px!important;height:445px!important}
+#perfect-page .pf-products-scene[data-scene="cleaning"] .pf-p-4,#perfect-page .pf-products-scene[data-scene="cleaning"] .pf-p-7,#perfect-page .pf-products-scene[data-scene="cleaning"] .pf-p-8,#perfect-page .pf-products-scene[data-scene="cleaning"] .pf-p-9{width:155px!important;height:415px!important}
+#perfect-page .pf-products-scene[data-scene="haircare"] .pf-product-card{width:152px!important;height:385px!important}
+#perfect-page .pf-products-scene[data-scene="haircare"] .pf-p-5{width:146px!important;height:378px!important}
+#perfect-page .pf-products-scene[data-scene="haircare"] .pf-p-6,#perfect-page .pf-products-scene[data-scene="haircare"] .pf-p-7{width:149px!important;height:382px!important}
+#perfect-page .pf-products-scene[data-scene="men"] .pf-product-card{width:168px!important;height:465px!important}
+#perfect-page .pf-product-card figcaption{max-width:240px!important;font-size:9px!important;font-weight:760!important}
+#perfect-page .pf-marquee-track{animation:pfFinalMarquee var(--pf-marquee-duration,80s) linear infinite!important;animation-play-state:running!important}
+#perfect-page .pf-marquee-track span{padding-right:42px!important}
+@keyframes pfFinalMarquee{from{transform:translate3d(0,0,0)}to{transform:translate3d(-50%,0,0)}}
+#perfect-page .pf-category-cards{grid-template-columns:repeat(6,1fr)!important}
+#perfect-page .pf-category-card{min-height:142px!important}
+#perfect-page .pf-category-card:nth-child(-n+5){border-right:1px solid var(--line)!important}
+#perfect-page .pf-category-card:nth-child(6){border-right:0!important}
+@media(max-width:980px){
+#perfect-page .pf-shell{width:min(calc(100% - 40px),900px)!important}
+#perfect-page .pf-local-inner{gap:14px!important}
+#perfect-page .pf-local-logo{flex:0 0 auto}
+#perfect-page .pf-local-links{overflow-x:auto!important;overscroll-behavior-x:contain;-webkit-overflow-scrolling:touch;padding:0 22px 0 6px!important;-webkit-mask-image:linear-gradient(to right,transparent 0,#000 12px,#000 calc(100% - 30px),transparent 100%);mask-image:linear-gradient(to right,transparent 0,#000 12px,#000 calc(100% - 30px),transparent 100%)}
+#perfect-page .pf-local-links button{min-height:42px!important;padding:0 13px!important;font-size:10px!important}
+#perfect-page .pf-showcase{padding-top:24px!important}
+#perfect-page .pf-showcase-grid{display:grid!important;grid-template-columns:minmax(0,1fr)!important;gap:8px!important;min-height:0!important;align-items:start!important}
+#perfect-page .pf-copy{width:100%!important;max-width:760px!important;padding:28px 0 6px!important}
+#perfect-page .pf-copy h1{font-size:clamp(64px,11vw,88px)!important;line-height:.84!important;letter-spacing:-4px!important}
+#perfect-page .pf-copy h1 em{margin-top:18px!important;font-size:.40em!important;line-height:1.05!important;letter-spacing:-1.2px!important}
+#perfect-page .pf-lead{max-width:720px!important;margin-top:22px!important;font-size:14px!important;line-height:1.65!important}
+#perfect-page .pf-actions{margin-top:24px!important}
+#perfect-page .pf-visual{width:100%!important;height:555px!important;margin-top:0!important}
+#perfect-page .pf-wordmark{font-size:clamp(96px,20vw,142px)!important}
+#perfect-page .pf-ring-a{width:470px!important;height:470px!important;right:50%!important;transform:translateX(50%)!important;top:54px!important}
+#perfect-page .pf-ring-b{width:338px!important;height:338px!important;right:50%!important;transform:translateX(50%)!important;top:120px!important}
+#perfect-page .pf-category-cards{grid-template-columns:repeat(3,1fr)!important}
+#perfect-page .pf-category-card:nth-child(3),#perfect-page .pf-category-card:nth-child(6){border-right:0!important}
+#perfect-page .pf-category-card:nth-child(4),#perfect-page .pf-category-card:nth-child(5),#perfect-page .pf-category-card:nth-child(6){border-top:1px solid var(--line)!important}
+}
+@media(max-width:640px){
+#perfect-page .pf-shell{width:calc(100% - 28px)!important}
+#perfect-page .pf-local-inner{gap:8px!important}
+#perfect-page .pf-local-logo{font-size:16px!important}
+#perfect-page .pf-showcase{padding-top:16px!important}
+#perfect-page .pf-copy{padding-top:22px!important}
+#perfect-page .pf-kicker{margin-bottom:16px!important;font-size:9px!important}
+#perfect-page .pf-cat-no{margin-bottom:8px!important}
+#perfect-page .pf-copy h1{font-size:clamp(52px,15.2vw,66px)!important;letter-spacing:-3px!important}
+#perfect-page .pf-copy h1 em{margin-top:14px!important;font-size:.43em!important;letter-spacing:-.8px!important}
+#perfect-page .pf-lead{margin-top:18px!important;font-size:12.8px!important;line-height:1.58!important}
+#perfect-page .pf-actions{display:grid!important;grid-template-columns:1fr 1fr!important;gap:8px!important;margin-top:20px!important}
+#perfect-page .pf-btn{min-height:48px!important;padding:0 14px!important;font-size:10px!important;gap:10px!important}
+#perfect-page .pf-visual{height:445px!important}
+#perfect-page .pf-wordmark{font-size:92px!important;letter-spacing:-6px!important}
+#perfect-page .pf-ring-a{width:350px!important;height:350px!important;top:42px!important}
+#perfect-page .pf-ring-b{width:250px!important;height:250px!important;top:92px!important}
+#perfect-page .pf-products-scene[data-scene="laundry"] .pf-product-card{width:128px!important;height:330px!important}
+#perfect-page .pf-products-scene[data-scene="laundry"] .pf-p-4,#perfect-page .pf-products-scene[data-scene="laundry"] .pf-p-5{width:142px!important;height:336px!important}
+#perfect-page .pf-products-scene[data-scene="fabriccare"] .pf-product-card{width:116px!important;height:315px!important}
+#perfect-page .pf-products-scene[data-scene="fabriccare"] .pf-p-4,#perfect-page .pf-products-scene[data-scene="fabriccare"] .pf-p-5,#perfect-page .pf-products-scene[data-scene="fabriccare"] .pf-p-6{width:108px!important;height:300px!important}
+#perfect-page .pf-products-scene[data-scene="dishes"] .pf-product-card{width:126px!important;height:325px!important}
+#perfect-page .pf-products-scene[data-scene="cleaning"] .pf-product-card{width:102px!important;height:300px!important}
+#perfect-page .pf-products-scene[data-scene="cleaning"] .pf-p-3{width:190px!important;height:340px!important}
+#perfect-page .pf-products-scene[data-scene="cleaning"] .pf-p-4,#perfect-page .pf-products-scene[data-scene="cleaning"] .pf-p-7,#perfect-page .pf-products-scene[data-scene="cleaning"] .pf-p-8,#perfect-page .pf-products-scene[data-scene="cleaning"] .pf-p-9{width:106px!important;height:305px!important}
+#perfect-page .pf-products-scene[data-scene="haircare"] .pf-product-card{width:120px!important;height:325px!important}
+#perfect-page .pf-products-scene[data-scene="haircare"] .pf-p-5{width:114px!important;height:318px!important}
+#perfect-page .pf-products-scene[data-scene="haircare"] .pf-p-6,#perfect-page .pf-products-scene[data-scene="haircare"] .pf-p-7{width:117px!important;height:321px!important}
+#perfect-page .pf-products-scene[data-scene="men"] .pf-product-card{width:116px!important;height:330px!important}
+#perfect-page .pf-category-strip{padding:54px 0 62px!important}
+#perfect-page .pf-strip-head h2{font-size:44px!important;letter-spacing:-2px!important}
+#perfect-page .pf-category-cards{grid-template-columns:repeat(2,1fr)!important}
+#perfect-page .pf-category-card{min-height:114px!important;padding:15px!important}
+#perfect-page .pf-category-card:nth-child(odd){border-right:1px solid var(--line)!important}
+#perfect-page .pf-category-card:nth-child(even){border-right:0!important}
+#perfect-page .pf-category-card:nth-child(n+3){border-top:1px solid var(--line)!important}
+#perfect-page .pf-category-card b{margin-top:26px!important;font-size:13px!important}
+#perfect-page .pf-all-products{padding:22px 18px!important;border-radius:22px!important}
+#perfect-page .pf-all-products h3{font-size:22px!important}
+}
+@media(max-width:380px){#perfect-page .pf-shell{width:calc(100% - 24px)!important}#perfect-page .pf-copy h1{font-size:52px!important}#perfect-page .pf-actions{grid-template-columns:1fr!important}#perfect-page .pf-visual{height:420px!important}#perfect-page .pf-ring-a{width:318px!important;height:318px!important}#perfect-page .pf-ring-b{width:226px!important;height:226px!important}}
+@media(prefers-reduced-motion:reduce){html{scroll-behavior:auto!important}#perfect-page .pf-marquee-track{animation:none!important}#perfect-page .pf-products-scene,#perfect-page .pf-product-card,#perfect-page .pf-btn,#perfect-page .pf-category-card{transition:none!important}}
+
+
+/* ---- pf-v22-selected-product ---- */
+#perfect-page .pf-product-card{
+  transition:filter .28s ease;
+}
+#perfect-page .pf-product-card.is-selected img{
+  filter:drop-shadow(0 34px 30px rgba(34,25,31,.20));
+}
+#perfect-page .pf-product-card.is-selected figcaption{
+  opacity:1;
+  border-color:color-mix(in srgb,var(--accent) 24%,var(--line));
+  box-shadow:0 10px 28px color-mix(in srgb,var(--accent) 12%,transparent);
+}
+html[data-aromika-theme="dark"] #perfect-page .pf-product-card.is-selected img{
+  filter:drop-shadow(0 34px 30px rgba(0,0,0,.38));
+}
+@media(max-width:700px){
+  #perfect-page .pf-product-card.is-selected figcaption{
+    font-size:8.5px;
+  }
+}
+
+
+/* ---- pf-v25-orbit-controls-marquee ---- */
+#perfect-page .pf-orbit-ui{
+  position:absolute;
+  left:50%;
+  bottom:18px;
+  z-index:120;
+  transform:translateX(-50%);
+  display:flex;
+  align-items:center;
+  gap:10px;
+  width:max-content;
+  max-width:calc(100% - 28px);
+}
+#perfect-page .pf-orbit-arrow{
+  appearance:none;
+  width:42px;
+  height:42px;
+  flex:0 0 42px;
+  display:grid;
+  place-items:center;
+  border-radius:50%;
+  border:1px solid color-mix(in srgb,var(--accent) 24%,var(--line));
+  background:color-mix(in srgb,var(--scene) 90%,#fff);
+  color:var(--accent-ui,var(--accent));
+  font:600 18px/1 Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  cursor:pointer;
+  box-shadow:0 8px 24px rgba(30,24,28,.06);
+  transition:transform .18s ease,background .18s ease,border-color .18s ease;
+}
+#perfect-page .pf-orbit-arrow:hover{
+  transform:scale(1.06);
+  background:#fff;
+  border-color:color-mix(in srgb,var(--accent) 45%,var(--line));
+}
+#perfect-page .pf-orbit-arrow:active{
+  transform:scale(.96);
+}
+#perfect-page .pf-orbit-ui .pf-orbit-hint{
+  position:static!important;
+  transform:none!important;
+  margin:0!important;
+  white-space:nowrap;
+}
+#perfect-page .pf-product-card{
+  cursor:pointer;
+}
+
+/* The ticker is driven only by requestAnimationFrame. */
+#perfect-page .pf-marquee-track{
+  animation:none!important;
+  transition:none!important;
+  will-change:transform;
+}
+@media(prefers-reduced-motion:reduce){
+  #perfect-page .pf-marquee-track{
+    animation:none!important;
+    transition:none!important;
+  }
+}
+@media(max-width:700px){
+  #perfect-page .pf-orbit-ui{
+    bottom:10px;
+    gap:8px;
+  }
+  #perfect-page .pf-orbit-arrow{
+    width:40px;
+    height:40px;
+    flex-basis:40px;
+  }
+  #perfect-page .pf-orbit-ui .pf-orbit-hint{
+    max-width:190px;
+    white-space:normal;
+    text-align:center;
+    line-height:1.3;
+  }
+}
+@media(max-width:390px){
+  #perfect-page .pf-orbit-ui .pf-orbit-hint{
+    max-width:150px;
+    font-size:8px;
+  }
+}
+
+
+/* ---- perfect-footer-final ---- */
+#aromika-footer{margin-top:0}
+#aromika-footer .arf-col a[href="/perfect"]{color:#fff}
+#aromika-footer .arf-col a[href="/perfect"]::after{
+  content:"";
+  display:inline-block;
+  width:5px;height:5px;border-radius:50%;
+  margin-left:7px;vertical-align:middle;
+  background:#f45b98;
+}
+@media(max-width:700px){
+  #aromika-footer .arf-top{padding-top:52px!important}
+}
+
+
+/* ---- pf-v30-orbit-final ---- */
+/* JS owns product transforms; CSS must not interpolate transform again. */
+#perfect-page .pf-product-card{
+  transition:filter .24s ease!important;
+}
+#perfect-page .pf-product-card figcaption{
+  min-width:0!important;
+  width:max-content;
+  max-width:230px!important;
+  padding:8px 12px!important;
+  font-size:9px!important;
+  line-height:1.25!important;
+}
+#perfect-page .pf-product-card.is-selected figcaption{
+  opacity:1!important;
+}
+#perfect-page .pf-orbit-arrow{
+  touch-action:manipulation;
+}
+#perfect-page .pf-orbit-arrow:focus-visible,
+#perfect-page .pf-product-card:focus-visible{
+  outline:2px solid var(--accent-ui,var(--accent));
+  outline-offset:4px;
+}
+@media(max-width:700px){
+  #perfect-page .pf-product-card figcaption{
+    max-width:170px!important;
+    font-size:8.5px!important;
+    padding:7px 9px!important;
+  }
+}
+
+
+/* ---- pf-v31-motion-lock ---- */
+#perfect-page .pf-product-card{
+  transition:filter .24s ease!important;
+}
+#perfect-page .pf-marquee-track{
+  animation:none!important;
+  transition:none!important;
+  will-change:transform!important;
+}
+
+
+/* ---- production motion owner ---- */
+#perfect-page .pf-marquee-track{animation:none!important;transition:none!important;will-change:transform!important;}
