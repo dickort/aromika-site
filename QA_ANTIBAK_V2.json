@@ -1,0 +1,9 @@
+{
+  "js_syntax": "PASS",
+  "css_parse": "PASS",
+  "css_errors": [],
+  "brace_balance": 0,
+  "has_4_category_grid": true,
+  "hides_old_volume_categories": true,
+  "has_volume_switch": true
+}

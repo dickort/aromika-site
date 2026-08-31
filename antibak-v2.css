@@ -1,0 +1,301 @@
+/* =========================================================
+   AROMIKA / ANTIBAK V2 — architecture + visual cleanup layer
+   Load AFTER antibak-v1.css
+   ========================================================= */
+
+/* ---------------------------------------------------------
+   1. One coherent Antibak interface palette
+   Product packaging supplies variation; UI stays branded.
+   --------------------------------------------------------- */
+#antibak-page,
+#antibak-page[data-category="dish1100"],
+#antibak-page[data-category="dish500"],
+#antibak-page[data-category="dish3300"],
+#antibak-page[data-category="laundry"],
+#antibak-page[data-category="liquidsoap"],
+#antibak-page[data-category="barsoap"]{
+  --ab-blue:#184b9b;
+  --ab-navy:#153b7a;
+  --ab-red:#e53945;
+  --ab-cyan:#62c7df;
+
+  --accent:#1b72b9;
+  --accent2:#69c9df;
+  --accent-ui:#184b9b;
+  --accent-soft:#edf8fc;
+  --theme-wash:#f4fbfd;
+  --scene:#f4fbfd;
+  --scheme-bg:#f4fbfd;
+  --scheme-line:#d6eaf1;
+  --scheme-glow:rgba(27,114,185,.14);
+}
+
+html[data-aromika-theme="dark"] #antibak-page,
+html[data-aromika-theme="dark"] #antibak-page[data-category="dish1100"],
+html[data-aromika-theme="dark"] #antibak-page[data-category="dish500"],
+html[data-aromika-theme="dark"] #antibak-page[data-category="dish3300"],
+html[data-aromika-theme="dark"] #antibak-page[data-category="laundry"],
+html[data-aromika-theme="dark"] #antibak-page[data-category="liquidsoap"],
+html[data-aromika-theme="dark"] #antibak-page[data-category="barsoap"]{
+  --accent:#67b6e0;
+  --accent2:#76cae0;
+  --accent-ui:#7ac5e8;
+  --accent-soft:#15232c;
+  --theme-wash:#101a21;
+  --scene:#101a21;
+  --scheme-bg:#101a21;
+  --scheme-line:#2a3a44;
+  --scheme-glow:rgba(55,143,190,.12);
+}
+
+/* ---------------------------------------------------------
+   2. Main IA: 4 categories, not 6 packaging buckets
+   dish500 / dish3300 remain functional but are hidden as
+   top-level navigation items. They are controlled by volume.
+   --------------------------------------------------------- */
+#antibak-page .ab-local-links > [data-category="dish500"],
+#antibak-page .ab-local-links > [data-category="dish3300"],
+#antibak-page .ab-category-cards > [data-category="dish500"],
+#antibak-page .ab-category-cards > [data-category="dish3300"]{
+  display:none!important;
+}
+
+#antibak-page .ab-category-cards{
+  grid-template-columns:repeat(4,1fr)!important;
+}
+#antibak-page .ab-category-card{
+  --card-accent:var(--ab-blue)!important;
+}
+#antibak-page .ab-category-cards > [data-category="dish1100"],
+#antibak-page .ab-category-cards > [data-category="laundry"],
+#antibak-page .ab-category-cards > [data-category="liquidsoap"]{
+  border-right:1px solid var(--line)!important;
+  border-top:0!important;
+}
+#antibak-page .ab-category-cards > [data-category="barsoap"]{
+  border-right:0!important;
+  border-top:0!important;
+}
+
+/* Main navigation is calmer and closer to Perfect. */
+#antibak-page .ab-local-links{
+  gap:4px!important;
+}
+#antibak-page .ab-local-links button{
+  padding-left:16px!important;
+  padding-right:16px!important;
+}
+
+/* ---------------------------------------------------------
+   3. Hero cleanup: product first, arguments later
+   --------------------------------------------------------- */
+#antibak-page .ab-proof-grid{
+  display:none!important;
+}
+
+#antibak-page .ab-lead{
+  max-width:610px!important;
+}
+#antibak-page .ab-product-info{
+  margin-top:16px!important;
+}
+#antibak-page .ab-actions{
+  margin-top:18px!important;
+}
+
+@media(min-width:981px){
+  #antibak-page .ab-showcase-grid{
+    grid-template-columns:minmax(390px,.9fr) minmax(0,1.1fr)!important;
+    gap:52px!important;
+    min-height:650px!important;
+    align-items:center!important;
+  }
+  #antibak-page .ab-copy{
+    padding-top:46px!important;
+    padding-bottom:48px!important;
+  }
+  #antibak-page .ab-visual{
+    min-height:610px!important;
+  }
+}
+
+/* ---------------------------------------------------------
+   4. Dish volume selector
+   --------------------------------------------------------- */
+#antibak-page .ab-volume-switch{
+  display:flex;
+  align-items:center;
+  gap:10px;
+  width:max-content;
+  max-width:100%;
+  margin-top:18px;
+  padding:5px;
+  border:1px solid color-mix(in srgb,var(--ab-blue) 18%,var(--scheme-line));
+  border-radius:999px;
+  background:color-mix(in srgb,var(--scheme-panel) 90%,transparent);
+  box-shadow:0 8px 22px rgba(24,75,155,.06);
+}
+#antibak-page .ab-volume-switch.is-hidden{
+  display:none!important;
+}
+#antibak-page .ab-volume-label{
+  padding:0 8px 0 10px;
+  color:var(--muted);
+  font-size:8px;
+  line-height:1;
+  font-weight:800;
+  letter-spacing:.09em;
+  text-transform:uppercase;
+  white-space:nowrap;
+}
+#antibak-page .ab-volume-switch button{
+  min-width:76px;
+  height:34px;
+  padding:0 13px;
+  border:0;
+  border-radius:999px;
+  background:transparent;
+  color:var(--ink);
+  font:inherit;
+  font-size:9px;
+  line-height:1;
+  font-weight:800;
+  cursor:pointer;
+  white-space:nowrap;
+  transition:background .22s ease,color .22s ease,transform .22s ease,box-shadow .22s ease;
+}
+#antibak-page .ab-volume-switch button:hover{
+  background:color-mix(in srgb,var(--ab-blue) 8%,transparent);
+  transform:translateY(-1px);
+}
+#antibak-page .ab-volume-switch button.is-active{
+  background:var(--ab-blue);
+  color:#fff;
+  box-shadow:0 7px 16px rgba(24,75,155,.18);
+}
+#antibak-page .ab-volume-switch button:focus-visible{
+  outline:2px solid var(--ab-red);
+  outline-offset:2px;
+}
+
+/* ---------------------------------------------------------
+   5. Selected product copy: compact like Perfect
+   --------------------------------------------------------- */
+#antibak-page .ab-product-info-desc{
+  max-width:560px!important;
+  font-size:11px!important;
+  line-height:1.45!important;
+}
+#antibak-page .ab-product-info-facts{
+  margin-top:10px!important;
+}
+#antibak-page .ab-product-price-row{
+  margin-top:10px!important;
+}
+#antibak-page .ab-product-shop-state{
+  margin-top:9px!important;
+}
+
+/* ---------------------------------------------------------
+   6. Category strip: four strong needs
+   --------------------------------------------------------- */
+#antibak-page .ab-category-strip{
+  padding-top:68px!important;
+}
+#antibak-page .ab-category-card.is-active{
+  background:var(--ab-blue)!important;
+  border-color:var(--ab-blue)!important;
+}
+#antibak-page .ab-category-card:hover{
+  background:color-mix(in srgb,var(--ab-blue) 7%,transparent)!important;
+}
+#antibak-page .ab-category-card.is-active:hover{
+  background:var(--ab-blue)!important;
+}
+#antibak-page .ab-all-products{
+  background:color-mix(in srgb,var(--ab-blue) 5%,var(--scheme-panel))!important;
+  border-color:color-mix(in srgb,var(--ab-blue) 14%,var(--scheme-line))!important;
+}
+#antibak-page .ab-all-products>div>span{
+  color:var(--ab-blue)!important;
+}
+#antibak-page .ab-all-products>a{
+  background:var(--ab-blue)!important;
+}
+
+/* ---------------------------------------------------------
+   7. The main dish category stays visually active for all
+      three volume subcategories.
+   JS adds .ab-v2-group-active.
+   --------------------------------------------------------- */
+#antibak-page .ab-local-links [data-category="dish1100"].ab-v2-group-active,
+#antibak-page .ab-category-cards [data-category="dish1100"].ab-v2-group-active{
+  background:var(--ab-blue)!important;
+  color:#fff!important;
+  border-color:var(--ab-blue)!important;
+}
+#antibak-page .ab-category-cards [data-category="dish1100"].ab-v2-group-active span,
+#antibak-page .ab-category-cards [data-category="dish1100"].ab-v2-group-active b,
+#antibak-page .ab-category-cards [data-category="dish1100"].ab-v2-group-active i{
+  color:#fff!important;
+  -webkit-text-fill-color:#fff!important;
+}
+
+/* ---------------------------------------------------------
+   8. Mobile/tablet
+   --------------------------------------------------------- */
+@media(max-width:980px){
+  #antibak-page .ab-volume-switch{
+    margin-top:15px;
+  }
+  #antibak-page .ab-category-cards{
+    grid-template-columns:repeat(2,1fr)!important;
+  }
+  #antibak-page .ab-category-cards > [data-category="dish1100"],
+  #antibak-page .ab-category-cards > [data-category="liquidsoap"]{
+    border-right:1px solid var(--line)!important;
+  }
+  #antibak-page .ab-category-cards > [data-category="laundry"],
+  #antibak-page .ab-category-cards > [data-category="barsoap"]{
+    border-right:0!important;
+  }
+  #antibak-page .ab-category-cards > [data-category="liquidsoap"],
+  #antibak-page .ab-category-cards > [data-category="barsoap"]{
+    border-top:1px solid var(--line)!important;
+  }
+}
+
+@media(max-width:640px){
+  #antibak-page .ab-volume-switch{
+    width:100%;
+    display:grid;
+    grid-template-columns:auto repeat(3,1fr);
+    gap:4px;
+    border-radius:15px;
+  }
+  #antibak-page .ab-volume-label{
+    padding:0 7px;
+  }
+  #antibak-page .ab-volume-switch button{
+    min-width:0;
+    width:100%;
+    height:36px;
+    padding:0 7px;
+  }
+  #antibak-page .ab-product-info{
+    margin-top:13px!important;
+  }
+  #antibak-page .ab-category-card{
+    min-height:128px!important;
+  }
+}
+
+@media(max-width:390px){
+  #antibak-page .ab-volume-switch{
+    grid-template-columns:repeat(3,1fr);
+  }
+  #antibak-page .ab-volume-label{
+    grid-column:1/-1;
+    padding:5px 7px 2px;
+  }
+}
