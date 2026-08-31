@@ -1,0 +1,293 @@
+<script id="aromika-theme-bootstrap">(function(){try{var k='aromika-theme',s=localStorage.getItem(k),d=s?s==='dark':window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches,t=d?'dark':'light';document.documentElement.setAttribute('data-aromika-theme',t);document.documentElement.style.colorScheme=t;}catch(e){}})();</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/site-v22.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/perfect-v2.css">
+
+<div id="aromika-onepiece-site">
+<section id="aromika-hero">
+<header class="ar-header"><div class="ar-wrap ar-header-row"><a class="ar-logo" href="/"><img alt="Aromika" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/logo.webp"/></a><nav class="ar-nav"><a data-i18n="products" href="/#products">Продукция</a><a data-i18n="brands" href="/#brands">Бренды</a><a data-i18n="about" href="/okompanii">О компании</a><a data-i18n="partners" href="/partneram">Партнёрам</a><a data-i18n="careers" href="/vacancies">Работа в компании</a><a data-i18n="contacts" href="/kontakty">Контакты</a></nav><div aria-label="Language switcher" class="ar-lang"><button class="is-active" data-lang="ru" type="button">RU</button><span></span><button data-lang="kk" type="button">KZ</button></div><button aria-label="Включить тёмную тему" aria-pressed="false" class="ar-theme-toggle" title="Включить тёмную тему" type="button"><svg aria-hidden="true" class="ar-theme-icon ar-theme-moon" viewbox="0 0 24 24"><path d="M20.4 15.5A8.7 8.7 0 0 1 8.5 3.6 8.8 8.8 0 1 0 20.4 15.5Z"></path></svg><svg aria-hidden="true" class="ar-theme-icon ar-theme-sun" viewbox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"></path></svg></button><a class="ar-shop" href="https://aromika.shop/" rel="noopener" target="_blank"><span data-i18n="buyOnline">Купить онлайн</span> ↗
+      </a><button aria-label="Меню" class="ar-burger" type="button"><span></span><span></span></button></div></header><div class="ar-overlay"></div><aside class="ar-menu"><nav><a data-i18n="products" href="/#products">Продукция</a><a data-i18n="brands" href="/#brands">Бренды</a><a data-i18n="about" href="/okompanii">О компании</a><a data-i18n="partners" href="/partneram">Партнёрам</a><a data-i18n="careers" href="/vacancies">Работа в компании</a><a data-i18n="contacts" href="/kontakty">Контакты</a></nav><div aria-label="Language switcher" class="ar-menu-lang"><button class="is-active" data-lang="ru" type="button">RU</button><button data-lang="kk" type="button">ҚАЗ</button></div><a class="ar-menu-shop" href="https://aromika.shop/" rel="noopener" target="_blank"><span data-i18n="shop">Интернет-магазин</span> ↗
+    </a></aside>
+</section>
+</div>
+<main data-category="laundry" id="perfect-page">
+<nav aria-label="Категории Perfect" class="pf-local-nav">
+<div class="pf-shell pf-local-inner">
+<a class="pf-local-logo" href="#perfect-showcase">PERFECT</a>
+<div class="pf-local-links">
+<button class="is-active" data-category="laundry" data-pf-i18n="catLaundry">Стирка</button>
+<button data-category="fabriccare" data-pf-i18n="catFabricCare">Аромат для белья</button>
+<button data-category="dishes" data-pf-i18n="catDishes">Посуда</button>
+<button data-category="cleaning" data-pf-i18n="catCleaning">Уборка</button>
+<button data-category="haircare" data-pf-i18n="catHaircare">Уход за волосами</button>
+<button data-category="men" data-pf-i18n="catMen">Мужская серия</button>
+</div>
+</div>
+</nav>
+<section class="pf-showcase" id="perfect-showcase">
+<div class="pf-bg-shape pf-bg-a"></div>
+<div class="pf-bg-shape pf-bg-b"></div>
+<div class="pf-shell pf-showcase-grid">
+<div class="pf-copy">
+<div class="pf-kicker"><span></span><b data-pf-i18n="brandKicker">Бренд Aromika</b></div>
+<div class="pf-cat-no">01</div>
+<h1><span>Perfect</span><em data-pf-i18n="title">для стирки</em></h1>
+<p class="pf-lead" data-pf-i18n="lead">Гели Perfect рассчитаны на повседневную стирку цветного, универсального и детского белья. Энзимные формулы помогают справляться с пятнами, уменьшают эффект застирывания и бережно относятся к структуре волокон. Для детского белья в линейке предусмотрен гипоаллергенный Baby Care.</p>
+<div class="pf-actions">
+<a class="pf-btn pf-btn-primary" href="#perfect-products"><span data-pf-i18n="view">Смотреть продукты</span><b>→</b></a>
+<a class="pf-btn pf-btn-ghost" href="https://aromika.shop/" rel="noopener" target="_blank"><span data-pf-i18n="buy">Купить онлайн</span></a>
+</div>
+</div>
+<div class="pf-visual">
+<div class="pf-wordmark">PERFECT</div>
+<div class="pf-ring pf-ring-a"></div><div class="pf-ring pf-ring-b"></div>
+<div class="pf-products-scene" data-scene="laundry">
+<figure class="pf-product-card pf-p-1" data-product-index="0">
+<img alt="Perfect Mix Colors 1500 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/laundry-mix-colors-1500.webp"/>
+<figcaption>Perfect Mix Colors 1500 мл</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-2" data-product-index="1">
+<img alt="Perfect Baby Care 1500 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/laundry-baby-care-1500.webp"/>
+<figcaption>Perfect Baby Care 1500 мл</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-3" data-product-index="2">
+<img alt="Perfect Universal 1500 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/laundry-universal-1500.webp"/>
+<figcaption>Perfect Universal 1500 мл</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-4" data-product-index="3">
+<img alt="Perfect Universal 3300 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/laundry-universal-3300.webp"/>
+<figcaption>Perfect Universal 3300 мл</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-5" data-product-index="4">
+<img alt="Perfect Universal 4300 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/laundry-universal-4300.webp"/>
+<figcaption>Perfect Universal 4300 мл</figcaption>
+</figure>
+</div>
+<div class="pf-products-scene" data-scene="fabriccare">
+<figure class="pf-product-card pf-p-1" data-product-index="0">
+<img alt="Blossom Dream 1500 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/fabriccare-blossom-dream-1500.webp"/>
+<figcaption>Blossom Dream 1500 мл</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-2" data-product-index="1">
+<img alt="Crystal Fresh 1500 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/fabriccare-crystal-fresh-1500.webp"/>
+<figcaption>Crystal Fresh 1500 мл</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-3" data-product-index="2">
+<img alt="Frost Fresh 1500 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/fabriccare-frost-fresh-1500.webp"/>
+<figcaption>Frost Fresh 1500 мл</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-4" data-product-index="3">
+<img alt="Флора" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/fabriccare-perfume-flora.webp"/>
+<figcaption>Флора</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-5" data-product-index="4">
+<img alt="Озон" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/fabriccare-perfume-ozon.webp"/>
+<figcaption>Озон</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-6" data-product-index="5">
+<img alt="Релакс" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/fabriccare-perfume-relax.webp"/>
+<figcaption>Релакс</figcaption>
+</figure>
+</div>
+<div class="pf-products-scene" data-scene="dishes">
+<figure class="pf-product-card pf-p-1" data-product-index="0">
+<img alt="Mangosteen 500 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/dishes-mangosteen-500.webp"/>
+<figcaption>Mangosteen 500 мл</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-2" data-product-index="1">
+<img alt="Mangosteen 1100 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/dishes-mangosteen-1100.webp"/>
+<figcaption>Mangosteen 1100 мл</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-3" data-product-index="2">
+<img alt="Papaya 500 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/dishes-papaya-500.webp"/>
+<figcaption>Papaya 500 мл</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-4" data-product-index="3">
+<img alt="Papaya 1100 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/dishes-papaya-1100.webp"/>
+<figcaption>Papaya 1100 мл</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-5" data-product-index="4">
+<img alt="Pitahaya 500 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/dishes-pitahaya-500.webp"/>
+<figcaption>Pitahaya 500 мл</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-6" data-product-index="5">
+<img alt="Pitahaya 1100 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/dishes-pitahaya-1100.webp"/>
+<figcaption>Pitahaya 1100 мл</figcaption>
+</figure>
+</div>
+<div class="pf-products-scene" data-scene="cleaning">
+<figure class="pf-product-card pf-p-1" data-product-index="0">
+<img alt="Для полов Lemon 1500 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/cleaning-floor-lemon-1500.webp"/>
+<figcaption>Для полов Lemon 1500 мл</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-2" data-product-index="1">
+<img alt="Для полов Ocean 1500 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/cleaning-floor-ocean-1500.webp"/>
+<figcaption>Для полов Ocean 1500 мл</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-3" data-product-index="2">
+<img alt="Для полов Лайм и фейхоа 5000 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/cleaning-floor-lime-feijoa-5000.webp"/>
+<figcaption>Для полов Лайм и фейхоа 5000 мл</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-4" data-product-index="3">
+<img alt="Для акрила 750 мл, спрей" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/cleaning-acrylic-spray-750.webp"/>
+<figcaption>Для акрила 750 мл, спрей</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-5" data-product-index="4">
+<img alt="Для акрила 500 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/cleaning-acrylic-gel-500.webp"/>
+<figcaption>Для акрила 500 мл</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-6" data-product-index="5">
+<img alt="Для акрила 750 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/cleaning-acrylic-gel-750.webp"/>
+<figcaption>Для акрила 750 мл</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-7" data-product-index="6">
+<img alt="Для стёкол Лимон 500 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/cleaning-glass-lemon-500.webp"/>
+<figcaption>Для стёкол Лимон 500 мл</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-8" data-product-index="7">
+<img alt="Для стёкол Морская свежесть 500 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/cleaning-glass-sea-500.webp"/>
+<figcaption>Для стёкол Морская свежесть 500 мл</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-9" data-product-index="8">
+<img alt="Против налёта и ржавчины 500 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/cleaning-scale-rust-500.webp"/>
+<figcaption>Против налёта и ржавчины 500 мл</figcaption>
+</figure>
+</div>
+<div class="pf-products-scene" data-scene="haircare">
+<figure class="pf-product-card pf-p-1" data-product-index="0">
+<img alt="Бальзам-кондиционер Колорист 800 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/haircare-conditioner-colorist-800.webp"/>
+<figcaption>Бальзам-кондиционер Колорист 800 мл</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-2" data-product-index="1">
+<img alt="Бальзам-кондиционер Hydra-Баланс 800 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/haircare-conditioner-hydra-balance-800.webp"/>
+<figcaption>Бальзам-кондиционер Hydra-Баланс 800 мл</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-3" data-product-index="2">
+<img alt="Бальзам-кондиционер Интенсив 800 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/haircare-conditioner-intensive-800.webp"/>
+<figcaption>Бальзам-кондиционер Интенсив 800 мл</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-4" data-product-index="3">
+<img alt="Шампунь Баланс очищение 800 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/haircare-shampoo-balance-800.webp"/>
+<figcaption>Шампунь Баланс очищение 800 мл</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-5" data-product-index="4">
+<img alt="Шампунь Anti-Dandruff 800 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/haircare-shampoo-anti-dandruff-800.webp"/>
+<figcaption>Шампунь Anti-Dandruff 800 мл</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-6" data-product-index="5">
+<img alt="Бессульфатный шампунь Увлажняющий 800 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/haircare-shampoo-color-sulfate-free-800.webp"/>
+<figcaption>Бессульфатный шампунь Увлажняющий 800 мл</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-7" data-product-index="6">
+<img alt="Бессульфатный шампунь Интенсивное питание 800 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/haircare-shampoo-intensive-sulfate-free-800.webp"/>
+<figcaption>Бессульфатный шампунь Интенсивное питание 800 мл</figcaption>
+</figure></div>
+<div class="pf-products-scene" data-scene="men"><figure class="pf-product-card pf-p-1" data-product-index="0">
+<img alt="Ember Wood 300 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/men-shower-ember-wood-300.webp"/>
+<figcaption>Ember Wood 300 мл</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-2" data-product-index="1">
+<img alt="Frost Impulse 300 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/men-shower-frost-impulse-300.webp"/>
+<figcaption>Frost Impulse 300 мл</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-3" data-product-index="2">
+<img alt="Herbal Code 300 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/men-shower-herbal-code-300.webp"/>
+<figcaption>Herbal Code 300 мл</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-4" data-product-index="3">
+<img alt="Шампунь с климбазолом 300 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/men-shampoo-climbazole-300.webp"/>
+<figcaption>Шампунь с климбазолом 300 мл</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-5" data-product-index="4">
+<img alt="Шампунь с кофеином 300 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/men-shampoo-caffeine-300.webp"/>
+<figcaption>Шампунь с кофеином 300 мл</figcaption>
+</figure>
+<figure class="pf-product-card pf-p-6" data-product-index="5">
+<img alt="Шампунь с ментолом 300 мл" decoding="async" loading="eager" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect/men-shampoo-menthol-300.webp"/>
+<figcaption>Шампунь с ментолом 300 мл</figcaption>
+</figure></div>
+<div class="pf-series-badge">
+<span class="pf-series-dot"></span>
+<div><small data-pf-i18n="series">Серия</small><b class="pf-series-name">Стирка</b></div>
+</div>
+<div class="pf-orbit-ui">
+<button aria-label="Предыдущий продукт" class="pf-orbit-arrow pf-orbit-prev" type="button">←</button>
+<div class="pf-orbit-hint" data-pf-i18n="orbitHint">Нажмите на продукт или используйте стрелки</div>
+<button aria-label="Следующий продукт" class="pf-orbit-arrow pf-orbit-next" type="button">→</button>
+</div>
+</div>
+</div>
+<div aria-hidden="true" class="pf-marquee">
+<div class="pf-marquee-track">
+<span data-marquee-item="">СТИРКА • ЧИСТОТА • УХОД ЗА ЦВЕТОМ • PERFECT • </span>
+<span data-marquee-item="">СТИРКА • ЧИСТОТА • УХОД ЗА ЦВЕТОМ • PERFECT • </span>
+<span data-marquee-item="">СТИРКА • ЧИСТОТА • УХОД ЗА ЦВЕТОМ • PERFECT • </span>
+<span data-marquee-item="">СТИРКА • ЧИСТОТА • УХОД ЗА ЦВЕТОМ • PERFECT • </span>
+<span data-marquee-item="">СТИРКА • ЧИСТОТА • УХОД ЗА ЦВЕТОМ • PERFECT • </span>
+<span data-marquee-item="">СТИРКА • ЧИСТОТА • УХОД ЗА ЦВЕТОМ • PERFECT • </span>
+<span data-marquee-item="">СТИРКА • ЧИСТОТА • УХОД ЗА ЦВЕТОМ • PERFECT • </span>
+<span data-marquee-item="">СТИРКА • ЧИСТОТА • УХОД ЗА ЦВЕТОМ • PERFECT • </span>
+</div>
+</div>
+</section>
+<section class="pf-category-strip" id="perfect-products">
+<div class="pf-shell">
+<div class="pf-strip-head">
+<div>
+<span class="pf-strip-kicker" data-pf-i18n="chooseCategory">Выберите категорию</span>
+<h2 data-pf-i18n="stripTitle">Продукция Perfect</h2>
+</div>
+<p data-pf-i18n="stripText">Основные линейки Perfect собраны по назначению — выберите нужную категорию.</p>
+</div>
+<div class="pf-category-cards">
+<button class="pf-category-card is-active" data-category="laundry"><span>01</span><b data-pf-i18n="catLaundry">Стирка</b><i>→</i></button>
+<button class="pf-category-card" data-category="fabriccare"><span>02</span><b data-pf-i18n="catFabricCare">Аромат для белья</b><i>→</i></button>
+<button class="pf-category-card" data-category="dishes"><span>03</span><b data-pf-i18n="catDishes">Посуда</b><i>→</i></button>
+<button class="pf-category-card" data-category="cleaning"><span>04</span><b data-pf-i18n="catCleaning">Уборка</b><i>→</i></button>
+<button class="pf-category-card" data-category="haircare"><span>05</span><b data-pf-i18n="catHaircare">Уход за волосами</b><i>→</i></button>
+<button class="pf-category-card" data-category="men"><span>06</span><b data-pf-i18n="catMen">Мужская серия</b><i>→</i></button>
+</div>
+<div class="pf-all-products">
+<div>
+<span data-pf-i18n="allEyebrow">Больше категорий</span>
+<h3 data-pf-i18n="allTitle">Вся продукция Perfect — в интернет-магазине</h3>
+<p data-pf-i18n="allText">Полный ассортимент Perfect доступен в интернет-магазине Aromika.</p>
+</div>
+<a href="https://aromika.shop/" rel="noopener" target="_blank">
+<span data-pf-i18n="allButton">Смотреть весь ассортимент</span><b>↗</b>
+</a>
+</div>
+</div>
+</section>
+</main>
+<footer class="arf-footer" id="aromika-footer"><div class="arf-wrap"><div class="arf-top"><div class="arf-brand"><a aria-label="Aromika" class="arf-logo-link" href="/"><img alt="Aromika" class="arf-logo" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/logo.webp"/></a><p data-arf-i18n="brandText">
+          Казахстанский производитель бытовой химии и косметической продукции.
+        </p><a class="arf-shop-btn" href="https://aromika.shop/" rel="noopener" target="_blank"><span data-arf-i18n="shopBtn">Интернет-магазин</span><svg viewbox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a></div><nav aria-label="Компания" class="arf-col"><div class="arf-col-title" data-arf-i18n="company">Компания</div><a data-arf-i18n="about" href="/okompanii">О компании</a><a data-arf-i18n="production" href="/okompanii#production-quality">Производство</a><a data-arf-i18n="contacts" href="/kontakty">Контакты</a><a data-arf-i18n="careers" href="/vacancies">Работа в компании</a></nav><nav aria-label="Бренды" class="arf-col"><div class="arf-col-title" data-arf-i18n="brands">Бренды</div><a href="/perfect">Perfect</a><a href="/washexpert">Wash Expert</a><a href="/maxipower">Maxi Power</a><a href="/prachka">Prachka</a><a href="/antibak">Antibak</a></nav><nav aria-label="Партнёрам" class="arf-col"><div class="arf-col-title" data-arf-i18n="partners">Партнёрам</div><a data-arf-i18n="distributors" href="/partneram?type=distributor">Дистрибьюторам</a><a data-arf-i18n="retail" href="/partneram?type=retail">Торговым сетям</a><a href="/partneram?type=horeca">HoReCa</a><a data-arf-i18n="corporate" href="/partneram?type=corporate">Корпоративным клиентам</a></nav><nav aria-label="Покупателям" class="arf-col"><div class="arf-col-title" data-arf-i18n="buyers">Покупателям</div><a data-arf-i18n="catalog" href="https://aromika.shop/vse-tovary/" rel="noopener" target="_blank">Каталог</a><a data-arf-i18n="online" href="https://aromika.shop/" rel="noopener" target="_blank">Интернет-магазин</a><a href="https://kaspi.kz/shop/info/merchant/1359004/address-tab/" rel="noopener" target="_blank">Kaspi Магазин</a><a data-arf-i18n="where" href="https://aromika.shop/index.php?dispatch=store_locator.search" rel="noopener" target="_blank">Где купить</a></nav></div><div class="arf-contact-strip"><div class="arf-contact"><small data-arf-i18n="office">Головной офис</small><b data-arf-i18n="city">Костанай, Казахстан</b></div><a class="arf-contact" href="tel:+77142524044"><small data-arf-i18n="phone">Телефон</small><b>+7 (7142) 52-40-44</b></a><a class="arf-contact" href="mailto:info@aromika.info"><small>E-mail</small><b>info@aromika.info</b></a><div aria-label="Language" class="arf-lang"><button data-lang="ru" type="button">RU</button><i></i><button data-lang="kk" type="button">ҚАЗ</button></div></div><div class="arf-bottom"><span>© 2026 Aromika</span><div class="arf-legal"><a data-arf-i18n="about" href="/okompanii">О компании</a><a data-arf-i18n="feedback" href="/kontakty">Обратная связь</a></div><a aria-label="Наверх" class="arf-to-top" href="#top"><span data-arf-i18n="top">Наверх</span><svg viewbox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"></path></svg></a></div></div></footer>
+
+<script id="perfect-v2-loader">
+(function(){
+  if(window.__AROMIKA_PERFECT_LOADER__)return;
+  window.__AROMIKA_PERFECT_LOADER__=true;
+
+  function loadPerfect(){
+    if(document.querySelector('script[data-perfect-runtime="v2"]'))return;
+    var s=document.createElement('script');
+    s.src='https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/perfect-v2.js';
+    s.async=true;
+    s.setAttribute('data-perfect-runtime','v2');
+    s.onload=function(){
+      document.documentElement.setAttribute('data-perfect-runtime','v2');
+    };
+    s.onerror=function(){
+      document.documentElement.setAttribute('data-perfect-runtime','failed');
+      console.error('Perfect v2: runtime failed to load');
+    };
+    document.head.appendChild(s);
+  }
+
+  if(document.readyState==='loading'){
+    document.addEventListener('DOMContentLoaded',loadPerfect,{once:true});
+  }else{
+    loadPerfect();
+  }
+})();
+</script>
