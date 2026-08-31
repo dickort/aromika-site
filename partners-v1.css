@@ -590,3 +590,106 @@ html[data-aromika-theme="dark"] #partners-page{--bp-ink:#f3f3f3;--bp-muted:#aaa;
 /* responsive */
 @media(max-width:1100px){#partners-page .bp-hero-grid,#partners-page .bp-infra-grid{grid-template-columns:1fr;gap:55px}.bp-network{min-height:520px}.bp-section-head{grid-template-columns:1fr!important;gap:25px!important}.bp-route-panel{grid-template-columns:1fr}.bp-route-audience{min-height:420px}.bp-audience-grid{grid-template-columns:1fr 1fr}.bp-aud-card:nth-child(2){border-right:0}.bp-aud-card:nth-child(n+3){border-top:1px solid var(--bp-line)}.bp-start-flow{grid-template-columns:1fr 1fr}.bp-start-step:nth-child(2n){border-right:0}.bp-start-step:nth-child(n+3){border-top:1px solid rgba(255,255,255,.13)}.bp-contact-card{grid-template-columns:1fr}.bp-infra-copy{position:relative;top:auto}}
 @media(max-width:700px){#partners-page .bp-shell{width:calc(100% - 30px)}#partners-page .bp-hero{padding:65px 0 70px}.bp-hero h1{font-size:48px;letter-spacing:-2.7px}.bp-hero-copy>p{font-size:13px}.bp-network{min-height:430px}.bp-network-core{width:138px;height:138px}.bp-network-core strong{font-size:32px}.bp-node{min-width:120px;padding:10px}.bp-node-a{left:3%;top:18%}.bp-node-b{right:3%;top:23%}.bp-node-c{left:3%;bottom:18%}.bp-node-d{right:3%;bottom:20%}.bp-ring-a{width:80%;height:40%}.bp-ring-b{width:46%;height:78%}.bp-formats,.bp-audiences,.bp-start,.bp-infra,.bp-faq{padding:80px 0 88px!important}.bp-section-head{margin-bottom:40px!important}.bp-section-head h2,.bp-infra-copy h2{font-size:43px;letter-spacing:-2px}.bp-route-switch{grid-template-columns:1fr}.bp-route-btn{border-right:0;border-bottom:1px solid var(--bp-line)}.bp-route-btn:last-child{border-bottom:0}.bp-route-copy,.bp-route-audience{padding:30px 24px}.bp-route-title{font-size:31px}.bp-route-points{grid-template-columns:1fr}.bp-route-points>div{min-height:80px}.bp-route-points b{margin-top:16px}.bp-audience-grid{grid-template-columns:1fr}.bp-aud-card{border-right:0!important;border-top:1px solid var(--bp-line);min-height:330px}.bp-aud-card:first-child{border-top:0}.bp-start-flow{grid-template-columns:1fr}.bp-start-step{border-right:0!important;border-top:1px solid rgba(255,255,255,.13);min-height:175px}.bp-start-step:first-child{border-top:0}.bp-infra-row{grid-template-columns:38px 1fr 15px}.bp-faq-item button{grid-template-columns:38px 1fr 30px}.bp-faq-item button b{font-size:15px}.bp-faq-item>div>p{margin-left:38px}.bp-contact{padding:70px 0 80px!important}.bp-contact-copy{padding:38px 26px}.bp-contact-copy h2{font-size:43px;letter-spacing:-2px}.bp-contact-actions strong{font-size:19px}.bp-contact-main,.bp-contact-line{min-height:135px;padding:25px}}
+
+/* =========================================================
+   AROMIKA HEADER THEME CONTROL — synced with Perfect V29
+   Fixes theme icon geometry/layout on corporate pages.
+   ========================================================= */
+html[data-aromika-theme="light"]{color-scheme:light}
+html[data-aromika-theme="dark"]{color-scheme:dark;background:#0d0e11}
+html[data-aromika-theme="dark"] body,
+html[data-aromika-theme="dark"] #allrecords{background:#0d0e11!important}
+
+#aromika-hero .ar-theme-toggle{
+  flex:0 0 42px!important;
+  width:42px!important;
+  height:42px!important;
+  margin-left:14px!important;
+  padding:0!important;
+  display:inline-flex!important;
+  align-items:center!important;
+  justify-content:center!important;
+  position:relative!important;
+  border:1px solid rgba(23,23,23,.11)!important;
+  border-radius:50%!important;
+  background:rgba(255,255,255,.62)!important;
+  color:#171717!important;
+  cursor:pointer!important;
+  overflow:hidden!important;
+  line-height:1!important;
+  transition:background .28s,border-color .28s,color .28s,transform .28s,box-shadow .28s!important;
+}
+#aromika-hero .ar-theme-toggle:hover{
+  transform:translateY(-1px)!important;
+  background:#fff!important;
+  box-shadow:0 8px 24px rgba(18,18,18,.07)!important;
+}
+#aromika-hero .ar-theme-toggle:focus-visible{
+  outline:none!important;
+  box-shadow:0 0 0 3px rgba(234,47,120,.2)!important;
+}
+#aromika-hero .ar-theme-icon{
+  position:absolute!important;
+  left:50%!important;
+  top:50%!important;
+  width:18px!important;
+  height:18px!important;
+  margin:0!important;
+  padding:0!important;
+  fill:none!important;
+  stroke:currentColor!important;
+  stroke-width:1.7!important;
+  stroke-linecap:round!important;
+  stroke-linejoin:round!important;
+  transform-origin:50% 50%!important;
+  translate:-50% -50%;
+  transition:opacity .24s,transform .34s cubic-bezier(.22,1,.36,1)!important;
+  pointer-events:none!important;
+}
+#aromika-hero .ar-theme-sun{opacity:0!important;transform:scale(.68) rotate(-28deg)!important}
+#aromika-hero .ar-theme-moon{opacity:1!important;transform:scale(1) rotate(0)!important}
+html[data-aromika-theme="dark"] #aromika-hero .ar-theme-sun{opacity:1!important;transform:scale(1) rotate(0)!important}
+html[data-aromika-theme="dark"] #aromika-hero .ar-theme-moon{opacity:0!important;transform:scale(.68) rotate(28deg)!important}
+#aromika-hero .ar-shop{margin-left:12px!important}
+
+html[data-aromika-theme="dark"] #aromika-hero{
+  --ink:#f5f5f6;
+  --line:rgba(255,255,255,.09);
+  background:#0d0e11;
+  color:#f5f5f6;
+}
+html[data-aromika-theme="dark"] #aromika-hero .ar-header{
+  background:rgba(13,14,17,.94)!important;
+  border-color:rgba(255,255,255,.09)!important;
+}
+html[data-aromika-theme="dark"] #aromika-hero .ar-logo img{filter:brightness(0) invert(1)!important}
+html[data-aromika-theme="dark"] #aromika-hero .ar-nav a{color:#f1f1f2!important}
+html[data-aromika-theme="dark"] #aromika-hero .ar-lang button,
+html[data-aromika-theme="dark"] #aromika-hero .ar-menu-lang button{color:#fff!important}
+html[data-aromika-theme="dark"] #aromika-hero .ar-lang button.is-active,
+html[data-aromika-theme="dark"] #aromika-hero .ar-menu-lang button.is-active{color:#ea2f78!important}
+html[data-aromika-theme="dark"] #aromika-hero .ar-theme-toggle{
+  background:#191b20!important;
+  border-color:rgba(255,255,255,.12)!important;
+  color:#f5f5f6!important;
+}
+html[data-aromika-theme="dark"] #aromika-hero .ar-theme-toggle:hover{background:#22242a!important;box-shadow:none!important}
+html[data-aromika-theme="dark"] #aromika-hero .ar-shop{background:#ea2f78!important;color:#fff!important}
+html[data-aromika-theme="dark"] #aromika-hero .ar-burger span{background:#fff!important}
+html[data-aromika-theme="dark"] #aromika-hero .ar-menu{background:#111216!important;color:#fff!important}
+html[data-aromika-theme="dark"] #aromika-hero .ar-overlay{background:rgba(0,0,0,.58)!important}
+html[data-aromika-theme="dark"] #aromika-footer.arf-footer{background:#090a0c!important}
+
+@media(max-width:768px){
+  #aromika-hero .ar-theme-toggle{
+    margin-left:auto!important;
+    flex:0 0 40px!important;
+    width:40px!important;
+    height:40px!important;
+  }
+  #aromika-hero .ar-burger{margin-left:7px!important}
+}
+@media(prefers-reduced-motion:reduce){
+  #aromika-hero .ar-theme-icon{transition:none!important}
+}
+

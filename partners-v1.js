@@ -12,7 +12,31 @@
   page.querySelectorAll('.bp-faq-item>button').forEach(function(b){b.addEventListener('click',function(){var item=b.parentElement;var open=item.classList.contains('is-open');page.querySelectorAll('.bp-faq-item').forEach(function(x){x.classList.remove('is-open')});if(!open)item.classList.add('is-open')})});
   document.addEventListener('click',function(e){var b=e.target.closest('[data-lang]');if(!b)return;var l=b.getAttribute('data-lang');if(l==='ru'||l==='kk'){apply(l);try{window.dispatchEvent(new CustomEvent('aromika:languagechange',{detail:{lang:l}}))}catch(err){}}});window.addEventListener('aromika:languagechange',function(e){if(e.detail)apply(e.detail.lang)});
   if(hero){var burger=hero.querySelector('.ar-burger'),menu=hero.querySelector('.ar-menu'),overlay=hero.querySelector('.ar-overlay');function toggle(open){if(!burger||!menu||!overlay)return;burger.classList.toggle('open',open);menu.classList.toggle('open',open);overlay.classList.toggle('open',open);document.body.style.overflow=open?'hidden':''}if(burger)burger.addEventListener('click',function(){toggle(!menu.classList.contains('open'))});if(overlay)overlay.addEventListener('click',function(){toggle(false)});if(menu)menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){toggle(false)})})}
-  var themeBtn=hero&&hero.querySelector('.ar-theme-toggle');function setTheme(t){if(t!=='dark')t='light';if(t==='dark')document.documentElement.setAttribute('data-aromika-theme','dark');else document.documentElement.removeAttribute('data-aromika-theme');if(themeBtn){themeBtn.setAttribute('aria-pressed',t==='dark'?'true':'false')}}function savedTheme(){try{return localStorage.getItem('aromika-theme')==='dark'?'dark':'light'}catch(e){return'light'}}setTheme(savedTheme());if(themeBtn)themeBtn.addEventListener('click',function(){var next=document.documentElement.getAttribute('data-aromika-theme')==='dark'?'light':'dark';setTheme(next);try{localStorage.setItem('aromika-theme',next)}catch(e){}});
+
+  // Header theme — synchronized with the working Perfect header.
+  var THEME_KEY='aromika-theme',themeMq=null;try{themeMq=matchMedia('(prefers-color-scheme:dark)')}catch(e){}
+  function storedTheme(){try{var v=localStorage.getItem(THEME_KEY);return v==='dark'||v==='light'?v:null}catch(e){return null}}
+  function currentTheme(){return storedTheme()||(themeMq&&themeMq.matches?'dark':'light')}
+  function reflectTheme(t){
+    document.documentElement.setAttribute('data-aromika-theme',t);
+    document.documentElement.style.colorScheme=t;
+    var btn=hero&&hero.querySelector('.ar-theme-toggle');
+    if(btn){
+      var dark=t==='dark';
+      btn.setAttribute('aria-pressed',dark?'true':'false');
+      btn.setAttribute('aria-label',dark?'Включить светлую тему':'Включить тёмную тему');
+      btn.setAttribute('title',dark?'Включить светлую тему':'Включить тёмную тему');
+    }
+  }
+  reflectTheme(currentTheme());
+  var themeBtn=hero&&hero.querySelector('.ar-theme-toggle');
+  if(themeBtn)themeBtn.addEventListener('click',function(){
+    var next=document.documentElement.getAttribute('data-aromika-theme')==='dark'?'light':'dark';
+    try{localStorage.setItem(THEME_KEY,next)}catch(e){}
+    reflectTheme(next);
+  });
+
+
   var reveal=page.querySelectorAll('.bp-reveal');if('IntersectionObserver' in window){var io=new IntersectionObserver(function(entries){entries.forEach(function(x){if(x.isIntersecting){x.target.classList.add('is-visible');io.unobserve(x.target)}})},{threshold:.10,rootMargin:'0px 0px -30px 0px'});reveal.forEach(function(x){io.observe(x)})}else{reveal.forEach(function(x){x.classList.add('is-visible')})}
   if(footer){var top=footer.querySelector('.arf-to-top');if(top)top.addEventListener('click',function(e){e.preventDefault();window.scrollTo({top:0,behavior:'smooth'})})}
 })();

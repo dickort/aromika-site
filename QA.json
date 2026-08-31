@@ -1,0 +1,35 @@
+[
+  {
+    "file": "company-v1.js",
+    "node_ok": true,
+    "stderr": ""
+  },
+  {
+    "file": "production-v1.js",
+    "node_ok": true,
+    "stderr": ""
+  },
+  {
+    "file": "partners-v1.js",
+    "node_ok": true,
+    "stderr": ""
+  },
+  {
+    "file": "company-v1.css",
+    "css_ok": true,
+    "errors": [],
+    "brace_balance": 0
+  },
+  {
+    "file": "production-v1.css",
+    "css_ok": true,
+    "errors": [],
+    "brace_balance": 0
+  },
+  {
+    "file": "partners-v1.css",
+    "css_ok": true,
+    "errors": [],
+    "brace_balance": 0
+  }
+]

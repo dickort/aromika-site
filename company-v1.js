@@ -54,6 +54,30 @@
     if(menu)menu.querySelectorAll('a').forEach(function(a){a.addEventListener('click',function(){toggle(false)})});
   }
 
+  // Header theme — synchronized with the working Perfect header.
+  var THEME_KEY='aromika-theme',themeMq=null;try{themeMq=matchMedia('(prefers-color-scheme:dark)')}catch(e){}
+  function storedTheme(){try{var v=localStorage.getItem(THEME_KEY);return v==='dark'||v==='light'?v:null}catch(e){return null}}
+  function currentTheme(){return storedTheme()||(themeMq&&themeMq.matches?'dark':'light')}
+  function reflectTheme(t){
+    document.documentElement.setAttribute('data-aromika-theme',t);
+    document.documentElement.style.colorScheme=t;
+    var btn=hero&&hero.querySelector('.ar-theme-toggle');
+    if(btn){
+      var dark=t==='dark';
+      btn.setAttribute('aria-pressed',dark?'true':'false');
+      btn.setAttribute('aria-label',dark?'Включить светлую тему':'Включить тёмную тему');
+      btn.setAttribute('title',dark?'Включить светлую тему':'Включить тёмную тему');
+    }
+  }
+  reflectTheme(currentTheme());
+  var themeBtn=hero&&hero.querySelector('.ar-theme-toggle');
+  if(themeBtn)themeBtn.addEventListener('click',function(){
+    var next=document.documentElement.getAttribute('data-aromika-theme')==='dark'?'light':'dark';
+    try{localStorage.setItem(THEME_KEY,next)}catch(e){}
+    reflectTheme(next);
+  });
+
+
   var reveal=page.querySelectorAll('.ac-reveal');
   if('IntersectionObserver' in window){var io=new IntersectionObserver(function(entries){entries.forEach(function(x){if(x.isIntersecting){x.target.classList.add('is-visible');io.unobserve(x.target)}})},{threshold:.10,rootMargin:'0px 0px -30px 0px'});reveal.forEach(function(x){io.observe(x)})}else{reveal.forEach(function(x){x.classList.add('is-visible')})}
 
