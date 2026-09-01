@@ -1,0 +1,3 @@
+<!-- Aromika Assistant Romi V5 -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/assistant-v5.css">
+<script src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/assistant-v5.js" defer></script>
