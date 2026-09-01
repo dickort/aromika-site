@@ -1,0 +1,13 @@
+TILDA REDIRECTS
+/partneram -> /okompanii#cooperation
+/proizvodstvo -> /okompanii#production-quality
+/production -> /okompanii#production-quality
+/vacancies -> /careers
+/brends -> /brands
+/brands/perfect -> /perfect
+/brands/washexpert -> /washexpert
+/brands/wash-expert -> /washexpert
+/brands/maxipower -> /maxipower
+/brands/maxi-power -> /maxipower
+/brands/prachka -> /prachka
+/brands/antibak -> /antibak

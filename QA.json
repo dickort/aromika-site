@@ -1,35 +1,96 @@
-[
-  {
-    "file": "company-v1.js",
-    "node_ok": true,
-    "stderr": ""
+{
+  "build": "AROMIKA PRODUCTION FINAL V4",
+  "pages": {
+    "home": {
+      "file": "01_HOME_FINAL.txt",
+      "bytes": 11541,
+      "has_page": true,
+      "stale_routes": false
+    },
+    "brands": {
+      "file": "02_BRANDS_FINAL.txt",
+      "bytes": 6543,
+      "has_page": true,
+      "stale_routes": false
+    },
+    "akcii": {
+      "file": "03_AKCII_FINAL.txt",
+      "bytes": 2689,
+      "has_page": true,
+      "stale_routes": false
+    },
+    "okompanii": {
+      "file": "04_OKOMPANII_FINAL.txt",
+      "bytes": 10692,
+      "has_page": true,
+      "stale_routes": false
+    },
+    "careers": {
+      "file": "05_CAREERS_FINAL.txt",
+      "bytes": 4807,
+      "has_page": true,
+      "stale_routes": false
+    },
+    "kontakty": {
+      "file": "06_KONTAKTY_FINAL.txt",
+      "bytes": 4511,
+      "has_page": true,
+      "stale_routes": false
+    },
+    "perfect": {
+      "file": "07_PERFECT_FINAL.txt",
+      "bytes": 3587,
+      "has_page": true,
+      "stale_routes": false
+    },
+    "washexpert": {
+      "file": "08_WASHEXPERT_FINAL.txt",
+      "bytes": 3664,
+      "has_page": true,
+      "stale_routes": false
+    },
+    "maxipower": {
+      "file": "09_MAXIPOWER_FINAL.txt",
+      "bytes": 3659,
+      "has_page": true,
+      "stale_routes": false
+    },
+    "prachka": {
+      "file": "10_PRACHKA_FINAL.txt",
+      "bytes": 3572,
+      "has_page": true,
+      "stale_routes": false
+    },
+    "antibak": {
+      "file": "11_ANTIBAK_FINAL.txt",
+      "bytes": 3620,
+      "has_page": true,
+      "stale_routes": false
+    }
   },
-  {
-    "file": "production-v1.js",
-    "node_ok": true,
-    "stderr": ""
+  "checks": {
+    "page_count": 11,
+    "representatives": 28,
+    "company_has_production_anchor": true,
+    "company_has_cooperation_anchor": true,
+    "romi_assets": [
+      "romi-finder.webp",
+      "romi-greeting.webp",
+      "romi-launcher.webp",
+      "romi-success.webp"
+    ],
+    "legacy_route_refs_in_final_page_t123": 0,
+    "js_syntax_checked": [
+      "pages-final-v1.js",
+      "site-shell-final-v1.js",
+      "assistant-v5-final.js"
+    ],
+    "live_browser_smoke_test": "not run; required after Tilda publish"
   },
-  {
-    "file": "partners-v1.js",
-    "node_ok": true,
-    "stderr": ""
-  },
-  {
-    "file": "company-v1.css",
-    "css_ok": true,
-    "errors": [],
-    "brace_balance": 0
-  },
-  {
-    "file": "production-v1.css",
-    "css_ok": true,
-    "errors": [],
-    "brace_balance": 0
-  },
-  {
-    "file": "partners-v1.css",
-    "css_ok": true,
-    "errors": [],
-    "brace_balance": 0
-  }
-]
+  "source_notes": [
+    "Canonical route map V3",
+    "Romi Assistant V5 final from prior audited package",
+    "Representatives extracted from V5 final",
+    "Brand catalogs hydrated from current GitHub legacy runtime files at runtime"
+  ]
+}

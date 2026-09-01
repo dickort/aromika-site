@@ -1,0 +1,20 @@
+AROMIKA · PRODUCTION FINAL V4
+
+/                  Главная
+/brands            Бренды
+/akcii             Актуальные акции
+/okompanii         О компании + Производство + Сотрудничество
+/careers           Работа в компании
+/kontakty          Контакты
+/perfect           Perfect
+/washexpert        Wash Expert
+/maxipower         Maxi Power
+/prachka           Prachka
+/antibak           Antibak
+
+/#products                         Продукция
+/okompanii#production-quality      Производство и качество
+/okompanii#cooperation             Сотрудничество
+/okompanii?type=retail#cooperation
+/okompanii?type=horeca#cooperation
+/okompanii?type=distributor#cooperation
