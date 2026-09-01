@@ -1,0 +1,21 @@
+{
+  "schema": 2,
+  "updated_at": null,
+  "demo": false,
+  "sources": {
+    "aromika": {
+      "status": "empty",
+      "count": 0,
+      "last_success": null,
+      "message": "Collector has not run yet."
+    },
+    "kaspi": {
+      "status": "empty",
+      "count": 0,
+      "last_success": null,
+      "merchant_id": "1359004",
+      "message": "Collector has not run yet."
+    }
+  },
+  "products": []
+}
