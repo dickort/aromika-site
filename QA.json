@@ -1,31 +1,22 @@
 {
-  "site-route-fix-production-v1.js": {
+  "aromika-common-nav-final-v1.js": {
     "syntax_ok": true,
-    "detail": ""
+    "stderr": ""
   },
-  "assistant-v5-production.js": {
+  "assistant-v5.js": {
     "syntax_ok": true,
-    "detail": ""
+    "stderr": ""
   },
-  "assistant_routes": {
-    "careers": true,
-    "production_anchor": true,
-    "old_vacancies_absent": true,
-    "old_proizvodstvo_absent": true,
-    "partner_routes_preserved": true
+  "head_has_replacement_site_css": false,
+  "assistant_old_routes": {
+    "vacancies": 0,
+    "proizvodstvo": 0
   },
-  "route_fix": {
+  "common_routes": {
     "brands": true,
+    "akcii": true,
     "careers": true,
-    "company_cooperation": true,
-    "company_production": true,
-    "mutation_observer": true,
-    "no_layout_classes_removed": true
-  },
-  "head_safe": {
-    "no_site_shell": true,
-    "no_pages_final": true,
-    "production_assistant": true,
-    "route_fixer": true
+    "cooperation": true,
+    "production": true
   }
 }
