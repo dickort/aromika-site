@@ -1,0 +1,354 @@
+
+#brands-page-v10{--ink:#171717;--muted:#767676;--paper:#f7f6f3;--pink:#ea2f78;width:100%;overflow:hidden;background:var(--paper);color:var(--ink);font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif}
+#brands-page-v10 *{box-sizing:border-box}
+#brands-page-v10 a{color:inherit;text-decoration:none}
+#brands-page-v10 .brv10-wrap{width:min(calc(100% - 64px),1380px);margin:0 auto}
+#brands-page-v10 .brv10-kicker{display:flex;align-items:center;gap:12px;margin-bottom:25px;font-size:10px;line-height:1;font-weight:800;letter-spacing:1.2px;text-transform:uppercase}
+#brands-page-v10 .brv10-kicker span{width:30px;height:1px;background:currentColor}
+#brands-page-v10 .brv10-hero{padding:100px 0 96px;background:#fff;border-bottom:1px solid rgba(23,23,23,.09)}
+#brands-page-v10 .brv10-hero-grid{display:grid;grid-template-columns:minmax(0,1.4fr) minmax(290px,.6fr);gap:70px;align-items:end}
+#brands-page-v10 h1,#brands-page-v10 h2,#brands-page-v10 h3{margin:0}
+#brands-page-v10 h1{font-size:clamp(62px,7vw,108px);line-height:.91;letter-spacing:-4.8px;font-weight:710}
+#brands-page-v10 h1 span,#brands-page-v10 h1 em{display:block}
+#brands-page-v10 h1 em{font-style:normal;font-weight:420;color:#999}
+#brands-page-v10 .brv10-hero-grid>p{margin:0 0 4px;color:var(--muted);font-size:15px;line-height:1.72}
+#brands-page-v10 .brv10-section{padding:118px 0 132px;background:#f7f6f3}
+#brands-page-v10 .brv10-head{display:flex;align-items:end;justify-content:space-between;gap:50px;margin-bottom:56px}
+#brands-page-v10 .brv10-head h2{font-size:clamp(48px,4.7vw,72px);line-height:1;letter-spacing:-2.8px}
+#brands-page-v10 .brv10-head>p{width:390px;margin:0 0 5px;color:var(--muted);font-size:14px;line-height:1.65}
+#brands-page-v10 .brv10-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:15px}
+#brands-page-v10 .brv10-card{min-height:410px;padding:25px;border-radius:30px;display:grid;grid-template-columns:minmax(0,1.14fr) 180px;grid-template-rows:auto 1fr;gap:12px 10px;overflow:hidden;transition:transform .45s cubic-bezier(.22,1,.36,1),box-shadow .45s ease}
+#brands-page-v10 .brv10-card:hover{transform:translateY(-6px);box-shadow:0 28px 72px rgba(0,0,0,.10)}
+#brands-page-v10 .brv10-card__top{grid-column:1/-1;display:flex;align-items:center;gap:8px;position:relative;z-index:3;font-size:9px;font-weight:800;letter-spacing:.8px;text-transform:uppercase}
+#brands-page-v10 .brv10-card__top>span:nth-child(2){padding:6px 8px;border:1px solid currentColor;border-radius:999px;opacity:.55}
+#brands-page-v10 .brv10-card__top>span:first-child{opacity:.5}
+#brands-page-v10 .brv10-card__top i{margin-left:auto;width:39px;height:39px;border:1px solid currentColor;border-radius:50%;display:flex;align-items:center;justify-content:center;opacity:.65;transition:transform .4s,opacity .3s}
+#brands-page-v10 .brv10-card__top svg{width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.6;stroke-linecap:round;stroke-linejoin:round}
+#brands-page-v10 .brv10-card:hover .brv10-card__top i{transform:rotate(45deg);opacity:1}
+#brands-page-v10 .brv10-card__copy{grid-column:1;grid-row:2;align-self:end;position:relative;z-index:3;padding-bottom:3px}
+#brands-page-v10 .brv10-card__copy h3{font-size:clamp(29px,2.65vw,43px);line-height:.92;letter-spacing:-2px;font-weight:790}
+#brands-page-v10 .brv10-card__copy>b{display:block;margin-top:12px;font-size:9px;line-height:1.2;letter-spacing:.8px;text-transform:uppercase;opacity:.72}
+#brands-page-v10 .brv10-card__copy p{margin:9px 0 0;font-size:11.5px;line-height:1.52;opacity:.72}
+#brands-page-v10 .brv10-card__copy u{display:inline-block;margin-top:16px;padding-bottom:3px;text-decoration:none;border-bottom:1px solid currentColor;font-size:8.5px;font-weight:800;letter-spacing:.65px;text-transform:uppercase}
+#brands-page-v10 .brv10-card__visual{grid-column:2;grid-row:2;display:flex;align-items:flex-end;justify-content:center;position:relative;z-index:2}
+#brands-page-v10 .brv10-card__visual:after{content:"";position:absolute;width:176px;height:176px;bottom:-42px;border:1px solid currentColor;border-radius:50%;opacity:.1}
+#brands-page-v10 .brv10-asset-stage{width:180px;height:272px;display:flex;align-items:flex-end;justify-content:center;position:relative}
+#brands-page-v10 .brv10-asset-stage img{display:block;width:164px;height:244px;object-fit:contain;object-position:center bottom;filter:drop-shadow(0 24px 24px rgba(0,0,0,.15));transform:translateY(6px);transition:transform .6s cubic-bezier(.22,1,.36,1)}
+#brands-page-v10 .brv10-card:hover .brv10-asset-stage img{transform:translateY(0) scale(1.02)}
+#brands-page-v10 .brv10-cutout{mix-blend-mode:darken}
+#brands-page-v10 .brv10-cutout.is-cutout-ready{mix-blend-mode:normal}
+
+#brands-page-v10 .brv10-card--rose{color:#fff;background:linear-gradient(145deg,#78264f,#b82d68 52%,#df5c90)}
+#brands-page-v10 .brv10-card--lemon{color:#5b4a00;background:linear-gradient(145deg,#fff6b7,#f6df63 52%,#e9c72f)}
+#brands-page-v10 .brv10-card--ice{color:#123d5f;background:linear-gradient(145deg,#e1f4ff,#b6e2f7 52%,#85c7e8)}
+#brands-page-v10 .brv10-card--baby{color:#86506b;background:linear-gradient(145deg,#fff2f8,#f9d8e8 52%,#efb8d2)}
+#brands-page-v10 .brv10-card--violet{color:#553667;background:linear-gradient(145deg,#f0e8f6,#d7c1e6 52%,#b995cf)}
+#brands-page-v10 .brv10-card--sage{color:#365a4d;background:linear-gradient(145deg,#e8f3eb,#c9e2cf 52%,#9fc8aa)}
+#brands-page-v10 .brv10-card--coral{color:#793d39;background:linear-gradient(145deg,#ffe9dc,#ffc9b8 52%,#f39d88)}
+#brands-page-v10 .brv10-card--mint{color:#28594e;background:linear-gradient(145deg,#e3f5ef,#b9dfd2 52%,#82c3af)}
+#brands-page-v10 .brv10-card--powder{color:#75495e;background:linear-gradient(145deg,#fff0f4,#f1d1dc 52%,#dba6ba)}
+#brands-page-v10 .brv10-card--lime{color:#465e2a;background:linear-gradient(145deg,#eef6cf,#d8e89c 52%,#b9d168)}
+#brands-page-v10 .brv10-card--sky{color:#244f67;background:linear-gradient(145deg,#e5f1f8,#bfddeb 52%,#8ec3da)}
+#brands-page-v10 .brv10-card--orange{color:#6d3b16;background:linear-gradient(145deg,#fff0d9,#f8c987 52%,#efa85c)}
+#brands-page-v10 .brv10-card--berry{color:#71364f;background:linear-gradient(145deg,#fde8f0,#e9bad0 52%,#cf86aa)}
+#brands-page-v10 .brv10-card--blue{color:#1e456b;background:linear-gradient(145deg,#e4eef9,#b8d1eb 52%,#83acd5)}
+#brands-page-v10 .brv10-card--aqua{color:#205a61;background:linear-gradient(145deg,#e0f3f4,#b5dcde 52%,#7bbfc3)}
+
+
+#brands-page-v10 .brv10-partners-intro{padding:112px 0 82px;background:#fff;border-top:1px solid rgba(23,23,23,.08)}
+#brands-page-v10 .brv10-partners-intro .brv10-head{margin-bottom:0}
+#brands-page-v10 .brv10-partners-intro .brv10-head h2{max-width:760px;font-size:clamp(48px,4.8vw,74px);line-height:.98;letter-spacing:-2.9px}
+#brands-page-v10 .brv10-partners-intro .brv10-head h2 span,#brands-page-v10 .brv10-partners-intro .brv10-head h2 em{display:block}
+#brands-page-v10 .brv10-partners-intro .brv10-head h2 em{font-style:normal;font-weight:420;color:#999}
+html[data-aromika-theme="dark"] #brands-page-v10 .brv10-partners-intro{background:#0d0e11;border-color:rgba(255,255,255,.08)}
+@media(max-width:720px){#brands-page-v10 .brv10-partners-intro{padding:74px 0 60px}#brands-page-v10 .brv10-partners-intro .brv10-head h2{font-size:43px;letter-spacing:-1.6px}}
+
+#brands-page-v10 .brv10-topface{padding:118px 0 132px;background:#161117;color:#fff}
+#brands-page-v10 .brv10-tf-shell{min-height:590px;border:1px solid rgba(255,255,255,.1);border-radius:34px;position:relative;overflow:hidden;display:grid;grid-template-columns:.9fr .65fr 1.15fr;gap:24px;padding:42px;background:radial-gradient(circle at 48% 40%,rgba(234,47,120,.21),transparent 28%),linear-gradient(135deg,#1b131a,#24151f 55%,#341725)}
+#brands-page-v10 .brv10-tf-copy{align-self:center;position:relative;z-index:3}
+#brands-page-v10 .brv10-tf-copy h2{font-size:clamp(58px,6vw,92px);line-height:.9;letter-spacing:-4px}
+#brands-page-v10 .brv10-tf-copy p{max-width:430px;margin:24px 0 0;color:rgba(255,255,255,.62);font-size:14px;line-height:1.65}
+#brands-page-v10 .brv10-tf-all{display:inline-flex;margin-top:27px;padding:14px 17px;border-radius:999px;background:#ea2f78;font-size:10px;font-weight:800;letter-spacing:.6px;text-transform:uppercase}
+#brands-page-v10 .brv10-tf-product{display:flex;align-items:center;justify-content:center;position:relative;z-index:2}
+#brands-page-v10 .brv10-tf-product:before{content:"";position:absolute;width:250px;height:250px;border:1px solid rgba(255,255,255,.13);border-radius:50%}
+#brands-page-v10 .brv10-tf-stage{width:265px;height:430px;display:flex;align-items:center;justify-content:center;position:relative}
+#brands-page-v10 .brv10-tf-stage img{position:relative;z-index:2;display:block;width:228px;height:372px;object-fit:contain;filter:drop-shadow(0 32px 34px rgba(0,0,0,.35));transform:rotate(5deg)}
+#brands-page-v10 .brv10-tf-cats{display:grid;grid-template-columns:1fr 1fr;gap:10px;align-content:center;position:relative;z-index:3}
+#brands-page-v10 .brv10-tf-cat{min-height:150px;padding:21px;border:1px solid rgba(255,255,255,.12);border-radius:22px;background:rgba(255,255,255,.055);display:grid;grid-template-columns:1fr auto;grid-template-rows:1fr auto;transition:background .3s,transform .35s}
+#brands-page-v10 .brv10-tf-cat:hover{background:rgba(255,255,255,.1);transform:translateY(-3px)}
+#brands-page-v10 .brv10-tf-cat span{grid-column:1/-1;color:rgba(255,255,255,.36);font-size:11px;font-weight:800}
+#brands-page-v10 .brv10-tf-cat b{align-self:end;font-size:20px;letter-spacing:-.5px}
+#brands-page-v10 .brv10-tf-cat i{align-self:end;font-style:normal;color:#ea2f78;font-size:18px}
+
+html[data-aromika-theme="dark"] #brands-page-v10{--paper:#0f1013;--ink:#f5f5f6;--muted:#a1a3aa;background:#0f1013;color:#f5f5f6}
+html[data-aromika-theme="dark"] #brands-page-v10 .brv10-hero{background:#0d0e11;border-color:rgba(255,255,255,.08)}
+html[data-aromika-theme="dark"] #brands-page-v10 .brv10-section{background:#101115}
+html[data-aromika-theme="dark"] #brands-page-v10 .brv10-cutout{mix-blend-mode:normal;opacity:.98}
+
+@media(max-width:1050px){
+ #brands-page-v10 .brv10-wrap{width:calc(100% - 40px)}
+ #brands-page-v10 .brv10-grid{grid-template-columns:repeat(2,minmax(0,1fr))}
+ #brands-page-v10 .brv10-tf-shell{grid-template-columns:1fr .7fr}
+ #brands-page-v10 .brv10-tf-cats{grid-column:1/-1;grid-template-columns:repeat(5,1fr)}
+ #brands-page-v10 .brv10-tf-cat{min-height:115px}
+}
+@media(max-width:720px){
+ #brands-page-v10 .brv10-wrap{width:calc(100% - 30px)}
+ #brands-page-v10 .brv10-hero{padding:66px 0 62px}
+ #brands-page-v10 .brv10-hero-grid{grid-template-columns:1fr;gap:30px}
+ #brands-page-v10 h1{font-size:50px;line-height:.96;letter-spacing:-2.3px}
+ #brands-page-v10 .brv10-section,#brands-page-v10 .brv10-topface{padding:80px 0 90px}
+ #brands-page-v10 .brv10-head{display:block;margin-bottom:40px}
+ #brands-page-v10 .brv10-head h2{font-size:43px;letter-spacing:-1.6px}
+ #brands-page-v10 .brv10-head>p{width:auto;margin-top:18px}
+ #brands-page-v10 .brv10-grid{grid-template-columns:1fr}
+ #brands-page-v10 .brv10-card{min-height:350px;grid-template-columns:minmax(0,1.08fr) 152px}
+ #brands-page-v10 .brv10-card__copy h3{font-size:34px}
+ #brands-page-v10 .brv10-asset-stage{width:152px;height:238px}
+ #brands-page-v10 .brv10-asset-stage img{width:140px;height:210px}
+ #brands-page-v10 .brv10-tf-shell{min-height:0;padding:26px;grid-template-columns:1fr;border-radius:28px}
+ #brands-page-v10 .brv10-tf-product{min-height:330px}
+ #brands-page-v10 .brv10-tf-stage{width:220px;height:320px}
+ #brands-page-v10 .brv10-tf-stage img{width:188px;height:290px;max-height:290px}
+ #brands-page-v10 .brv10-tf-cats{grid-column:auto;grid-template-columns:1fr 1fr}
+ #brands-page-v10 .brv10-tf-cat{min-height:120px}
+}
+
+
+/* ===== BRANDS V7 — scale fixes + typography polish ===== */
+#brands-page-v10 .brv10-section{padding:124px 0 136px}
+#brands-page-v10 .brv10-head{align-items:flex-end;gap:56px;margin-bottom:60px}
+#brands-page-v10 .brv10-head h2{font-size:clamp(50px,4.8vw,74px);line-height:.98;letter-spacing:-2.9px}
+#brands-page-v10 .brv10-head>p{width:420px;font-size:15px;line-height:1.72}
+#brands-page-v10 .brv10-grid{gap:18px}
+#brands-page-v10 .brv10-card{min-height:424px;padding:28px 28px 26px;border-radius:32px;display:grid;grid-template-columns:minmax(0,1.14fr) 180px;grid-template-rows:auto 1fr;gap:14px 12px}
+#brands-page-v10 .brv10-card__top{font-size:10px;font-weight:800;letter-spacing:.9px}
+#brands-page-v10 .brv10-card__top>span:nth-child(2){padding:7px 10px}
+#brands-page-v10 .brv10-card__top i{width:40px;height:40px}
+#brands-page-v10 .brv10-card__copy{padding-bottom:4px}
+#brands-page-v10 .brv10-card__copy h3{font-size:clamp(31px,2.7vw,44px);line-height:.94;letter-spacing:-1.8px;font-weight:780}
+#brands-page-v10 .brv10-card__copy>b{display:block;margin-top:13px;font-size:10px;line-height:1.25;letter-spacing:.95px;text-transform:uppercase;opacity:.78}
+#brands-page-v10 .brv10-card__copy p{max-width:31ch;margin:10px 0 0;font-size:12.5px;line-height:1.62;opacity:.78}
+#brands-page-v10 .brv10-card__copy u{display:inline-block;margin-top:18px;padding-bottom:4px;font-size:9px;font-weight:800;letter-spacing:.82px;text-transform:uppercase}
+#brands-page-v10 .brv10-card__visual:after{width:184px;height:184px;bottom:-46px}
+#brands-page-v10 .brv10-asset-stage{width:182px;height:282px}
+#brands-page-v10 .brv10-asset-stage img{width:166px;height:252px}
+
+/* boost visually smaller packshots */
+#brands-page-v10 .brv10-card--boost .brv10-asset-stage{width:194px;height:292px}
+#brands-page-v10 .brv10-card--boost .brv10-card__visual:after{width:194px;height:194px;bottom:-42px}
+#brands-page-v10 .brv10-card--jar .brv10-asset-stage img{width:182px;height:268px}
+#brands-page-v10 .brv10-card--widepack .brv10-asset-stage img{width:182px;height:268px}
+
+#brands-page-v10 .brv10-partners-intro{padding:118px 0 88px}
+#brands-page-v10 .brv10-partners-intro .brv10-head h2{font-size:clamp(50px,4.9vw,76px);line-height:.98;letter-spacing:-3px}
+#brands-page-v10 .brv10-partners-intro .brv10-head>p{font-size:15px;line-height:1.72}
+#brands-page-v10 .brv10-topface{padding:124px 0 136px}
+#brands-page-v10 .brv10-tf-shell{min-height:610px;gap:28px;padding:44px 44px 42px}
+#brands-page-v10 .brv10-tf-copy h2{font-size:clamp(60px,6vw,94px);line-height:.9;letter-spacing:-4.1px}
+#brands-page-v10 .brv10-tf-copy p{margin:26px 0 0;font-size:14.5px;line-height:1.7}
+#brands-page-v10 .brv10-tf-all{display:inline-flex;margin-top:28px;padding:15px 18px;border-radius:999px;font-size:10px;font-weight:800;letter-spacing:.72px;text-transform:uppercase}
+#brands-page-v10 .brv10-tf-cats{gap:12px}
+#brands-page-v10 .brv10-tf-cat{min-height:156px;padding:22px;border-radius:24px}
+#brands-page-v10 .brv10-tf-cat span{font-size:11px}
+#brands-page-v10 .brv10-tf-cat b{font-size:21px;line-height:1.04;letter-spacing:-.6px}
+#brands-page-v10 .brv10-tf-cat i{font-size:19px}
+
+@media(max-width:1050px){
+ #brands-page-v10 .brv10-head{gap:34px}
+ #brands-page-v10 .brv10-head>p{width:360px}
+ #brands-page-v10 .brv10-grid{gap:16px}
+ #brands-page-v10 .brv10-tf-shell{grid-template-columns:1fr .72fr;gap:22px;padding:36px}
+}
+@media(max-width:720px){
+ #brands-page-v10 .brv10-hero{padding:68px 0 64px}
+ #brands-page-v10 .brv10-section,#brands-page-v10 .brv10-topface{padding:84px 0 92px}
+ #brands-page-v10 .brv10-head{display:block;margin-bottom:42px}
+ #brands-page-v10 .brv10-head h2{font-size:44px;line-height:1;letter-spacing:-1.7px}
+ #brands-page-v10 .brv10-head>p{width:auto;margin-top:18px;font-size:14px;line-height:1.65}
+ #brands-page-v10 .brv10-grid{grid-template-columns:1fr}
+ #brands-page-v10 .brv10-card{min-height:364px;padding:24px 22px 22px;grid-template-columns:minmax(0,1.05fr) 160px;gap:12px 10px}
+ #brands-page-v10 .brv10-card__top{font-size:9px}
+ #brands-page-v10 .brv10-card__copy h3{font-size:35px;letter-spacing:-1.5px}
+ #brands-page-v10 .brv10-card__copy p{font-size:12px;line-height:1.56}
+ #brands-page-v10 .brv10-asset-stage{width:160px;height:246px}
+ #brands-page-v10 .brv10-asset-stage img{width:146px;height:220px}
+ #brands-page-v10 .brv10-card--boost .brv10-asset-stage{width:168px;height:250px}
+ #brands-page-v10 .brv10-card--jar .brv10-asset-stage img,
+ #brands-page-v10 .brv10-card--widepack .brv10-asset-stage img{width:158px;height:230px}
+ #brands-page-v10 .brv10-partners-intro{padding:78px 0 62px}
+ #brands-page-v10 .brv10-partners-intro .brv10-head h2{font-size:44px;letter-spacing:-1.7px}
+ #brands-page-v10 .brv10-tf-shell{min-height:0;padding:28px;grid-template-columns:1fr;gap:22px}
+ #brands-page-v10 .brv10-tf-copy p{font-size:14px;line-height:1.62}
+ #brands-page-v10 .brv10-tf-cats{grid-template-columns:1fr 1fr;gap:10px}
+ #brands-page-v10 .brv10-tf-cat{min-height:122px;padding:18px}
+ #brands-page-v10 .brv10-tf-cat b{font-size:19px}
+}
+
+
+/* ===== BRANDS V8 — visible fixes ===== */
+#brands-page-v10 .brv10-card--jar,
+#brands-page-v10 .brv10-card--widepack{grid-template-columns:minmax(0,1fr) 210px!important}
+#brands-page-v10 .brv10-card--jar .brv10-card__visual,
+#brands-page-v10 .brv10-card--widepack .brv10-card__visual{overflow:visible!important}
+#brands-page-v10 .brv10-card--jar .brv10-asset-stage,
+#brands-page-v10 .brv10-card--widepack .brv10-asset-stage{width:210px!important;height:300px!important;overflow:visible!important}
+#brands-page-v10 .brv10-img--salt{width:190px!important;height:278px!important;transform:translate(12px,5px) scale(1.42)!important;transform-origin:center bottom!important}
+#brands-page-v10 .brv10-card--jar:hover .brv10-img--salt{transform:translate(12px,-2px) scale(1.46)!important}
+#brands-page-v10 .brv10-img--soap{width:192px!important;height:278px!important;transform:translate(15px,7px) scale(1.58)!important;transform-origin:center bottom!important}
+#brands-page-v10 .brv10-card--widepack:hover .brv10-img--soap{transform:translate(15px,0) scale(1.62)!important}
+
+#brands-page-v10 .brv10-partner-title{max-width:820px!important;font-size:clamp(50px,4.8vw,74px)!important;line-height:1.06!important;letter-spacing:-2.4px!important}
+#brands-page-v10 .brv10-partner-title span,#brands-page-v10 .brv10-partner-title em{display:block!important}
+#brands-page-v10 .brv10-partner-title em{margin-top:.16em!important;font-style:normal!important;font-weight:420!important;color:#999!important}
+
+#brands-page-v10 .brv10-hero{padding:104px 0 98px!important}
+#brands-page-v10 .brv10-hero-grid{gap:72px!important}
+#brands-page-v10 .brv10-section{padding:122px 0 134px!important}
+#brands-page-v10 .brv10-head{gap:56px!important;margin-bottom:58px!important}
+#brands-page-v10 .brv10-head h2{line-height:1.01!important;letter-spacing:-2.45px!important}
+#brands-page-v10 .brv10-head>p{width:410px!important;font-size:14px!important;line-height:1.68!important}
+#brands-page-v10 .brv10-grid{gap:18px!important}
+#brands-page-v10 .brv10-card{min-height:424px!important;padding:27px!important;border-radius:31px!important}
+#brands-page-v10 .brv10-card__copy h3{line-height:.98!important;letter-spacing:-1.65px!important}
+#brands-page-v10 .brv10-card__copy>b{margin-top:12px!important;font-size:9.5px!important;line-height:1.3!important;letter-spacing:.8px!important}
+#brands-page-v10 .brv10-card__copy p{margin-top:10px!important;font-size:12px!important;line-height:1.58!important;max-width:30ch!important}
+#brands-page-v10 .brv10-card__copy u{margin-top:17px!important}
+#brands-page-v10 .brv10-partners-intro{padding:116px 0 88px!important}
+#brands-page-v10 .brv10-partners-intro .brv10-head{gap:62px!important}
+#brands-page-v10 .brv10-topface{padding:120px 0 134px!important}
+
+@media(max-width:1050px){
+ #brands-page-v10 .brv10-card--jar,#brands-page-v10 .brv10-card--widepack{grid-template-columns:minmax(0,1fr) 190px!important}
+ #brands-page-v10 .brv10-card--jar .brv10-asset-stage,#brands-page-v10 .brv10-card--widepack .brv10-asset-stage{width:190px!important}
+ #brands-page-v10 .brv10-img--salt{transform:translate(8px,6px) scale(1.32)!important}
+ #brands-page-v10 .brv10-img--soap{transform:translate(10px,7px) scale(1.46)!important}
+}
+@media(max-width:720px){
+ #brands-page-v10 .brv10-hero{padding:68px 0 64px!important}
+ #brands-page-v10 .brv10-section,#brands-page-v10 .brv10-topface{padding:82px 0 90px!important}
+ #brands-page-v10 .brv10-head{display:block!important;margin-bottom:42px!important}
+ #brands-page-v10 .brv10-head h2{font-size:43px!important;line-height:1.03!important;letter-spacing:-1.5px!important}
+ #brands-page-v10 .brv10-head>p{width:auto!important;margin-top:18px!important;font-size:13.5px!important;line-height:1.62!important}
+ #brands-page-v10 .brv10-card{min-height:360px!important;padding:23px!important;grid-template-columns:minmax(0,1fr) 154px!important}
+ #brands-page-v10 .brv10-card--jar,#brands-page-v10 .brv10-card--widepack{grid-template-columns:minmax(0,1fr) 168px!important}
+ #brands-page-v10 .brv10-card--jar .brv10-asset-stage,#brands-page-v10 .brv10-card--widepack .brv10-asset-stage{width:168px!important;height:242px!important}
+ #brands-page-v10 .brv10-img--salt{width:154px!important;height:224px!important;transform:translate(7px,6px) scale(1.28)!important}
+ #brands-page-v10 .brv10-img--soap{width:154px!important;height:224px!important;transform:translate(8px,7px) scale(1.38)!important}
+ #brands-page-v10 .brv10-partners-intro{padding:78px 0 62px!important}
+ #brands-page-v10 .brv10-partner-title{font-size:43px!important;line-height:1.06!important;letter-spacing:-1.5px!important}
+ #brands-page-v10 .brv10-partner-title em{margin-top:.18em!important}
+}
+
+
+/* ===== BRANDS V9 — partner heading + Fresh Nature sizing ===== */
+#brands-page-v10 .brv10-partners-intro .brv10-head{display:block!important;margin-bottom:0!important}
+#brands-page-v10 .brv10-partner-title{max-width:920px!important;font-size:clamp(50px,4.8vw,74px)!important;line-height:1.04!important;letter-spacing:-2.3px!important;font-weight:680!important}
+
+/* Fresh Nature: slightly smaller than V8, never overlaps the text column. */
+#brands-page-v10 .brv10-card--widepack{grid-template-columns:minmax(0,1fr) 200px!important}
+#brands-page-v10 .brv10-card--widepack .brv10-card__visual{overflow:hidden!important;min-width:0!important}
+#brands-page-v10 .brv10-card--widepack .brv10-asset-stage{width:200px!important;height:292px!important;overflow:hidden!important}
+#brands-page-v10 .brv10-img--soap{width:184px!important;height:270px!important;transform:translate(5px,8px) scale(1.32)!important;transform-origin:center bottom!important}
+#brands-page-v10 .brv10-card--widepack:hover .brv10-img--soap{transform:translate(5px,3px) scale(1.36)!important}
+
+@media(max-width:1050px){
+ #brands-page-v10 .brv10-card--widepack{grid-template-columns:minmax(0,1fr) 184px!important}
+ #brands-page-v10 .brv10-card--widepack .brv10-asset-stage{width:184px!important;height:270px!important}
+ #brands-page-v10 .brv10-img--soap{width:172px!important;height:252px!important;transform:translate(3px,7px) scale(1.26)!important}
+ #brands-page-v10 .brv10-card--widepack:hover .brv10-img--soap{transform:translate(3px,3px) scale(1.29)!important}
+}
+@media(max-width:720px){
+ #brands-page-v10 .brv10-partner-title{font-size:44px!important;line-height:1.06!important;letter-spacing:-1.5px!important}
+ #brands-page-v10 .brv10-card--widepack{grid-template-columns:minmax(0,1fr) 154px!important}
+ #brands-page-v10 .brv10-card--widepack .brv10-asset-stage{width:154px!important;height:238px!important}
+ #brands-page-v10 .brv10-img--soap{width:144px!important;height:220px!important;transform:translate(2px,6px) scale(1.20)!important}
+ #brands-page-v10 .brv10-card--widepack:hover .brv10-img--soap{transform:translate(2px,2px) scale(1.22)!important}
+}
+
+
+/* ===== BRANDS V10 — unified partner section + Fresh Nature containment ===== */
+#brands-page-v10 .brv10-partners-intro{display:none!important}
+#brands-page-v10 .brv10-topface{
+  padding:104px 0 136px!important;
+  background:#161117!important;
+  color:#fff!important;
+}
+#brands-page-v10 .brv10-partner-head{
+  max-width:1120px;
+  margin:0 0 58px;
+  color:#fff;
+}
+#brands-page-v10 .brv10-partner-head .brv10-kicker{
+  margin-bottom:24px;
+  color:rgba(255,255,255,.72);
+}
+#brands-page-v10 .brv10-partner-head .brv10-kicker span{background:rgba(255,255,255,.72)}
+#brands-page-v10 .brv10-partner-title{
+  margin:0!important;
+  max-width:none!important;
+  font-size:clamp(52px,5vw,78px)!important;
+  line-height:1.02!important;
+  letter-spacing:-2.6px!important;
+  font-weight:670!important;
+  color:#fff!important;
+}
+#brands-page-v10 .brv10-tf-shell{margin-top:0!important}
+
+/* Fresh Nature: locked media column, restrained scale, no text overlap. */
+#brands-page-v10 .brv10-card--widepack{
+  grid-template-columns:minmax(0,1fr) 186px!important;
+  overflow:hidden!important;
+}
+#brands-page-v10 .brv10-card--widepack .brv10-card__copy{
+  min-width:0!important;
+  max-width:100%!important;
+  overflow:visible!important;
+}
+#brands-page-v10 .brv10-card--widepack .brv10-card__visual{
+  width:186px!important;
+  min-width:186px!important;
+  max-width:186px!important;
+  overflow:hidden!important;
+  justify-self:end!important;
+}
+#brands-page-v10 .brv10-card--widepack .brv10-asset-stage{
+  width:186px!important;
+  height:276px!important;
+  overflow:hidden!important;
+}
+#brands-page-v10 .brv10-card--widepack .brv10-img--soap{
+  width:166px!important;
+  height:246px!important;
+  max-width:166px!important;
+  max-height:246px!important;
+  transform:translate(0,5px) scale(1.12)!important;
+  transform-origin:center bottom!important;
+  object-fit:contain!important;
+  object-position:center bottom!important;
+}
+#brands-page-v10 .brv10-card--widepack:hover .brv10-img--soap{
+  transform:translate(0,1px) scale(1.15)!important;
+}
+
+@media(max-width:1050px){
+  #brands-page-v10 .brv10-topface{padding:92px 0 118px!important}
+  #brands-page-v10 .brv10-partner-head{margin-bottom:48px}
+  #brands-page-v10 .brv10-partner-title{font-size:clamp(48px,6.4vw,68px)!important;line-height:1.03!important}
+  #brands-page-v10 .brv10-card--widepack{grid-template-columns:minmax(0,1fr) 176px!important}
+  #brands-page-v10 .brv10-card--widepack .brv10-card__visual{width:176px!important;min-width:176px!important;max-width:176px!important}
+  #brands-page-v10 .brv10-card--widepack .brv10-asset-stage{width:176px!important;height:260px!important}
+  #brands-page-v10 .brv10-card--widepack .brv10-img--soap{width:158px!important;height:232px!important;max-width:158px!important;max-height:232px!important;transform:translate(0,5px) scale(1.10)!important}
+  #brands-page-v10 .brv10-card--widepack:hover .brv10-img--soap{transform:translate(0,1px) scale(1.13)!important}
+}
+@media(max-width:720px){
+  #brands-page-v10 .brv10-topface{padding:76px 0 92px!important}
+  #brands-page-v10 .brv10-partner-head{margin-bottom:38px}
+  #brands-page-v10 .brv10-partner-head .brv10-kicker{margin-bottom:18px}
+  #brands-page-v10 .brv10-partner-title{font-size:43px!important;line-height:1.05!important;letter-spacing:-1.5px!important}
+  #brands-page-v10 .brv10-card--widepack{grid-template-columns:minmax(0,1fr) 148px!important}
+  #brands-page-v10 .brv10-card--widepack .brv10-card__visual{width:148px!important;min-width:148px!important;max-width:148px!important}
+  #brands-page-v10 .brv10-card--widepack .brv10-asset-stage{width:148px!important;height:226px!important}
+  #brands-page-v10 .brv10-card--widepack .brv10-img--soap{width:136px!important;height:204px!important;max-width:136px!important;max-height:204px!important;transform:translate(0,4px) scale(1.08)!important}
+  #brands-page-v10 .brv10-card--widepack:hover .brv10-img--soap{transform:translate(0,1px) scale(1.10)!important}
+}
