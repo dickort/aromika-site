@@ -1,18 +1,18 @@
 {
   "schema": 3,
-  "updated_at": "2026-09-01T10:21:22.065374+00:00",
+  "updated_at": "2026-09-01T15:00:11.228029+00:00",
   "demo": false,
   "sources": {
     "aromika": {
       "status": "ok",
-      "count": 42,
-      "last_success": "2026-09-01T10:21:08.949316+00:00",
+      "count": 37,
+      "last_success": "2026-09-01T14:59:54.934301+00:00",
       "message": "Live discounted products detected."
     },
     "kaspi": {
       "status": "empty",
       "count": 0,
-      "last_success": "2026-09-01T10:21:22.065302+00:00",
+      "last_success": "2026-09-01T15:00:11.227563+00:00",
       "message": "Live scan completed; no discounted cards detected.",
       "merchant_id": "1359004"
     }
@@ -120,16 +120,6 @@
     },
     {
       "source": "aromika",
-      "name": "Все товары",
-      "brand": "",
-      "old_price": 1001,
-      "price": 851,
-      "discount": 15,
-      "image": "https://aromika.shop/images/detailed/137/12.png",
-      "url": "https://aromika.shop/vse-tovary/page-5/"
-    },
-    {
-      "source": "aromika",
       "name": "Жидкое мыло хозяйственное «Aromika» 65% Лимон 1100 мл",
       "brand": "",
       "old_price": 1034,
@@ -210,16 +200,6 @@
     },
     {
       "source": "aromika",
-      "name": "Все товары",
-      "brand": "",
-      "old_price": 1265,
-      "price": 1075,
-      "discount": 15,
-      "image": "https://aromika.shop/images/detailed/137/12.png",
-      "url": "https://aromika.shop/vse-tovary/page-2/"
-    },
-    {
-      "source": "aromika",
       "name": "Гель для интимной гигиены Delicate c экстрактом алоэ вера 800 мл",
       "brand": "",
       "old_price": 1489,
@@ -280,16 +260,6 @@
     },
     {
       "source": "aromika",
-      "name": "Все товары",
-      "brand": "",
-      "old_price": 1553,
-      "price": 1320,
-      "discount": 15,
-      "image": "https://aromika.shop/images/detailed/137/12.png",
-      "url": "https://aromika.shop/vse-tovary/page-3/"
-    },
-    {
-      "source": "aromika",
       "name": "Шампунь «Beauty ESSENCE» Восстановление 800 мл",
       "brand": "",
       "old_price": 1656,
@@ -310,16 +280,6 @@
     },
     {
       "source": "aromika",
-      "name": "Все товары",
-      "brand": "",
-      "old_price": 1656,
-      "price": 1408,
-      "discount": 15,
-      "image": "https://aromika.shop/images/detailed/137/12.png",
-      "url": "https://aromika.shop/vse-tovary/page-6/"
-    },
-    {
-      "source": "aromika",
       "name": "Бессульфатный шампунь «Beauty ESSENCE» Keratin 800 мл",
       "brand": "",
       "old_price": 2018,
@@ -337,16 +297,6 @@
       "discount": 15,
       "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/Sh_BeautyESSENCE_Nutrition.png.webp",
       "url": "https://aromika.shop/vse-tovary/aromika-beauty-essence-bessulfatnyy-shampun-pitanie-i-uvlazhnenie-800ml/"
-    },
-    {
-      "source": "aromika",
-      "name": "Все товары",
-      "brand": "",
-      "old_price": 2018,
-      "price": 1715,
-      "discount": 15,
-      "image": "https://aromika.shop/images/detailed/137/12.png",
-      "url": "https://aromika.shop/vse-tovary/"
     },
     {
       "source": "aromika",
