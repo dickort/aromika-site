@@ -1,38 +1,86 @@
 name: Update promotions feed V3
+
 on:
   workflow_dispatch:
   schedule:
     - cron: '17 */2 * * *'
+
 permissions:
   contents: write
+
+concurrency:
+  group: update-promotions-feed-v3
+  cancel-in-progress: false
+
 jobs:
   update:
     runs-on: ubuntu-latest
     timeout-minutes: 35
+
     steps:
-      - uses: actions/checkout@v4
-      - uses: actions/setup-python@v5
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
         with:
           python-version: '3.12'
-      - run: pip install -r requirements-promos.txt
-      - run: python -m playwright install --with-deps chromium
+
+      - name: Install Python dependencies
+        run: pip install -r requirements-promos.txt
+
+      - name: Install Chromium
+        run: python -m playwright install --with-deps chromium
+
       - name: Collect live promotions
         run: python collector/collect_promos.py
+
       - name: Show collection result
         run: |
           python - <<'PY'
           import json
-          d=json.load(open('data/promos-v3.json',encoding='utf-8'))
-          print('sources=', json.dumps(d.get('sources',{}), ensure_ascii=False, indent=2))
-          print('products=', len(d.get('products',[])))
-          for p in d.get('products',[])[:20]:
-              print(p.get('source'), p.get('discount'), p.get('price'), p.get('name'))
+
+          with open('data/promos-v3.json', encoding='utf-8') as f:
+              d = json.load(f)
+
+          print(
+              'sources=',
+              json.dumps(
+                  d.get('sources', {}),
+                  ensure_ascii=False,
+                  indent=2
+              )
+          )
+
+          print('products=', len(d.get('products', [])))
+
+          for p in d.get('products', [])[:20]:
+              print(
+                  p.get('source'),
+                  p.get('discount'),
+                  p.get('price'),
+                  p.get('name')
+              )
           PY
+
       - name: Commit feed when changed
         run: |
           git config user.name "aromika-promos-bot"
           git config user.email "actions@users.noreply.github.com"
+
           git add data/promos-v3.json
-          git diff --cached --quiet && exit 0
+
+          if git diff --cached --quiet; then
+            echo "Promotions feed has not changed."
+            exit 0
+          fi
+
           git commit -m "Update promotions feed V3"
-          git push
+
+          echo "Syncing with latest main..."
+          git pull --rebase origin main
+
+          echo "Pushing updated feed..."
+          git push origin HEAD:main
