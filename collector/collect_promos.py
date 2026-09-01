@@ -100,6 +100,30 @@ def normalize_product_url(base: str, href: str) -> str:
     return urlunparse((p.scheme, p.netloc, p.path, "", "", ""))
 
 
+def is_aromika_product_url(url: str) -> bool:
+    """Return True only for real Aromika product detail URLs.
+
+    Reject catalog root and pagination URLs such as /vse-tovary/ and
+    /vse-tovary/page-5/, which can otherwise inherit prices from a nearby card.
+    """
+    p = urlparse(url)
+    if p.netloc.lower() != "aromika.shop":
+        return False
+    prefix = "/vse-tovary/"
+    path = p.path or ""
+    if not path.startswith(prefix):
+        return False
+    tail = path[len(prefix):].strip("/")
+    if not tail:
+        return False
+    if re.fullmatch(r"page-\d+", tail, flags=re.I):
+        return False
+    # Product pages are a single slug directly under /vse-tovary/.
+    if "/" in tail:
+        return False
+    return True
+
+
 def find_discount_box(anchor) -> tuple[object | None, list[int]]:
     """Find the smallest ancestor that contains an actual two-price offer."""
     node = anchor
@@ -166,7 +190,7 @@ def parse_aromika_listing(soup: BeautifulSoup, base_url: str) -> list[dict]:
     seen_urls: set[str] = set()
     for anchor in soup.select('a[href*="/vse-tovary/"]'):
         url = normalize_product_url(base_url, anchor.get("href", ""))
-        if not url.startswith("https://aromika.shop/vse-tovary/") or url in seen_urls:
+        if not is_aromika_product_url(url) or url in seen_urls:
             continue
         seen_urls.add(url)
         box, vals = find_discount_box(anchor)
@@ -177,7 +201,7 @@ def parse_aromika_listing(soup: BeautifulSoup, base_url: str) -> list[dict]:
         if pct <= 0 or pct > 90:
             continue
         name = card_name(box, url, anchor)
-        if not name:
+        if not name or name.strip().lower() in {"все товары", "барлық тауарлар"}:
             continue
         items[url] = {
             "source": "aromika",
@@ -292,7 +316,7 @@ def collect_aromika() -> list[dict]:
                 found[item["url"]] = item
             for a in soup.select('a[href*="/vse-tovary/"]'):
                 u = normalize_product_url(scan_url, a.get("href", ""))
-                if u.startswith("https://aromika.shop/vse-tovary/"):
+                if is_aromika_product_url(u):
                     candidate_urls.add(u)
             if "/vse-tovary/" in scan_url:
                 no_new_pages = no_new_pages + 1 if len(found) == before else 0
@@ -521,8 +545,14 @@ def main() -> None:
     # Deduplicate by source + URL and keep only true discounts.
     dedup: dict[tuple[str, str], dict] = {}
     for p in all_products:
-        if p.get("discount", 0) > 0 and p.get("price", 0) > 0 and p.get("old_price", 0) > p.get("price", 0):
-            dedup[(p.get("source", ""), p.get("url", ""))] = p
+        if not (p.get("discount", 0) > 0 and p.get("price", 0) > 0 and p.get("old_price", 0) > p.get("price", 0)):
+            continue
+        if p.get("source") == "aromika":
+            if not is_aromika_product_url(p.get("url", "")):
+                continue
+            if str(p.get("name", "")).strip().lower() in {"все товары", "барлық тауарлар"}:
+                continue
+        dedup[(p.get("source", ""), p.get("url", ""))] = p
     all_products = list(dedup.values())
     all_products.sort(key=lambda p: (-p.get("discount", 0), p.get("price", 0)))
 
