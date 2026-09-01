@@ -1,62 +1,442 @@
 {
   "schema": 3,
-  "updated_at": "2026-09-01T09:20:00+00:00",
+  "updated_at": "2026-09-01T10:21:22.065374+00:00",
   "demo": false,
   "sources": {
     "aromika": {
       "status": "ok",
-      "count": 4,
-      "last_success": "2026-09-01T09:20:00+00:00",
-      "message": "Seeded from live storefront prices; collector will refresh automatically."
+      "count": 42,
+      "last_success": "2026-09-01T10:21:08.949316+00:00",
+      "message": "Live discounted products detected."
     },
     "kaspi": {
-      "status": "pending",
+      "status": "empty",
       "count": 0,
-      "last_success": null,
-      "merchant_id": "1359004",
-      "message": "Run GitHub Action once to collect the live merchant storefront."
+      "last_success": "2026-09-01T10:21:22.065302+00:00",
+      "message": "Live scan completed; no discounted cards detected.",
+      "merchant_id": "1359004"
     }
   },
   "products": [
     {
       "source": "aromika",
-      "name": "Гель для стирки «Perfect Aromika» Black & Dark 3300 мл",
-      "brand": "Perfect",
-      "old_price": 3416,
-      "price": 2904,
+      "name": "Гель для интимной гигиены Delicate Алоэ вера 400 мл",
+      "brand": "",
+      "old_price": 817,
+      "price": 694,
       "discount": 15,
-      "image": "https://aromika.shop/images/detailed/138/Perfect_WG_Black_Dark_3300_.webp",
-      "url": "https://aromika.shop/vse-tovary/gel-dlya-stirki-perfect-aromika-black-and-dark-3300-ml/"
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/IG_Aloe_400.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/gel-dlya-intimnoy-gigieny-delicate-aloe-vera-400-ml/"
     },
     {
       "source": "aromika",
-      "name": "Бессульфатный шампунь «Beauty ESSENCE» Keratin 800 мл",
-      "brand": "Beauty ESSENCE",
-      "old_price": 2018,
-      "price": 1715,
+      "name": "Гель для интимной гигиены Delicate Ночная фиалка 400 мл",
+      "brand": "",
+      "old_price": 817,
+      "price": 694,
       "discount": 15,
-      "image": "https://aromika.shop/images/detailed/138/Sh_BeautyESSENCE_Keratin.png",
-      "url": "https://aromika.shop/"
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/IG_Fial_400.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/gel-dlya-intimnoy-gigieny-delicate-nochnaya-fialka-400-ml/"
+    },
+    {
+      "source": "aromika",
+      "name": "Гель для интимной гигиены Delicate Ромашка 400 мл",
+      "brand": "",
+      "old_price": 817,
+      "price": 694,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/IG_Rom_400.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/gel-dlya-intimnoy-gigieny-delicate-romashka-400-ml/"
+    },
+    {
+      "source": "aromika",
+      "name": "Гель для интимной гигиены Delicate Свежесть 400 мл",
+      "brand": "",
+      "old_price": 817,
+      "price": 694,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/IG_Sve_400.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/gel-dlya-intimnoy-gigieny-delicate-svezhest-400-ml/"
+    },
+    {
+      "source": "aromika",
+      "name": "Соль для ванн «Simore» Грейпфрут 910 г",
+      "brand": "",
+      "old_price": 1001,
+      "price": 851,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/Salt_Simore_Grapefruit.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/col-dlya-vann-simore-910g-s-efirnym-maslom-greypfruta/"
+    },
+    {
+      "source": "aromika",
+      "name": "Соль для ванн «Simore» Лаванда 910 г",
+      "brand": "",
+      "old_price": 1001,
+      "price": 851,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/Salt_Simore_lavender.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/sol-dlya-vann-simore-910g-s-efirnym-maslom-lavandy/"
+    },
+    {
+      "source": "aromika",
+      "name": "Соль для ванн «Simore» Можжевельник 910 г",
+      "brand": "",
+      "old_price": 1001,
+      "price": 851,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/Salt_Simore_Juniper.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/sol-dlya-vann-simore-910g-s-efirnym-maslom-mozhzhevelnika/"
+    },
+    {
+      "source": "aromika",
+      "name": "Соль для ванн «Simore» Мята 910 г",
+      "brand": "",
+      "old_price": 1001,
+      "price": 851,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/Salt_Simore_Mint.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/sol-dlya-vann-simore-910g-s-efirnym-maslom-myaty/"
+    },
+    {
+      "source": "aromika",
+      "name": "Соль для ванн «Simore» Шалфей 910 г",
+      "brand": "",
+      "old_price": 1001,
+      "price": 851,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/Salt_Simore_Sage.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/sol-dlya-vann-simore-910g-s-efirnym-maslom-shalfeya/"
+    },
+    {
+      "source": "aromika",
+      "name": "Соль для ванн «Simore» Эвкалипт 910 г",
+      "brand": "",
+      "old_price": 1001,
+      "price": 851,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/Salt_Simore_Eucalyptus.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/sol-dlya-vann-simore-910g-s-efirnym-maslom-evkalipta/"
+    },
+    {
+      "source": "aromika",
+      "name": "Все товары",
+      "brand": "",
+      "old_price": 1001,
+      "price": 851,
+      "discount": 15,
+      "image": "https://aromika.shop/images/detailed/137/12.png",
+      "url": "https://aromika.shop/vse-tovary/page-5/"
+    },
+    {
+      "source": "aromika",
+      "name": "Жидкое мыло хозяйственное «Aromika» 65% Лимон 1100 мл",
+      "brand": "",
+      "old_price": 1034,
+      "price": 879,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/LS_Хозяйственное_Лимон_1100_ft.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/zhidkoe-hozyaystvennoe-mylo-65-limon-1100-ml/"
+    },
+    {
+      "source": "aromika",
+      "name": "Жидкое мыло хозяйственное «Aromika» 72% Антибактериальное 1100 мл",
+      "brand": "",
+      "old_price": 1083,
+      "price": 921,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/LS_Хозяйственное_Антибак_1100_ft_.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/zhidkoe-hozyaystvennoe-mylo-72-antibakterialnoe-1100-ml/"
+    },
+    {
+      "source": "aromika",
+      "name": "Гель для мытья посуды «Perfect Aromika» Мангустин 1100 мл",
+      "brand": "",
+      "old_price": 1265,
+      "price": 1075,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/Perfect_DG_Mangosteen_1100.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/perfect-gel-d-posudy-1100ml-mangosteen/"
+    },
+    {
+      "source": "aromika",
+      "name": "Гель для мытья посуды «Perfect Aromika» Инжир 1100 мл",
+      "brand": "",
+      "old_price": 1265,
+      "price": 1075,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/Perfect_DG_Fig_1100.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/perfect-gel-d-posudy-1100ml-fig/"
+    },
+    {
+      "source": "aromika",
+      "name": "Гель для мытья посуды «Perfect Aromika» Папайя 1100 мл",
+      "brand": "",
+      "old_price": 1265,
+      "price": 1075,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/Perfect_DG_Papaya_1100.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/perfect-gel-d-posudy-1100ml-papaya/"
+    },
+    {
+      "source": "aromika",
+      "name": "Гель для мытья посуды «Perfect Aromika» Питахайя 1100 мл",
+      "brand": "",
+      "old_price": 1265,
+      "price": 1075,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/Perfect_DG_Pitahaya_1100.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/perfect-gel-d-posudy-1100ml-pitahaya/"
+    },
+    {
+      "source": "aromika",
+      "name": "Средство для мытья полов «Perfect Aromika» Lemon 1500 мл",
+      "brand": "",
+      "old_price": 1265,
+      "price": 1075,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/137/Perfect_FloorCleaner_Lemon_1500.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/sredstvo-dlya-mytya-polov-perfect-aromika-ocean-1500-ml-ru/"
+    },
+    {
+      "source": "aromika",
+      "name": "Средство для мытья полов «Perfect Aromika» Ocean 1500 мл",
+      "brand": "",
+      "old_price": 1265,
+      "price": 1075,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/137/Perfect_FloorCleaner_Ocean_1500.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/sredstvo-dlya-mytya-polov-perfect-aromika-ocean-1500-ml/"
+    },
+    {
+      "source": "aromika",
+      "name": "Все товары",
+      "brand": "",
+      "old_price": 1265,
+      "price": 1075,
+      "discount": 15,
+      "image": "https://aromika.shop/images/detailed/137/12.png",
+      "url": "https://aromika.shop/vse-tovary/page-2/"
+    },
+    {
+      "source": "aromika",
+      "name": "Гель для интимной гигиены Delicate c экстрактом алоэ вера 800 мл",
+      "brand": "",
+      "old_price": 1489,
+      "price": 1266,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/Delicate_GIG_Aloe_800.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/gel-dlya-intimnoy-gigieny-delicate-c-ekstraktom-aloe-vera-800-ml/"
+    },
+    {
+      "source": "aromika",
+      "name": "Шампунь Топ малыш Миндальное молочко и глицерин 800 мл",
+      "brand": "",
+      "old_price": 1507,
+      "price": 1281,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/TM_Shampoo_Mind_milk_i_glicirin_800_v1.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/shampun-top-malysh-mindalnoe-molochko-i-glicirin-800-ml/"
+    },
+    {
+      "source": "aromika",
+      "name": "Шампунь Топ малыш Персик и глицерин 800 мл",
+      "brand": "",
+      "old_price": 1507,
+      "price": 1281,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/TM_Shampoo_Persik_i_glicirin_800_v1.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/shampun-top-malysh-persik-i-glicirin-800-ml/"
+    },
+    {
+      "source": "aromika",
+      "name": "Кондиционер Perfect Blossem dream 1500 мл.",
+      "brand": "",
+      "old_price": 1553,
+      "price": 1320,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/CND_Perfect_Blossom_Fresh_1500.png.webp",
+      "url": "https://aromika.shop/vse-tovary/kondicioner-perfect-blossem-dream-1500-ml/"
+    },
+    {
+      "source": "aromika",
+      "name": "Кондиционер Perfect Crystal fresh 1500 мл.",
+      "brand": "",
+      "old_price": 1553,
+      "price": 1320,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/CND_Perfect_Crystal_Fresh_1500.png.webp",
+      "url": "https://aromika.shop/vse-tovary/kondicioner-perfect-crystal-fresh-1500-ml/"
+    },
+    {
+      "source": "aromika",
+      "name": "Кондиционер Perfect Frost fresh 1500 мл.",
+      "brand": "",
+      "old_price": 1553,
+      "price": 1320,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/CND_Perfect_Frost_Fresh_1500.png.webp",
+      "url": "https://aromika.shop/vse-tovary/kondicioner-perfect-frost-fresh-1500-ml/"
+    },
+    {
+      "source": "aromika",
+      "name": "Все товары",
+      "brand": "",
+      "old_price": 1553,
+      "price": 1320,
+      "discount": 15,
+      "image": "https://aromika.shop/images/detailed/137/12.png",
+      "url": "https://aromika.shop/vse-tovary/page-3/"
     },
     {
       "source": "aromika",
       "name": "Шампунь «Beauty ESSENCE» Восстановление 800 мл",
-      "brand": "Beauty ESSENCE",
+      "brand": "",
       "old_price": 1656,
       "price": 1408,
       "discount": 15,
-      "image": "",
-      "url": "https://aromika.shop/"
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/Sh_BeautyESSENCE_Hydration.png.webp",
+      "url": "https://aromika.shop/vse-tovary/aromika-beauty-essence-bessulfatnyy-shampun-dlya-okrashennyh-volos-800ml/"
+    },
+    {
+      "source": "aromika",
+      "name": "Шампунь «Beauty ESSENCE» Детокс 800 мл",
+      "brand": "",
+      "old_price": 1656,
+      "price": 1408,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/Sh_BeautyESSENCE_Detox.png.webp",
+      "url": "https://aromika.shop/vse-tovary/aromika-beauty-essence-bessulfatnyy-shampun-balans-800ml/"
+    },
+    {
+      "source": "aromika",
+      "name": "Все товары",
+      "brand": "",
+      "old_price": 1656,
+      "price": 1408,
+      "discount": 15,
+      "image": "https://aromika.shop/images/detailed/137/12.png",
+      "url": "https://aromika.shop/vse-tovary/page-6/"
+    },
+    {
+      "source": "aromika",
+      "name": "Бессульфатный шампунь «Beauty ESSENCE» Keratin 800 мл",
+      "brand": "",
+      "old_price": 2018,
+      "price": 1715,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/Sh_BeautyESSENCE_Keratin.png.webp",
+      "url": "https://aromika.shop/vse-tovary/aromika-beauty-essence-bessulfatnyy-shampun-keratinoterapiya-800ml/"
     },
     {
       "source": "aromika",
       "name": "Бессульфатный шампунь «Beauty ESSENCE» Питание и увлажнение 800 мл",
-      "brand": "Beauty ESSENCE",
+      "brand": "",
       "old_price": 2018,
       "price": 1715,
       "discount": 15,
-      "image": "",
-      "url": "https://aromika.shop/"
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/Sh_BeautyESSENCE_Nutrition.png.webp",
+      "url": "https://aromika.shop/vse-tovary/aromika-beauty-essence-bessulfatnyy-shampun-pitanie-i-uvlazhnenie-800ml/"
+    },
+    {
+      "source": "aromika",
+      "name": "Все товары",
+      "brand": "",
+      "old_price": 2018,
+      "price": 1715,
+      "discount": 15,
+      "image": "https://aromika.shop/images/detailed/137/12.png",
+      "url": "https://aromika.shop/vse-tovary/"
+    },
+    {
+      "source": "aromika",
+      "name": "Стиральный порошок Perfect Aromika Colour 2.4 кг.",
+      "brand": "",
+      "old_price": 3198,
+      "price": 2718,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/WPowder_Perfect_Colour_2.4.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/stiralnyy-poroshok-perfect-aromika-colour-2-4-kg/"
+    },
+    {
+      "source": "aromika",
+      "name": "Стиральный порошок Perfect Aromika Universal 2.4 кг.",
+      "brand": "",
+      "old_price": 3198,
+      "price": 2718,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/WPowder_Perfect_Universal_2.4.png.webp",
+      "url": "https://aromika.shop/vse-tovary/stiralnyy-poroshok-perfect-aromika-universal-2-4-kg/"
+    },
+    {
+      "source": "aromika",
+      "name": "Гель для стирки «Perfect Aromika» White 3300 мл",
+      "brand": "",
+      "old_price": 3416,
+      "price": 2904,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/Perfect_WG_White_3300_.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/perfect-gel-dlya-stirki-3300ml-extra-white/"
+    },
+    {
+      "source": "aromika",
+      "name": "Гель для стирки «Perfect Aromika» Mix Color 3300 мл",
+      "brand": "",
+      "old_price": 3416,
+      "price": 2904,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/Perfect_WG_Colour_3300_.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/perfect-gel-dlya-stirki-3300ml-mix-color/"
+    },
+    {
+      "source": "aromika",
+      "name": "Гель для стирки «Perfect Aromika» Universal 3300 мл",
+      "brand": "",
+      "old_price": 3416,
+      "price": 2904,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/Perfect_WG_Universal_3300_.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/perfect-gel-dlya-stirki-3300ml-universal-ru/"
+    },
+    {
+      "source": "aromika",
+      "name": "Гель для стирки «Perfect Aromika» Ухаживающий 3300 мл",
+      "brand": "",
+      "old_price": 3416,
+      "price": 2904,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/Perfect_WG_Delicate_3300_.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/perfect-gel-dlya-stirki-3300ml-uhazhivayuschiy/"
+    },
+    {
+      "source": "aromika",
+      "name": "Гель для стирки «Perfect Aromika» Black & Dark 3300 мл",
+      "brand": "",
+      "old_price": 3416,
+      "price": 2904,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/Perfect_WG_Black_Dark_3300_.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/gel-dlya-stirki-perfect-aromika-black-and-dark-3300-ml/"
+    },
+    {
+      "source": "aromika",
+      "name": "Стиральный порошок Perfect Aromika Colour 5 кг.",
+      "brand": "",
+      "old_price": 6400,
+      "price": 5440,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/WPowder_Perfect_Colour_5.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/stiralnyy-poroshok-perfect-aromika-colour-5-kg/"
+    },
+    {
+      "source": "aromika",
+      "name": "Стиральный порошок Perfect Aromika Universal 5 кг.",
+      "brand": "",
+      "old_price": 6400,
+      "price": 5440,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/WPowder_Perfect_Universal_5.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/stiralnyy-poroshok-perfect-aromika-universal-5-kg/"
     }
   ]
 }
