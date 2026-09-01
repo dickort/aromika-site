@@ -1,0 +1,478 @@
+/* AROMIKA GLOBAL SITE SHELL · FINAL V1
+   One shared header + footer for all Tilda pages.
+   Isolated ags-* classes intentionally avoid collisions with legacy page CSS.
+*/
+:root{
+  --ags-pink:#ea2f78;
+  --ags-ink:#171717;
+  --ags-muted:#777276;
+  --ags-paper:#ffffff;
+  --ags-soft:#f7f4f2;
+  --ags-line:rgba(0,0,0,.09);
+  --ags-dark:#0d0e11;
+}
+*{box-sizing:border-box}
+html{scroll-behavior:smooth}
+body.ags-lock{overflow:hidden!important}
+
+#aromika-global-header,
+#aromika-global-footer{
+  font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+}
+#aromika-global-header a,
+#aromika-global-footer a{text-decoration:none}
+
+#aromika-global-header{
+  position:relative;
+  z-index:10050;
+  width:100%;
+  height:88px;
+  background:rgba(255,255,255,.97);
+  border-bottom:1px solid var(--ags-line);
+  color:var(--ags-ink);
+}
+#aromika-global-header *{box-sizing:border-box}
+#aromika-global-header .ags-wrap{
+  width:min(calc(100% - 64px),1380px);
+  height:100%;
+  margin:auto;
+}
+#aromika-global-header .ags-row{
+  height:100%;
+  display:flex;
+  align-items:center;
+}
+#aromika-global-header .ags-logo{
+  flex:0 0 auto;
+  display:block;
+}
+#aromika-global-header .ags-logo img{
+  display:block;
+  width:155px;
+  height:auto;
+}
+#aromika-global-header .ags-nav{
+  margin-left:auto;
+  display:flex;
+  align-items:center;
+  gap:24px;
+}
+#aromika-global-header .ags-nav a{
+  position:relative;
+  display:inline-flex;
+  align-items:center;
+  min-height:38px;
+  color:inherit;
+  font-size:12.5px;
+  line-height:1;
+  font-weight:620;
+  white-space:nowrap;
+  transition:color .18s ease;
+}
+#aromika-global-header .ags-nav a:hover,
+#aromika-global-header .ags-nav a.is-active{
+  color:var(--ags-pink);
+}
+#aromika-global-header .ags-nav a.is-active:after{
+  content:"";
+  position:absolute;
+  left:0;right:0;bottom:3px;
+  height:1px;
+  background:currentColor;
+}
+#aromika-global-header .ags-lang{
+  margin-left:24px;
+  display:flex;
+  align-items:center;
+  gap:8px;
+}
+#aromika-global-header .ags-lang button,
+#aromika-global-header .ags-mobile-lang button{
+  border:0;
+  padding:7px 0;
+  background:transparent;
+  color:inherit;
+  font:inherit;
+  font-size:10px;
+  line-height:1;
+  font-weight:820;
+  letter-spacing:.4px;
+  opacity:.38;
+  cursor:pointer;
+}
+#aromika-global-header .ags-lang button.is-active,
+#aromika-global-header .ags-mobile-lang button.is-active{
+  opacity:1;
+  color:var(--ags-pink);
+}
+#aromika-global-header .ags-lang i{
+  width:1px;height:11px;background:#ccc;
+}
+#aromika-global-header .ags-theme{
+  width:40px;height:40px;
+  margin-left:14px;
+  border:1px solid var(--ags-line);
+  border-radius:50%;
+  background:#fff;
+  color:inherit;
+  display:grid;
+  place-items:center;
+  cursor:pointer;
+  transition:.18s ease;
+}
+#aromika-global-header .ags-theme:hover{background:var(--ags-soft)}
+#aromika-global-header .ags-theme svg{
+  width:17px;height:17px;
+  fill:none;stroke:currentColor;stroke-width:1.7;
+  stroke-linecap:round;stroke-linejoin:round;
+}
+#aromika-global-header .ags-shop{
+  margin-left:12px;
+  min-height:46px;
+  padding:0 20px;
+  border-radius:999px;
+  background:var(--ags-ink);
+  color:#fff;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  font-size:12.5px;
+  font-weight:720;
+  white-space:nowrap;
+  transition:.18s ease;
+}
+#aromika-global-header .ags-shop:hover{background:var(--ags-pink)}
+#aromika-global-header .ags-burger{
+  display:none;
+  margin-left:auto;
+  width:44px;height:44px;
+  border:0;background:transparent;
+  position:relative;
+  z-index:10053;
+  color:inherit;
+  cursor:pointer;
+}
+#aromika-global-header .ags-burger span{
+  position:absolute;
+  left:8px;
+  width:27px;height:2px;
+  background:currentColor;
+  transition:.28s ease;
+}
+#aromika-global-header .ags-burger span:first-child{top:16px}
+#aromika-global-header .ags-burger span:last-child{top:26px}
+#aromika-global-header .ags-burger.is-open span:first-child{
+  top:21px;transform:rotate(45deg);
+}
+#aromika-global-header .ags-burger.is-open span:last-child{
+  top:21px;transform:rotate(-45deg);
+}
+#aromika-global-header .ags-overlay{
+  position:fixed;
+  z-index:10050;
+  inset:0;
+  background:rgba(0,0,0,.34);
+  opacity:0;
+  visibility:hidden;
+  pointer-events:none;
+  transition:.25s ease;
+}
+#aromika-global-header .ags-overlay.is-open{
+  opacity:1;
+  visibility:visible;
+  pointer-events:auto;
+}
+#aromika-global-header .ags-drawer{
+  position:fixed;
+  z-index:10051;
+  top:0;right:0;bottom:0;
+  width:min(88vw,420px);
+  padding:96px 30px 34px;
+  background:var(--ags-paper);
+  color:var(--ags-ink);
+  transform:translateX(104%);
+  transition:transform .45s cubic-bezier(.22,1,.36,1);
+  overflow:auto;
+}
+#aromika-global-header .ags-drawer.is-open{transform:none}
+#aromika-global-header .ags-drawer nav{
+  display:flex;
+  flex-direction:column;
+}
+#aromika-global-header .ags-drawer nav a{
+  padding:9px 0;
+  color:inherit;
+  font-size:25px;
+  line-height:1.13;
+  font-weight:700;
+  letter-spacing:-.7px;
+}
+#aromika-global-header .ags-drawer nav a.is-active{color:var(--ags-pink)}
+#aromika-global-header .ags-mobile-lang{
+  margin-top:25px;
+  display:flex;
+  gap:18px;
+}
+#aromika-global-header .ags-mobile-shop{
+  margin-top:26px;
+  min-height:55px;
+  padding:0 20px;
+  border-radius:999px;
+  background:var(--ags-pink);
+  color:#fff;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  font-size:13px;
+  font-weight:740;
+}
+
+/* Footer */
+#aromika-global-footer{
+  width:100%;
+  margin:0;
+  background:#0d0e11;
+  color:#f4f4f5;
+}
+#aromika-global-footer *{box-sizing:border-box}
+#aromika-global-footer .agsf-wrap{
+  width:min(calc(100% - 64px),1380px);
+  margin:auto;
+}
+#aromika-global-footer .agsf-top{
+  padding:76px 0 64px;
+  display:grid;
+  grid-template-columns:1.42fr repeat(4,1fr);
+  gap:42px;
+}
+#aromika-global-footer .agsf-brand{
+  max-width:310px;
+}
+#aromika-global-footer .agsf-logo{
+  display:block;
+  width:132px;
+  filter:brightness(0) invert(1);
+}
+#aromika-global-footer .agsf-brand p{
+  margin:23px 0 25px;
+  color:#999ba1;
+  font-size:12px;
+  line-height:1.65;
+}
+#aromika-global-footer .agsf-shop{
+  min-height:45px;
+  padding:0 17px;
+  border:1px solid rgba(255,255,255,.13);
+  border-radius:999px;
+  display:inline-flex;
+  align-items:center;
+  gap:12px;
+  color:#fff;
+  font-size:11.5px;
+  font-weight:700;
+}
+#aromika-global-footer .agsf-shop:hover{
+  border-color:var(--ags-pink);
+  color:#fff;
+}
+#aromika-global-footer .agsf-title{
+  margin-bottom:20px;
+  color:#73757b;
+  font-size:9.5px;
+  line-height:1;
+  font-weight:820;
+  letter-spacing:1px;
+  text-transform:uppercase;
+}
+#aromika-global-footer .agsf-col{
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap:12px;
+}
+#aromika-global-footer .agsf-col a{
+  color:#d6d6d8;
+  font-size:11.5px;
+  line-height:1.35;
+  transition:color .16s ease;
+}
+#aromika-global-footer .agsf-col a:hover{color:#fff}
+#aromika-global-footer .agsf-contact{
+  min-height:92px;
+  border-top:1px solid rgba(255,255,255,.09);
+  border-bottom:1px solid rgba(255,255,255,.09);
+  display:grid;
+  grid-template-columns:1.25fr 1fr 1fr auto;
+  align-items:stretch;
+}
+#aromika-global-footer .agsf-contact-item{
+  padding:23px 30px 23px 0;
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  color:#fff;
+}
+#aromika-global-footer a.agsf-contact-item:hover b{color:var(--ags-pink)}
+#aromika-global-footer .agsf-contact-item small{
+  margin-bottom:7px;
+  color:#6f7177;
+  font-size:9px;
+  font-weight:790;
+  letter-spacing:.7px;
+  text-transform:uppercase;
+}
+#aromika-global-footer .agsf-contact-item b{
+  color:#f2f2f3;
+  font-size:13px;
+  font-weight:620;
+  transition:color .16s ease;
+}
+#aromika-global-footer .agsf-lang{
+  min-width:150px;
+  display:flex;
+  justify-content:flex-end;
+  align-items:center;
+  gap:9px;
+}
+#aromika-global-footer .agsf-lang button{
+  border:0;background:transparent;
+  color:#787a80;
+  cursor:pointer;
+  font-size:10px;font-weight:820;
+}
+#aromika-global-footer .agsf-lang button.is-active{color:#fff}
+#aromika-global-footer .agsf-lang i{
+  width:1px;height:11px;background:rgba(255,255,255,.18);
+}
+#aromika-global-footer .agsf-bottom{
+  min-height:82px;
+  display:grid;
+  grid-template-columns:1fr auto auto;
+  gap:26px;
+  align-items:center;
+  color:#65676d;
+  font-size:10px;
+}
+#aromika-global-footer .agsf-legal{
+  display:flex;
+  gap:22px;
+}
+#aromika-global-footer .agsf-legal a{color:#777980}
+#aromika-global-footer .agsf-top-btn{
+  border:0;background:transparent;color:#a5a6aa;
+  display:flex;align-items:center;gap:9px;
+  cursor:pointer;
+  font-size:10px;
+}
+#aromika-global-footer .agsf-top-btn svg{
+  width:16px;height:16px;fill:none;stroke:currentColor;stroke-width:1.7;
+}
+
+/* Dark mode */
+html[data-aromika-theme="dark"] #aromika-global-header{
+  --ags-paper:#111216;
+  --ags-ink:#f5f5f6;
+  --ags-muted:#a6a7ab;
+  --ags-soft:#1c1e23;
+  --ags-line:rgba(255,255,255,.09);
+  background:rgba(13,14,17,.97);
+  color:#f5f5f6;
+}
+html[data-aromika-theme="dark"] #aromika-global-header .ags-logo img{
+  filter:brightness(0) invert(1);
+}
+html[data-aromika-theme="dark"] #aromika-global-header .ags-theme{
+  background:#191b20;
+}
+html[data-aromika-theme="dark"] #aromika-global-header .ags-shop{
+  background:var(--ags-pink);
+  color:#fff;
+}
+
+/* Tablet */
+@media(max-width:1180px){
+  #aromika-global-header .ags-nav{gap:16px}
+  #aromika-global-header .ags-nav a{font-size:11.5px}
+  #aromika-global-header .ags-lang{margin-left:17px}
+  #aromika-global-header .ags-shop{padding:0 16px}
+  #aromika-global-footer .agsf-top{
+    grid-template-columns:1.35fr repeat(2,1fr);
+    row-gap:50px;
+  }
+}
+@media(max-width:980px){
+  #aromika-global-header{height:76px}
+  #aromika-global-header .ags-wrap{width:calc(100% - 40px)}
+  #aromika-global-header .ags-nav,
+  #aromika-global-header .ags-lang,
+  #aromika-global-header .ags-theme,
+  #aromika-global-header .ags-shop{display:none}
+  #aromika-global-header .ags-burger{display:block}
+  #aromika-global-footer .agsf-contact{
+    grid-template-columns:1fr 1fr;
+  }
+  #aromika-global-footer .agsf-contact-item{
+    border-bottom:1px solid rgba(255,255,255,.07);
+  }
+  #aromika-global-footer .agsf-lang{
+    justify-content:flex-start;
+    min-height:70px;
+  }
+}
+@media(max-width:700px){
+  #aromika-global-header{height:68px}
+  #aromika-global-header .ags-wrap{width:calc(100% - 30px)}
+  #aromika-global-header .ags-logo img{width:132px}
+  #aromika-global-header .ags-drawer{
+    padding:88px 24px 28px;
+  }
+  #aromika-global-header .ags-drawer nav a{
+    font-size:23px;
+  }
+  #aromika-global-footer .agsf-wrap{
+    width:calc(100% - 30px);
+  }
+  #aromika-global-footer .agsf-top{
+    padding:58px 0 50px;
+    grid-template-columns:1fr 1fr;
+    gap:40px 22px;
+  }
+  #aromika-global-footer .agsf-brand{
+    grid-column:1/-1;
+    max-width:350px;
+  }
+  #aromika-global-footer .agsf-contact{
+    grid-template-columns:1fr;
+  }
+  #aromika-global-footer .agsf-contact-item{
+    padding:18px 0;
+  }
+  #aromika-global-footer .agsf-lang{
+    min-height:62px;
+  }
+  #aromika-global-footer .agsf-bottom{
+    padding:27px 0 32px;
+    grid-template-columns:1fr auto;
+    gap:18px;
+  }
+  #aromika-global-footer .agsf-legal{
+    grid-column:1/-1;
+    grid-row:1;
+    flex-wrap:wrap;
+  }
+}
+@media(max-width:430px){
+  #aromika-global-footer .agsf-top{
+    grid-template-columns:1fr;
+  }
+  #aromika-global-footer .agsf-brand{
+    grid-column:auto;
+  }
+}
+@media(prefers-reduced-motion:reduce){
+  #aromika-global-header *,
+  #aromika-global-footer *{
+    transition:none!important;
+    scroll-behavior:auto!important;
+  }
+}
