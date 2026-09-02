@@ -1,0 +1,32 @@
+AROMIKA.INFO — ИСПРАВЛЕННЫЙ HEAD
+
+Да, предыдущий вариант был архитектурно неудачным:
+ради dark-mode правок я заменил весь глобальный bundle на V4.
+
+Теперь разделено правильно:
+
+1. aromika-info-global-base-v941.js
+   — навигация + Romi + товарный подбор + mobile.
+
+2. aromika-dark-contrast-v1.css
+   — только dark-mode contrast fixes.
+
+УСТАНОВКА
+
+GitHub → dickort/aromika-site → main → корень:
+- загрузить aromika-info-global-base-v941.js
+- загрузить aromika-dark-contrast-v1.css
+
+Tilda → НАСТРОЙКИ САЙТА → Ещё → HTML-код внутри HEAD:
+- удалить строку с aromika-info-global-v4.js;
+- вставить содержимое GLOBAL_HEAD_INFO_CORRECTED.txt.
+
+После этого: «Опубликовать все страницы».
+
+Важно:
+старые assistant-v5.*, romi-v8-core.*, romi-v9-*.js/css и отдельные
+aromika-common-nav-final-v1.js в HEAD не нужны, потому что base-файл
+уже содержит рабочую глобальную интеграцию V9.4.1.
+
+Преимущество:
+дальше можно менять dark-mode CSS отдельно, не затрагивая Romi и навигацию.

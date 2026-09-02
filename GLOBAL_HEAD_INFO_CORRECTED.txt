@@ -1,0 +1,6 @@
+<!-- AROMIKA.INFO · GLOBAL BASE V9.4.1 + DARK CONTRAST V1
+Install in TILDA → SITE SETTINGS → HEAD.
+Dark-mode corrections are isolated in a separate CSS file.
+-->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/aromika-dark-contrast-v1.css?v=1.0.0">
+<script src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/aromika-info-global-base-v941.js?v=9.4.1" defer></script>

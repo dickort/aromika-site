@@ -1,31 +1,33 @@
 {
-  "node_check_1": {
+  "base_js_1": {
     "ok": true,
     "output": ""
   },
-  "node_check_2": {
+  "base_js_2": {
     "ok": true,
     "output": ""
   },
-  "node_check_3": {
+  "base_js_3": {
     "ok": true,
     "output": ""
   },
-  "node_check_4": {
+  "base_js_4": {
     "ok": true,
     "output": ""
   },
   "static": {
-    "new_global_guard": true,
-    "dark_style_injected": true,
-    "careers_fix": true,
-    "company_fix": true,
-    "brands_fix": true,
-    "contacts_fix": true,
-    "perfect_fix": true,
-    "dark_only_main_rules": true,
-    "no_compare": true,
-    "no_b2b_quick": true
+    "head_has_base": true,
+    "head_has_dark_css": true,
+    "head_no_v4_bundle": true,
+    "dark_only": true,
+    "careers": true,
+    "company": true,
+    "brands": true,
+    "contacts": true,
+    "perfect": true
   },
-  "sha256": "5d31452efae11d4d84998e93ccb75fc037497c216e9cb88254c60c11304948c4"
+  "sha256": {
+    "base_js": "7bc92fe7f7a083b62159d32092d29d3ebe84de0fc4c6cba4a341728eaa88411b",
+    "dark_css": "9a6a8ca31ef6bb135fa60e84e649995889642ccf827eb2505891a5c0d9ff3e08"
+  }
 }
