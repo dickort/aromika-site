@@ -1,0 +1,28 @@
+AROMIKA.INFO V9.4.2 — DARK CONTRAST FIX
+
+Изменения только для DARK MODE:
+- /careers — вторичный текст, город/источник вакансии, chips и фильтры;
+- /okompanii — вторичный текст, системные подписи, route cards;
+- /brands — повышен контраст SKU/номер/описание без перекрашивания фирменных карточек;
+- /kontakty — вторичные подписи, карточки городов, модальные контакты;
+- /perfect — выбранные product tags и вторичные подписи.
+
+Главная страница и фирменные цветовые палитры брендов не перекрашиваются.
+
+Установка:
+1. GitHub → dickort/aromika-site → main.
+2. Загрузить в корень:
+   aromika-info-global-v4.js
+3. Tilda → Настройки сайта → Ещё → HTML-код внутри HEAD.
+4. Удалить старую строку aromika-info-global-v3.js.
+5. Вставить содержимое GLOBAL_HEAD_INFO_V4.txt.
+6. Опубликовать все страницы.
+7. Проверить dark mode:
+   /careers
+   /okompanii
+   /brands
+   /kontakty
+   /perfect
+
+Rollback:
+вернуть предыдущий GLOBAL_HEAD_INFO_V3 и aromika-info-global-v3.js.
