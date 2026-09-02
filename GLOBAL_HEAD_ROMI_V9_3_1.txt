@@ -1,0 +1,18 @@
+<!-- AROMIKA.INFO · ROMI V9.3.1
+SELF-CONTAINED UI: remove all previous Romi script/style includes before installing this block.
+-->
+<script>
+window.AROMIKA_ASSISTANT_ASSET_BASE='https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/romi/';
+window.ROMI_V8_CONFIG={
+  site:'info',
+  apiBase:'https://aromika.shop/index.php?dispatch=romi.',
+  shopOrigin:'https://aromika.shop',
+  infoOrigin:'https://aromika.info'
+};
+</script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/romi-v9-3-ui.css?v=9.3.1">
+
+<script src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/aromika-common-nav-final-v1.js?v=1.0.0" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/assistant-v9-3.js?v=9.3.1" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/romi-v9-3-core.js?v=9.3.1" defer></script>
