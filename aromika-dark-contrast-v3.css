@@ -1,0 +1,276 @@
+/* AROMIKA.INFO — DARK CONTRAST FIX V2
+   IMPORTANT: dark-mode only. Does not touch Romi, navigation or page layout.
+*/
+
+html[data-aromika-theme="dark"]{
+  --ar-dc-text:#f5f5f6;
+  --ar-dc-muted:#c2c4ca;
+  --ar-dc-subtle:#a8abb3;
+  --ar-dc-chip:#2a2d34;
+  --ar-dc-chip-2:#32353d;
+  --ar-dc-line:rgba(255,255,255,.14);
+}
+
+/* CAREERS */
+html[data-aromika-theme="dark"] #careers-page .cv-hero p,
+html[data-aromika-theme="dark"] #careers-page .cv-section-head>p,
+html[data-aromika-theme="dark"] #careers-page .cv-vacancy p,
+html[data-aromika-theme="dark"] #careers-page .cv-team p,
+html[data-aromika-theme="dark"] #careers-page .cv-step p{
+  color:var(--ar-dc-muted)!important;
+}
+html[data-aromika-theme="dark"] #careers-page .cv-vacancy-city{
+  color:#eceef2!important;
+}
+html[data-aromika-theme="dark"] #careers-page .cv-vacancy-source,
+html[data-aromika-theme="dark"] #careers-page .cv-updated,
+html[data-aromika-theme="dark"] #careers-page .cv-vacancy-note,
+html[data-aromika-theme="dark"] #careers-page .cv-team-num,
+html[data-aromika-theme="dark"] #careers-page .cv-board-foot{
+  color:var(--ar-dc-subtle)!important;
+}
+html[data-aromika-theme="dark"] #careers-page .cv-meta span,
+html[data-aromika-theme="dark"] #careers-page .cv-team-tags span{
+  background:var(--ar-dc-chip)!important;
+  color:#f0f1f3!important;
+  border:1px solid var(--ar-dc-line)!important;
+}
+html[data-aromika-theme="dark"] #careers-page .cv-filter{
+  background:#202229!important;
+  color:#d9dbe0!important;
+  border:1px solid var(--ar-dc-line)!important;
+}
+html[data-aromika-theme="dark"] #careers-page .cv-filter.is-active{
+  background:#f5f5f6!important;
+  color:#171717!important;
+  border-color:#f5f5f6!important;
+}
+
+/* COMPANY / COOP */
+html[data-aromika-theme="dark"] #company-coop-page .cc-proof span,
+html[data-aromika-theme="dark"] #company-coop-page .cc-section-head>p,
+html[data-aromika-theme="dark"] #company-coop-page .cc-system p,
+html[data-aromika-theme="dark"] #company-coop-page .cc-route p,
+html[data-aromika-theme="dark"] #company-coop-page .cc-window-lead{
+  color:var(--ar-dc-muted)!important;
+}
+html[data-aromika-theme="dark"] #company-coop-page .cc-system article>span,
+html[data-aromika-theme="dark"] #company-coop-page .cc-route>span,
+html[data-aromika-theme="dark"] #company-coop-page .cc-route i,
+html[data-aromika-theme="dark"] #company-coop-page .cc-window-head small{
+  color:var(--ar-dc-subtle)!important;
+}
+html[data-aromika-theme="dark"] #company-coop-page .cc-route:hover,
+html[data-aromika-theme="dark"] #company-coop-page .cc-route.is-active{
+  background:#1e2026!important;
+}
+html[data-aromika-theme="dark"] #company-coop-page .cc-route.is-active{
+  box-shadow:inset 3px 0 0 #ea2f78!important;
+}
+html[data-aromika-theme="dark"] #company-coop-page .cc-btn--line{
+  background:#1c1e23!important;
+  color:#f3f4f6!important;
+  border-color:var(--ar-dc-line)!important;
+}
+
+/* BRANDS
+   Keep each brand's palette. Only make small text / SKU pills readable.
+*/
+html[data-aromika-theme="dark"] #brands-page-v16 .brv16-card__top>span:first-child{
+  opacity:.82!important;
+}
+html[data-aromika-theme="dark"] #brands-page-v16 .brv16-card__top>span:nth-child(2){
+  opacity:1!important;
+  background:rgba(255,255,255,.12)!important;
+  border-color:currentColor!important;
+}
+html[data-aromika-theme="dark"] #brands-page-v16 .brv16-card__top i{
+  opacity:.9!important;
+}
+html[data-aromika-theme="dark"] #brands-page-v16 .brv16-card__copy>b,
+html[data-aromika-theme="dark"] #brands-page-v16 .brv16-card__copy p{
+  opacity:.96!important;
+}
+html[data-aromika-theme="dark"] #brands-page-v16 .brv16-card__copy u{
+  opacity:1!important;
+}
+html[data-aromika-theme="dark"] #brands-page-v16 .brv16-hero-grid>p,
+html[data-aromika-theme="dark"] #brands-page-v16 .arb-head>p,
+html[data-aromika-theme="dark"] #brands-page-v16 .brv16-tf-copy p{
+  color:#c1c3c9!important;
+}
+html[data-aromika-theme="dark"] #brands-page-v16 .brv16-tf-cat span{
+  color:#d8dae0!important;
+  opacity:1!important;
+}
+
+/* CONTACTS */
+html[data-aromika-theme="dark"] #contacts-page .ac-hero-copy>p,
+html[data-aromika-theme="dark"] #contacts-page .ac-hero-contact>p,
+html[data-aromika-theme="dark"] #contacts-page .ac-section-head>p,
+html[data-aromika-theme="dark"] #contacts-page .ac-sales-note,
+html[data-aromika-theme="dark"] #contacts-page .ac-map-hint,
+html[data-aromika-theme="dark"] .ac-modal-lead,
+html[data-aromika-theme="dark"] .ac-person-phone{
+  color:var(--ar-dc-muted)!important;
+}
+html[data-aromika-theme="dark"] #contacts-page .ac-hero-contact>small,
+html[data-aromika-theme="dark"] #contacts-page .ac-find-copy small,
+html[data-aromika-theme="dark"] #contacts-page .ac-search-item small,
+html[data-aromika-theme="dark"] #contacts-page .ac-city-card-top i,
+html[data-aromika-theme="dark"] #contacts-page .ac-city-card>small,
+html[data-aromika-theme="dark"] .ac-modal-note{
+  color:var(--ar-dc-subtle)!important;
+}
+html[data-aromika-theme="dark"] .ac-person-head small{
+  background:var(--ar-dc-chip)!important;
+  color:#f0f1f3!important;
+  border:1px solid var(--ar-dc-line)!important;
+}
+html[data-aromika-theme="dark"] #contacts-page .ac-city-card{
+  background:#14161b!important;
+}
+html[data-aromika-theme="dark"] #contacts-page .ac-city-card:hover{
+  background:#1f2228!important;
+}
+html[data-aromika-theme="dark"] #contacts-page .ac-city-card-action{
+  color:#d6d8dd!important;
+}
+
+/* PERFECT */
+html[data-aromika-theme="dark"] #perfect-page .pf-lead,
+html[data-aromika-theme="dark"] #perfect-page .pf-product-info-desc,
+html[data-aromika-theme="dark"] #perfect-page .pf-product-price-note,
+html[data-aromika-theme="dark"] #perfect-page .pf-product-shop-text,
+html[data-aromika-theme="dark"] #perfect-page .pf-orbit-hint{
+  color:#c1c3c9!important;
+}
+html[data-aromika-theme="dark"] #perfect-page .pf-product-info-label,
+html[data-aromika-theme="dark"] #perfect-page .pf-product-price-label,
+html[data-aromika-theme="dark"] #perfect-page .pf-product-info-facts small{
+  color:#aeb1b8!important;
+}
+html[data-aromika-theme="dark"] #perfect-page .pf-product-info-count,
+html[data-aromika-theme="dark"] #perfect-page .pf-product-info-facts>div{
+  background:var(--ar-dc-chip)!important;
+  color:#f4f5f6!important;
+  border-color:var(--ar-dc-line)!important;
+}
+html[data-aromika-theme="dark"] #perfect-page .pf-product-price-box{
+  background:#202229!important;
+  border-color:var(--ar-dc-line)!important;
+}
+
+
+/* =========================================================
+   BRAND PRODUCT PAGES — PRICE / FACT CARDS IN DARK MODE
+   Antibak / Wash Expert / Maxi Power / Prachka
+   ========================================================= */
+
+/* ANTIBAK */
+html[data-aromika-theme="dark"] #antibak-page .ab-product-price-box{
+  background:#20242b!important;
+  border-color:rgba(126,211,255,.28)!important;
+}
+html[data-aromika-theme="dark"] #antibak-page .ab-product-price-value{
+  color:#f7f9fb!important;
+}
+html[data-aromika-theme="dark"] #antibak-page .ab-product-price-label{
+  color:#7ed3ff!important;
+}
+html[data-aromika-theme="dark"] #antibak-page .ab-product-price-note,
+html[data-aromika-theme="dark"] #antibak-page .ab-product-info-desc,
+html[data-aromika-theme="dark"] #antibak-page .ab-product-shop-text{
+  color:#bcc4cd!important;
+}
+html[data-aromika-theme="dark"] #antibak-page .ab-product-info-facts>div{
+  background:#20262d!important;
+  border-color:rgba(126,211,255,.15)!important;
+}
+html[data-aromika-theme="dark"] #antibak-page .ab-product-info-facts small{
+  color:#7ed3ff!important;
+}
+html[data-aromika-theme="dark"] #antibak-page .ab-product-info-facts b{
+  color:#f5f7f9!important;
+}
+
+/* WASH EXPERT */
+html[data-aromika-theme="dark"] #washexpert-page .we-product-price-box{
+  background:#20242b!important;
+  border-color:rgba(94,168,255,.28)!important;
+}
+html[data-aromika-theme="dark"] #washexpert-page .we-product-price-value{
+  color:#f7f9fb!important;
+}
+html[data-aromika-theme="dark"] #washexpert-page .we-product-price-label{
+  color:#7db8ff!important;
+}
+html[data-aromika-theme="dark"] #washexpert-page .we-product-price-note,
+html[data-aromika-theme="dark"] #washexpert-page .we-product-info-desc,
+html[data-aromika-theme="dark"] #washexpert-page .we-product-shop-text{
+  color:#bcc4cd!important;
+}
+html[data-aromika-theme="dark"] #washexpert-page .we-product-info-facts>div{
+  background:#20262d!important;
+  border-color:rgba(94,168,255,.15)!important;
+}
+html[data-aromika-theme="dark"] #washexpert-page .we-product-info-facts small{
+  color:#7db8ff!important;
+}
+html[data-aromika-theme="dark"] #washexpert-page .we-product-info-facts b{
+  color:#f5f7f9!important;
+}
+
+/* MAXI POWER */
+html[data-aromika-theme="dark"] #maxipower-page .mp-product-price-box{
+  background:#20242b!important;
+  border-color:rgba(106,194,255,.26)!important;
+}
+html[data-aromika-theme="dark"] #maxipower-page .mp-product-price-value{
+  color:#f7f9fb!important;
+}
+html[data-aromika-theme="dark"] #maxipower-page .mp-product-price-label{
+  color:#7ec8ff!important;
+}
+html[data-aromika-theme="dark"] #maxipower-page .mp-product-price-note,
+html[data-aromika-theme="dark"] #maxipower-page .mp-product-info-desc,
+html[data-aromika-theme="dark"] #maxipower-page .mp-product-shop-text{
+  color:#bcc4cd!important;
+}
+html[data-aromika-theme="dark"] #maxipower-page .mp-product-info-facts>div{
+  background:#20262d!important;
+  border-color:rgba(106,194,255,.14)!important;
+}
+html[data-aromika-theme="dark"] #maxipower-page .mp-product-info-facts small{
+  color:#7ec8ff!important;
+}
+html[data-aromika-theme="dark"] #maxipower-page .mp-product-info-facts b{
+  color:#f5f7f9!important;
+}
+
+/* PRACHKA */
+html[data-aromika-theme="dark"] #prachka-page .pr-product-price-box{
+  background:#20242b!important;
+  border-color:rgba(238,113,168,.24)!important;
+}
+html[data-aromika-theme="dark"] #prachka-page .pr-product-price-value{
+  color:#f7f9fb!important;
+}
+html[data-aromika-theme="dark"] #prachka-page .pr-product-price-label{
+  color:#f08bb8!important;
+}
+html[data-aromika-theme="dark"] #prachka-page .pr-product-price-note,
+html[data-aromika-theme="dark"] #prachka-page .pr-product-info-desc,
+html[data-aromika-theme="dark"] #prachka-page .pr-product-shop-text{
+  color:#bcc4cd!important;
+}
+html[data-aromika-theme="dark"] #prachka-page .pr-product-info-facts>div{
+  background:#20262d!important;
+  border-color:rgba(238,113,168,.14)!important;
+}
+html[data-aromika-theme="dark"] #prachka-page .pr-product-info-facts small{
+  color:#f08bb8!important;
+}
+html[data-aromika-theme="dark"] #prachka-page .pr-product-info-facts b{
+  color:#f5f7f9!important;
+}
