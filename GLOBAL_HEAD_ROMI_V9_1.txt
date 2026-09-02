@@ -1,0 +1,21 @@
+<!-- AROMIKA.INFO · ROMI V9.1 FINAL
+Same Romi core as aromika.shop.
+Context differs only through ROMI_V8_CONFIG.site.
+No product comparison.
+-->
+<script>
+window.AROMIKA_ASSISTANT_ASSET_BASE='https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/romi/';
+window.ROMI_V8_CONFIG={
+  site:'info',
+  apiBase:'https://aromika.shop/index.php?dispatch=romi.',
+  shopOrigin:'https://aromika.shop',
+  infoOrigin:'https://aromika.info'
+};
+</script>
+
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/assistant-v5.css?v=5.0.3">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/romi-v9-1-final.css">
+
+<script src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/aromika-common-nav-final-v1.js?v=1.0.0" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/assistant-v5.js?v=5.0.3" defer></script>
+<script src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/romi-v9-1-final.js" defer></script>

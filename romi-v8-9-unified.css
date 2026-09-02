@@ -1,0 +1,434 @@
+/* Romi V8.1 UI — fixed panel geometry, compact product assistant */
+#aromika-assistant.is-rv8 .aa-panel{
+  width:min(500px,calc(100vw - 32px));
+  height:min(690px,calc(100dvh - 120px));
+  max-height:none;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+#aromika-assistant.is-rv8 .aa-topbar,
+#aromika-assistant.is-rv8 .aa-screen,
+#aromika-assistant.is-rv8 .aa-foot{display:none!important}
+
+#aromika-assistant .rv81-layer{
+  display:none;
+  flex:1 1 auto;
+  min-height:0;
+  width:100%;
+  background:var(--aa-paper,#fff);
+  color:var(--aa-ink,#171717);
+  flex-direction:column;
+}
+#aromika-assistant .rv81-layer.is-active{display:flex}
+#aromika-assistant .rv81-head{
+  flex:0 0 64px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:9px 12px 9px 14px;
+  border-bottom:1px solid var(--aa-line,rgba(0,0,0,.08));
+  background:var(--aa-paper,#fff);
+}
+#aromika-assistant .rv81-person{display:flex;align-items:center;gap:10px;min-width:0}
+#aromika-assistant .rv81-avatar{
+  width:43px;height:43px;border-radius:14px;overflow:hidden;display:grid;place-items:end center;
+  background:linear-gradient(145deg,#fff,#f8e9ef);border:1px solid rgba(234,47,120,.16);flex:0 0 auto
+}
+#aromika-assistant .rv81-avatar img{width:100%;height:100%;object-fit:contain;object-position:center bottom}
+#aromika-assistant .rv81-person b{display:block;font-size:14px;line-height:1.15}
+#aromika-assistant .rv81-person small{display:flex;align-items:center;gap:5px;margin-top:3px;color:var(--aa-muted,#706b6d);font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#aromika-assistant .rv81-person small:before{content:"";width:6px;height:6px;border-radius:50%;background:#35a853;flex:0 0 auto}
+#aromika-assistant .rv81-head-actions{display:flex;gap:5px}
+#aromika-assistant .rv81-head-actions button{
+  width:36px;height:36px;border:1px solid var(--aa-line,rgba(0,0,0,.08));border-radius:11px;background:var(--aa-soft,#f7f4f5);
+  color:var(--aa-ink,#171717);font-size:18px;line-height:1;cursor:pointer
+}
+#aromika-assistant .rv81-head-actions button:hover{border-color:rgba(234,47,120,.28);color:var(--aa-pink,#ea2f78)}
+
+#aromika-assistant .rv81-chat{
+  flex:1 1 auto;min-height:0;overflow:auto;padding:15px 14px 10px;overscroll-behavior:contain;scrollbar-width:thin
+}
+#aromika-assistant .rv81-msg{display:flex;margin:0 0 10px}
+#aromika-assistant .rv81-msg--user{justify-content:flex-end}
+#aromika-assistant .rv81-bubble{
+  max-width:88%;padding:10px 12px;border-radius:15px 15px 15px 5px;
+  background:var(--aa-soft,#f7f4f5);border:1px solid var(--aa-line,rgba(0,0,0,.08));
+  font-size:12px;line-height:1.48
+}
+#aromika-assistant .rv81-msg--user .rv81-bubble{
+  background:var(--aa-ink,#171717);border-color:var(--aa-ink,#171717);color:#fff;border-radius:15px 15px 5px 15px
+}
+#aromika-assistant .rv81-loading{display:flex;align-items:center;gap:4px}
+#aromika-assistant .rv81-loading span{width:5px;height:5px;border-radius:50%;background:var(--aa-pink,#ea2f78);animation:rv81dot .75s infinite alternate}
+#aromika-assistant .rv81-loading span:nth-child(2){animation-delay:.12s}
+#aromika-assistant .rv81-loading span:nth-child(3){animation-delay:.24s}
+#aromika-assistant .rv81-loading b{margin-left:5px;font-size:10px;font-weight:650;color:var(--aa-muted,#706b6d)}
+@keyframes rv81dot{to{transform:translateY(-3px);opacity:.45}}
+
+#aromika-assistant .rv81-quick{
+  flex:0 0 auto;display:flex;gap:6px;overflow-x:auto;padding:8px 12px 4px;background:var(--aa-paper,#fff);scrollbar-width:none
+}
+#aromika-assistant .rv81-quick::-webkit-scrollbar{display:none}
+#aromika-assistant .rv81-quick button{
+  flex:0 0 auto;height:32px;padding:0 11px;border:1px solid var(--aa-line,rgba(0,0,0,.08));border-radius:999px;
+  background:var(--aa-paper,#fff);color:var(--aa-ink,#171717);font-size:10.5px;font-weight:680;cursor:pointer
+}
+#aromika-assistant .rv81-quick button:hover{border-color:rgba(234,47,120,.35);color:var(--aa-pink,#ea2f78)}
+
+#aromika-assistant .rv81-form{
+  flex:0 0 auto;display:grid;grid-template-columns:minmax(0,1fr) 46px;gap:7px;padding:9px 12px 12px;
+  border-top:1px solid var(--aa-line,rgba(0,0,0,.08));background:var(--aa-paper,#fff)
+}
+#aromika-assistant .rv81-form textarea{
+  width:100%;height:46px;min-height:46px;max-height:92px;resize:none;padding:12px 13px;border:1px solid var(--aa-line,rgba(0,0,0,.10));
+  border-radius:14px;background:var(--aa-soft,#f7f4f5);color:var(--aa-ink,#171717);font-size:12px;line-height:1.35;outline:none
+}
+#aromika-assistant .rv81-form textarea:focus{border-color:rgba(234,47,120,.5);box-shadow:0 0 0 3px rgba(234,47,120,.08)}
+#aromika-assistant .rv81-form>button{
+  width:46px;height:46px;border:0;border-radius:14px;background:var(--aa-pink,#ea2f78);color:#fff;font-size:20px;cursor:pointer
+}
+
+#aromika-assistant .rv81-result-head{width:100%;display:flex;justify-content:space-between;align-items:center;margin:4px 0 8px}
+#aromika-assistant .rv81-result-head b{font-size:12.5px}
+#aromika-assistant .rv81-result-head span{font-size:10px;color:var(--aa-muted,#706b6d)}
+#aromika-assistant .rv81-products{width:100%;display:grid;gap:8px}
+#aromika-assistant .rv81-product{
+  display:grid;grid-template-columns:92px minmax(0,1fr);gap:11px;padding:10px;
+  border:1px solid var(--aa-line,rgba(0,0,0,.08));border-radius:16px;background:var(--aa-paper,#fff)
+}
+#aromika-assistant .rv81-product-img{
+  width:92px;height:108px;border-radius:12px;background:var(--aa-soft,#f7f4f5);display:grid;place-items:center;overflow:hidden;text-decoration:none;color:#999;font-size:9px;font-weight:800
+}
+#aromika-assistant .rv81-product-img img{width:100%;height:100%;object-fit:contain}
+#aromika-assistant .rv81-product-main{min-width:0}
+#aromika-assistant .rv81-sku{color:var(--aa-pink,#ea2f78);font-size:9px;font-weight:800;letter-spacing:.15px}
+#aromika-assistant .rv81-name{display:block;margin-top:2px;color:var(--aa-ink,#171717);font-size:12px;font-weight:740;line-height:1.3;text-decoration:none}
+#aromika-assistant .rv81-name:hover{color:var(--aa-pink,#ea2f78)}
+#aromika-assistant .rv81-meta{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+#aromika-assistant .rv81-meta span{padding:3px 6px;border-radius:999px;background:var(--aa-soft,#f7f4f5);color:var(--aa-muted,#706b6d);font-size:8.8px}
+#aromika-assistant .rv81-price{display:flex;align-items:center;gap:6px;margin-top:7px}
+#aromika-assistant .rv81-price strong{font-size:14px}
+#aromika-assistant .rv81-price del{color:#999;font-size:10px}
+#aromika-assistant .rv81-price em{font-style:normal;color:var(--aa-pink,#ea2f78);font-size:9px;font-weight:800}
+#aromika-assistant .rv81-card-actions{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+#aromika-assistant .rv81-card-actions a,
+#aromika-assistant .rv81-card-actions button{
+  min-height:31px;padding:7px 9px;border:1px solid var(--aa-line,rgba(0,0,0,.10));border-radius:9px;background:var(--aa-paper,#fff);
+  color:var(--aa-ink,#171717);font:inherit;font-size:9.5px;font-weight:720;text-decoration:none;cursor:pointer
+}
+#aromika-assistant .rv81-card-actions .rv81-primary{background:var(--aa-ink,#171717);color:#fff;border-color:var(--aa-ink,#171717)}
+#aromika-assistant .rv81-card-actions button.is-selected{border-color:rgba(234,47,120,.38);background:rgba(234,47,120,.08);color:var(--aa-pink,#ea2f78)}
+#aromika-assistant .rv81-card-actions .is-added{background:var(--aa-pink,#ea2f78);border-color:var(--aa-pink,#ea2f78);color:#fff}
+
+#aromika-assistant .rv81-compare{width:100%;display:grid;gap:7px}
+#aromika-assistant .rv81-compare>div{padding:10px;border:1px solid var(--aa-line,rgba(0,0,0,.08));border-radius:12px;display:grid;grid-template-columns:1fr auto;gap:4px 8px}
+#aromika-assistant .rv81-compare b{font-size:10.5px;line-height:1.3}
+#aromika-assistant .rv81-compare span{font-size:11px;font-weight:800}
+#aromika-assistant .rv81-compare small{font-size:9px;color:var(--aa-muted,#706b6d)}
+#aromika-assistant .rv81-compare a{font-size:9px;color:var(--aa-pink,#ea2f78);text-decoration:none;font-weight:700;text-align:right}
+
+#aromika-assistant .rv81-cartmsg{width:100%;padding:11px;border-radius:13px;background:rgba(234,47,120,.07);border:1px solid rgba(234,47,120,.14);display:grid;grid-template-columns:1fr auto;gap:3px 9px}
+#aromika-assistant .rv81-cartmsg b{font-size:11px}
+#aromika-assistant .rv81-cartmsg span{font-size:9px;color:var(--aa-muted,#706b6d)}
+#aromika-assistant .rv81-cartmsg a{grid-row:1/3;grid-column:2;color:var(--aa-pink,#ea2f78);font-size:9.5px;font-weight:750;text-decoration:none;align-self:center}
+
+#aromika-assistant .rv81-feedback{width:100%;display:grid;gap:7px}
+#aromika-assistant .rv81-feedback>b{font-size:12px}
+#aromika-assistant .rv81-fields{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+#aromika-assistant .rv81-feedback input,
+#aromika-assistant .rv81-feedback textarea{
+  width:100%;border:1px solid var(--aa-line,rgba(0,0,0,.10));border-radius:10px;background:var(--aa-soft,#f7f4f5);
+  color:var(--aa-ink,#171717);font:inherit;font-size:10.5px;padding:9px;outline:none
+}
+#aromika-assistant .rv81-feedback>button{height:38px;border:0;border-radius:10px;background:var(--aa-ink,#171717);color:#fff;font:inherit;font-size:10.5px;font-weight:750;cursor:pointer}
+#aromika-assistant .rv81-file{display:grid;gap:4px;color:var(--aa-muted,#706b6d);font-size:9px}
+#aromika-assistant .rv81-form-error{color:#b3264f;font-size:9px}
+#aromika-assistant .rv81-hp{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;opacity:0!important}
+
+html[data-aromika-theme="dark"] #aromika-assistant .rv81-person small:before{background:#62c77b}
+
+@media(max-width:720px){
+  #aromika-assistant.is-rv8 .aa-panel{
+    position:fixed;left:8px;right:8px;bottom:calc(76px + env(safe-area-inset-bottom));
+    width:auto;height:calc(100dvh - 94px - env(safe-area-inset-bottom));max-height:none;border-radius:22px
+  }
+}
+@media(max-width:480px){
+  #aromika-assistant .rv81-head{flex-basis:58px;padding:7px 9px}
+  #aromika-assistant .rv81-avatar{width:39px;height:39px;border-radius:12px}
+  #aromika-assistant .rv81-chat{padding:11px 9px 7px}
+  #aromika-assistant .rv81-quick{padding-left:9px;padding-right:9px}
+  #aromika-assistant .rv81-form{padding:8px 9px 9px}
+  #aromika-assistant .rv81-product{grid-template-columns:78px minmax(0,1fr);gap:9px;padding:8px}
+  #aromika-assistant .rv81-product-img{width:78px;height:94px}
+  #aromika-assistant .rv81-name{font-size:11px}
+  #aromika-assistant .rv81-fields{grid-template-columns:1fr}
+}
+
+
+/* V8.2 card layout override: compact, full-width, adapted to Romi panel */
+#aromika-assistant .rv81-products{
+  grid-template-columns:minmax(0,1fr);
+  width:100%;
+}
+#aromika-assistant .rv81-product{
+  width:100%;
+  min-width:0;
+  display:grid;
+  grid-template-columns:82px minmax(0,1fr);
+  grid-template-rows:auto auto;
+  gap:9px 11px;
+  padding:10px;
+  overflow:hidden;
+}
+#aromika-assistant .rv81-product-img{
+  width:82px;
+  height:94px;
+  align-self:start;
+}
+#aromika-assistant .rv81-product-main{
+  min-width:0;
+  overflow:hidden;
+}
+#aromika-assistant .rv81-name{
+  display:-webkit-box;
+  -webkit-line-clamp:3;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  font-size:11.5px;
+  line-height:1.28;
+}
+#aromika-assistant .rv81-meta{
+  margin-top:5px;
+}
+#aromika-assistant .rv81-price{
+  margin-top:6px;
+}
+#aromika-assistant .rv81-price strong{
+  font-size:14px;
+}
+#aromika-assistant .rv81-card-actions{
+  grid-column:1 / -1;
+  width:100%;
+  display:grid;
+  grid-template-columns:1.15fr 1fr 1fr;
+  gap:6px;
+  margin-top:0;
+}
+#aromika-assistant .rv81-card-actions a,
+#aromika-assistant .rv81-card-actions button{
+  width:100%;
+  min-width:0;
+  min-height:34px;
+  padding:7px 6px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  font-size:9.5px;
+}
+#aromika-assistant .rv81-result-head{
+  position:sticky;
+  top:-15px;
+  z-index:2;
+  padding:7px 0 5px;
+  background:var(--aa-paper,#fff);
+}
+@media(max-width:480px){
+  #aromika-assistant .rv81-product{
+    grid-template-columns:74px minmax(0,1fr);
+    gap:8px 9px;
+    padding:9px;
+  }
+  #aromika-assistant .rv81-product-img{
+    width:74px;
+    height:86px;
+  }
+  #aromika-assistant .rv81-name{
+    font-size:10.8px;
+    -webkit-line-clamp:3;
+  }
+  #aromika-assistant .rv81-meta span{
+    font-size:8px;
+    padding:3px 5px;
+  }
+  #aromika-assistant .rv81-card-actions{
+    gap:5px;
+  }
+  #aromika-assistant .rv81-card-actions a,
+  #aromika-assistant .rv81-card-actions button{
+    min-height:33px;
+    font-size:9px;
+    padding:6px 4px;
+  }
+}
+
+
+/* V8.7 — full product visibility in cards */
+#aromika-assistant .rv81-product{
+  grid-template-columns:104px minmax(0,1fr) !important;
+  align-items:start !important;
+}
+#aromika-assistant .rv81-product-img{
+  width:104px !important;
+  height:126px !important;
+  padding:7px !important;
+  box-sizing:border-box !important;
+  background:#fff !important;
+  overflow:hidden !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+#aromika-assistant .rv81-product-img img{
+  width:100% !important;
+  height:100% !important;
+  max-width:100% !important;
+  max-height:100% !important;
+  object-fit:contain !important;
+  object-position:center center !important;
+  transform:none !important;
+  clip-path:none !important;
+}
+#aromika-assistant .rv81-card-actions{
+  grid-template-columns:1.15fr 1fr 1fr !important;
+}
+@media(max-width:480px){
+  #aromika-assistant .rv81-product{
+    grid-template-columns:92px minmax(0,1fr) !important;
+  }
+  #aromika-assistant .rv81-product-img{
+    width:92px !important;
+    height:114px !important;
+    padding:6px !important;
+  }
+  #aromika-assistant .rv81-card-actions{
+    grid-template-columns:1fr 1fr !important;
+  }
+  #aromika-assistant .rv81-card-actions .rv81-primary{
+    grid-column:1 / -1 !important;
+  }
+}
+
+
+
+
+/* =========================================================
+   ROMI V8.9 — UNIFIED ASSISTANT
+   V5 is the only main menu on BOTH sites.
+   V8 is only the "Подобрать товар" subview.
+   Comparison is intentionally removed.
+   ========================================================= */
+
+#aromika-assistant.is-rv8 .aa-panel{
+  width:min(500px,calc(100vw - 32px)) !important;
+  height:min(690px,calc(100dvh - 40px)) !important;
+  max-height:none !important;
+  overflow:hidden !important;
+  display:flex !important;
+  flex-direction:column !important;
+}
+
+#aromika-assistant.is-rv8 .rv81-layer{
+  flex:1 1 auto !important;
+  min-height:0 !important;
+  width:100% !important;
+  height:100% !important;
+  overflow:hidden !important;
+  display:flex !important;
+  flex-direction:column !important;
+}
+
+#aromika-assistant.is-rv8 .rv81-chat{
+  flex:1 1 0 !important;
+  min-height:0 !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+}
+
+/* Cards: one image + text row, two full-width actions below. */
+#aromika-assistant .rv81-product{
+  width:100% !important;
+  min-width:0 !important;
+  display:grid !important;
+  grid-template-columns:104px minmax(0,1fr) !important;
+  grid-template-rows:auto auto !important;
+  gap:9px 11px !important;
+  padding:10px !important;
+  box-sizing:border-box !important;
+  overflow:hidden !important;
+}
+
+#aromika-assistant .rv81-product-img{
+  width:104px !important;
+  height:126px !important;
+  padding:7px !important;
+  box-sizing:border-box !important;
+  background:#fff !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  overflow:hidden !important;
+}
+
+#aromika-assistant .rv81-product-img img{
+  width:100% !important;
+  height:100% !important;
+  max-width:100% !important;
+  max-height:100% !important;
+  object-fit:contain !important;
+  object-position:center !important;
+  transform:none !important;
+  clip-path:none !important;
+}
+
+#aromika-assistant .rv81-card-actions{
+  grid-column:1 / -1 !important;
+  display:grid !important;
+  grid-template-columns:1fr 1fr !important;
+  gap:6px !important;
+  width:100% !important;
+}
+
+#aromika-assistant .rv81-card-actions a,
+#aromika-assistant .rv81-card-actions button{
+  width:100% !important;
+  min-width:0 !important;
+  min-height:36px !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+  text-align:center !important;
+  white-space:nowrap !important;
+}
+
+@media(max-width:720px){
+  #aromika-assistant.is-rv8 .aa-panel{
+    position:fixed !important;
+    left:8px !important;
+    right:8px !important;
+    top:8px !important;
+    bottom:8px !important;
+    width:auto !important;
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    border-radius:20px !important;
+  }
+}
+
+@media(max-width:480px){
+  #aromika-assistant .rv81-product{
+    grid-template-columns:92px minmax(0,1fr) !important;
+  }
+  #aromika-assistant .rv81-product-img{
+    width:92px !important;
+    height:114px !important;
+    padding:6px !important;
+  }
+}
