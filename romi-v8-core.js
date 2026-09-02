@@ -148,11 +148,28 @@ function remove(el){if(el&&el.parentNode) el.parentNode.removeChild(el)}
 function build(){
   ROOT=document.getElementById('aromika-assistant');
   if(!ROOT) return false;
-  PANEL=ROOT.querySelector('.aa-panel');
-  if(!PANEL) return false;
 
-  var old=PANEL.querySelector('.rv8-layer,.rv81-layer');
-  if(old) old.remove();
+  if(C.site==='info'){
+    var legacyPanel=ROOT.querySelector('.aa-panel');
+    if(!legacyPanel) return false;
+
+    var shell=document.getElementById('romi-v8-info-shell');
+    if(!shell){
+      shell=document.createElement('div');
+      shell.id='romi-v8-info-shell';
+      shell.className='rv81-info-shell';
+      document.body.appendChild(shell);
+    }else{
+      shell.innerHTML='';
+    }
+    PANEL=shell;
+    document.documentElement.classList.add('rv81-info-ready');
+  }else{
+    PANEL=ROOT.querySelector('.aa-panel');
+    if(!PANEL) return false;
+    var old=PANEL.querySelector('.rv8-layer,.rv81-layer');
+    if(old) old.remove();
+  }
 
   LAYER=document.createElement('section');
   LAYER.className='rv81-layer';
@@ -204,21 +221,20 @@ function build(){
   if(C.site==='info'){
     var launcher=ROOT.querySelector('.aa-launcher');
     if(launcher){
-      launcher.addEventListener('click',function(){
-        setTimeout(function(){
-          if(ROOT.classList.contains('is-open')) open();
-          else closeToHome();
-        },0);
-      });
+      launcher.addEventListener('click',function(e){
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        open();
+      },true);
     }
     var teaser=ROOT.querySelector('.aa-teaser');
     if(teaser){
       teaser.addEventListener('click',function(e){
         if(e.target.closest && e.target.closest('.aa-teaser-close')) return;
-        setTimeout(function(){
-          if(ROOT.classList.contains('is-open')) open();
-        },0);
-      });
+        e.preventDefault();
+        e.stopImmediatePropagation();
+        open();
+      },true);
     }
   }
 
@@ -241,13 +257,27 @@ function intro(){
   say(RU.hello);
 }
 function open(){
-  ROOT.classList.add('is-rv8');
+  if(C.site==='info'){
+    document.documentElement.classList.add('rv81-info-open');
+    if(PANEL) PANEL.classList.add('is-open');
+    // neutralize old V5 panel state
+    ROOT.classList.remove('is-open');
+    var launcher=ROOT.querySelector('.aa-launcher');
+    if(launcher) launcher.setAttribute('aria-expanded','false');
+  }else{
+    ROOT.classList.add('is-rv8');
+  }
   LAYER.classList.add('is-active');
   setTimeout(function(){INPUT&&INPUT.focus({preventScroll:true})},80);
 }
 function closeToHome(){
-  ROOT.classList.remove('is-rv8');
   LAYER.classList.remove('is-active');
+  if(C.site==='info'){
+    document.documentElement.classList.remove('rv81-info-open');
+    if(PANEL) PANEL.classList.remove('is-open');
+  }else{
+    ROOT.classList.remove('is-rv8');
+  }
 }
 function closeAll(){
   closeToHome();
