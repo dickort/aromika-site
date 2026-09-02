@@ -199,6 +199,29 @@ function build(){
   LAYER.querySelector('.rv81-back').addEventListener('click',closeToHome);
   LAYER.querySelector('.rv81-x').addEventListener('click',closeAll);
 
+  // On aromika.info the launcher should open the unified V8 interface directly.
+  // V5 still builds the shell/mascot, but its old home screen is no longer used.
+  if(C.site==='info'){
+    var launcher=ROOT.querySelector('.aa-launcher');
+    if(launcher){
+      launcher.addEventListener('click',function(){
+        setTimeout(function(){
+          if(ROOT.classList.contains('is-open')) open();
+          else closeToHome();
+        },0);
+      });
+    }
+    var teaser=ROOT.querySelector('.aa-teaser');
+    if(teaser){
+      teaser.addEventListener('click',function(e){
+        if(e.target.closest && e.target.closest('.aa-teaser-close')) return;
+        setTimeout(function(){
+          if(ROOT.classList.contains('is-open')) open();
+        },0);
+      });
+    }
+  }
+
   loadSession().then(function(){
     if(Array.isArray(STATE.messages)&&STATE.messages.length){
       STATE.messages.forEach(function(m){
@@ -228,8 +251,10 @@ function closeToHome(){
 }
 function closeAll(){
   closeToHome();
-  var x=ROOT.querySelector('.aa-panel-close');
-  if(x) x.click();
+  ROOT.classList.remove('is-open');
+  document.documentElement.classList.remove('aa-lock-mobile');
+  var launcher=ROOT.querySelector('.aa-launcher');
+  if(launcher) launcher.setAttribute('aria-expanded','false');
 }
 function clicks(e){
   var q=e.target.closest('[data-q]');
@@ -390,32 +415,31 @@ function brandMatch(p,d){
 }
 
 function searchTerms(q){
-  var n=normalizeQuery(q),d=detect(q),a=[n];
+  var n=normalizeQuery(q),d=detect(q),a=[];
 
-  // Query the most discriminating combinations first.
+  // Most specific phrase first.
   if(d.brand && d.category==='laundry') a.push(d.brand+' гель для стирки');
-  if(d.brand && d.category==='dish') a.push(d.brand+' для мытья посуды');
-  if(d.brand && d.category==='liquid_soap') a.push(d.brand+' жидкое мыло');
-  if(d.brand && d.category==='shower') a.push(d.brand+' гель для душа');
+  else if(d.brand && d.category==='dish') a.push(d.brand+' гель для мытья посуды');
+  else if(d.brand && d.category==='shower') a.push(d.brand+' гель для душа');
+  else if(d.brand && d.category==='liquid_soap') a.push(d.brand+' жидкое мыло');
+  else if(n) a.push(n);
 
-  if(d.category==='laundry') a.push('гель для стирки','для стирки');
-  if(d.category==='dish') a.push('гель для мытья посуды','посуды');
-  if(d.category==='shower') a.push('гель для душа');
-  if(d.category==='liquid_soap') a.push('жидкое мыло');
-  if(d.category==='soap_generic') a.push('жидкое мыло','мыло');
-  if(d.category==='bar_soap') a.push('кусковое мыло','банное мыло');
-  if(d.category==='shampoo') a.push('шампунь');
-  if(d.category==='cleaning') a.push('чистящее средство');
+  // Strong category query second.
+  if(d.category==='laundry') a.push('гель для стирки');
+  else if(d.category==='dish') a.push('гель для мытья посуды');
+  else if(d.category==='shower') a.push('гель для душа');
+  else if(d.category==='liquid_soap') a.push('жидкое мыло');
+  else if(d.category==='soap_generic') a.push('мыло');
+  else if(d.category==='bar_soap') a.push('банное мыло');
+  else if(d.category==='shampoo') a.push('шампунь');
+  else if(d.category==='laundry_conditioner') a.push('кондиционер для белья');
+  else if(d.category==='cleaning') a.push('чистящее средство');
 
+  // Brand-only query is only a fallback pool; hard filtering still applies later.
   if(d.brand) a.push(d.brand);
-  if(d.purpose==='black') a.push('black','черного');
-  if(d.purpose==='white') a.push('white','белого');
-  if(d.purpose==='color') a.push('color','цветного');
-  if(d.purpose==='hypo') a.push('гипоаллергенный','eco');
 
-  return uniq(a).slice(0,7);
+  return uniq(a).slice(0,3);
 }
-
 function score(p,q){
   var s=productText(p),d=detect(q),sc=0;
 
@@ -462,13 +486,15 @@ function score(p,q){
 function smartSearch(q){
   var wait=loading(),terms=searchTerms(q),d=detect(q);
 
-  Promise.all(terms.map(function(term){
-    return api('search',{query:{q:term}})
-      .then(function(j){return j.products||[]})
-      .catch(function(){return []});
-  })).then(function(groups){
-    remove(wait);
+  function fetchTerms(list){
+    return Promise.all(list.map(function(term){
+      return api('search',{query:{q:term}})
+        .then(function(j){return j.products||[]})
+        .catch(function(){return []});
+    }));
+  }
 
+  function prepare(groups){
     var byId={};
     groups.forEach(function(g){
       g.forEach(function(p){byId[p.product_id]=p});
@@ -476,7 +502,6 @@ function smartSearch(q){
 
     var list=Object.keys(byId).map(function(k){return byId[k]});
 
-    // Hard filtering is the main correctness gate.
     if(d.explicitCategory){
       list=list.filter(function(p){return categoryMatch(p,d)});
     }
@@ -485,6 +510,33 @@ function smartSearch(q){
     }
 
     list.sort(function(a,b){return score(b,q)-score(a,q)});
+    return list;
+  }
+
+  fetchTerms(terms).then(function(groups){
+    var list=prepare(groups);
+
+    // If a strict phrase still yielded no candidate, retry one broad category
+    // query. Server returns up to 40 candidates, then categoryMatch gates them.
+    if(!list.length && d.category){
+      var fallback='';
+      if(d.category==='laundry') fallback='стирки';
+      else if(d.category==='dish') fallback='посуды';
+      else if(d.category==='shower') fallback='душа';
+      else if(d.category==='liquid_soap'||d.category==='soap_generic'||d.category==='bar_soap') fallback='мыло';
+      else if(d.category==='shampoo') fallback='шампунь';
+      else if(d.category==='laundry_conditioner') fallback='кондиционер';
+      else if(d.category==='cleaning') fallback='чистящее';
+
+      if(fallback){
+        return fetchTerms([fallback]).then(function(extra){
+          return prepare(groups.concat(extra));
+        });
+      }
+    }
+    return list;
+  }).then(function(list){
+    remove(wait);
 
     STATE.last_query=q;
     STATE.last_products=list.slice(0,8).map(function(p){return p.product_id});
@@ -501,7 +553,6 @@ function smartSearch(q){
     say(RU.error);
   });
 }
-
 function meta(p){
   var v=productVolume(p),bits=[];
   if(v) bits.push(v>=1000?(Math.round(v/100)/10)+' л':v+' мл');
