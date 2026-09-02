@@ -1,0 +1,119 @@
+<script id="aromika-theme-bootstrap">(function(){try{var k='aromika-theme',s=localStorage.getItem(k),d=s?s==='dark':window.matchMedia&&window.matchMedia('(prefers-color-scheme: dark)').matches,t=d?'dark':'light';document.documentElement.setAttribute('data-aromika-theme',t);document.documentElement.style.colorScheme=t;}catch(e){}})();</script>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/site-v23.css">
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/company-coop-v5.css?v=5.0.0">
+<div id="aromika-onepiece-site"><section id="aromika-hero"><header class="ar-header"><div class="ar-wrap ar-header-row"><a class="ar-logo" href="/"><img alt="Aromika" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/logo.webp"/></a><nav class="ar-nav"><a data-i18n="products" href="/#products">Продукция</a><a data-i18n="brands" href="/brands">Бренды</a><a data-i18n="about" href="/okompanii#cooperation">Сотрудничество</a><a data-i18n="partners" href="/okompanii#cooperation">Партнёрам</a><a data-i18n="careers" href="/vacancies">Работа в компании</a><a data-i18n="contacts" href="/kontakty">Контакты</a></nav><div aria-label="Language switcher" class="ar-lang"><button class="is-active" data-lang="ru" type="button">RU</button><span></span><button data-lang="kk" type="button">ҚАЗ</button></div><button aria-label="Включить тёмную тему" aria-pressed="false" class="ar-theme-toggle" title="Включить тёмную тему" type="button"><svg aria-hidden="true" class="ar-theme-icon ar-theme-moon" viewbox="0 0 24 24"><path d="M20.4 15.5A8.7 8.7 0 0 1 8.5 3.6 8.8 8.8 0 1 0 20.4 15.5Z"></path></svg><svg aria-hidden="true" class="ar-theme-icon ar-theme-sun" viewbox="0 0 24 24"><circle cx="12" cy="12" r="4"></circle><path d="M12 2v2M12 20v2M4.93 4.93l1.42 1.42M17.65 17.65l1.42 1.42M2 12h2M20 12h2M4.93 19.07l1.42-1.42M17.65 6.35l1.42-1.42"></path></svg></button><a class="ar-shop" href="https://aromika.shop/" rel="noopener" target="_blank"><span data-i18n="buyOnline">Купить онлайн</span> ↗</a><button aria-label="Меню" class="ar-burger" type="button"><span></span><span></span></button></div></header><div class="ar-overlay"></div><aside class="ar-menu"><nav><a data-i18n="products" href="/#products">Продукция</a><a data-i18n="brands" href="/brands">Бренды</a><a data-i18n="about" href="/okompanii#cooperation">Сотрудничество</a><a data-i18n="partners" href="/okompanii#cooperation">Партнёрам</a><a data-i18n="careers" href="/vacancies">Работа в компании</a><a data-i18n="contacts" href="/kontakty">Контакты</a></nav><div aria-label="Language switcher" class="ar-menu-lang"><button class="is-active" data-lang="ru" type="button">RU</button><button data-lang="kk" type="button">ҚАЗ</button></div><a class="ar-menu-shop" href="https://aromika.shop/" rel="noopener" target="_blank"><span data-i18n="shop">Интернет-магазин</span> ↗</a></aside></section>
+<main id="company-coop-page">
+  <section class="cc-hero cc-reveal" id="top">
+    <div class="cc-wrap cc-hero-grid">
+      <div class="cc-hero-copy">
+        <div class="cc-kicker"><span></span><b data-cc="heroKicker">Aromika</b></div>
+        <h1><span data-cc="heroTitle1">Производим.</span><span data-cc="heroTitle2">Доставляем.</span><em data-cc="heroTitle3">Работаем вместе.</em></h1>
+        <p data-cc="heroLead">Aromika объединяет собственное производство, региональные продажи, склады и логистику. Это позволяет нам развивать свои бренды и выстраивать понятную работу с партнёрами.</p>
+        <div class="cc-hero-actions">
+          <a href="#company" class="cc-btn cc-btn--dark"><span data-cc="heroCompany">О компании</span><i>↓</i></a>
+          <a href="#cooperation" class="cc-btn cc-btn--line"><span data-cc="heroCoop">Сотрудничество</span><i>↓</i></a>
+        </div>
+      </div>
+      <div class="cc-proof" aria-label="Ключевые факты">
+        <div class="cc-proof-item"><strong>2005</strong><span data-cc="proof1">работаем на рынке Казахстана</span></div>
+        <div class="cc-proof-item"><strong>28</strong><span data-cc="proof2">структурных подразделений</span></div>
+        <div class="cc-proof-item cc-proof-item--wide"><strong data-cc="proof3Strong">4 звена</strong><span data-cc="proof3">производство · дистрибуция · продажи · логистика</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="cc-company" id="company">
+    <div class="cc-wrap">
+      <div class="cc-section-head cc-reveal">
+        <div>
+          <div class="cc-kicker"><span></span><b data-cc="companyKicker">О компании</b></div>
+          <h2 data-cc-html="companyTitle">Всё необходимое —<br><em>внутри одной системы.</em></h2>
+        </div>
+        <p data-cc="companyLead">Мы не отделяем продукт от его движения к клиенту: производство, коммерческая работа и поставка связаны между собой.</p>
+      </div>
+      <div class="cc-system cc-reveal">
+        <article><span>01</span><h3 data-cc="sys1Title">Производство</h3><p data-cc="sys1Text">Собственные линейки бытовой химии и средств ежедневного ухода.</p><a href="/proizvodstvo"><b data-cc="sys1Link">Подробнее</b> ↗</a></article>
+        <article><span>02</span><h3 data-cc="sys2Title">Дистрибуция</h3><p data-cc="sys2Text">Работа с собственным и партнёрским ассортиментом через региональную инфраструктуру.</p></article>
+        <article><span>03</span><h3 data-cc="sys3Title">Продажи</h3><p data-cc="sys3Text">Торговые команды работают с розницей, оптом, HoReCa и корпоративными клиентами.</p></article>
+        <article><span>04</span><h3 data-cc="sys4Title">Логистика</h3><p data-cc="sys4Text">Склады, комплектование заказов и организация региональной доставки.</p></article>
+      </div>
+    </div>
+  </section>
+
+  <section class="cc-coop" id="cooperation">
+    <div class="cc-wrap">
+      <div class="cc-section-head cc-reveal">
+        <div>
+          <div class="cc-kicker"><span></span><b data-cc="coopKicker">Сотрудничество</b></div>
+          <h2 data-cc-html="coopTitle">Открыты к новым<br><em>деловым связям.</em></h2>
+        </div>
+        <p data-cc="coopLead">Выберите направление: закупки и HoReCa ведут региональные команды, а дистрибуционные и производственные предложения рассматривает центральный офис.</p>
+      </div>
+
+      <div class="cc-business-block cc-reveal">
+        <div class="cc-business-head">
+          <span class="cc-collab-tag" data-cc="businessTag">Коммерческим партнёрам</span>
+          <h3 data-cc="businessTitle">Стать партнёром Aromika</h3>
+          <p data-cc="businessText">Выберите подходящее направление — ROMI покажет контакт региональной команды или подготовит обращение в центральный офис.</p>
+        </div>
+        <div class="cc-business-grid">
+          <article class="cc-business-card" data-business-type="retail">
+            <span>01</span>
+            <h4 data-cc="businessRetail">Закупка продукции Aromika</h4>
+            <p data-cc="businessRetailText">Для торговых сетей, оптовых компаний и розничных клиентов.</p>
+            <button class="cc-business-button" type="button" data-romi-open="partnership-retail" aria-controls="aromika-assistant"><span data-cc="businessCta">Продолжить в ROMI</span><i>→</i></button>
+          </article>
+          <article class="cc-business-card" data-business-type="horeca">
+            <span>02</span>
+            <h4 data-cc="businessHoreca">HoReCa и корпоративные клиенты</h4>
+            <p data-cc="businessHorecaText">Подбор и поставки продукции для регулярных профессиональных задач.</p>
+            <button class="cc-business-button" type="button" data-romi-open="partnership-horeca" aria-controls="aromika-assistant"><span data-cc="businessCta">Продолжить в ROMI</span><i>→</i></button>
+          </article>
+          <article class="cc-business-card" data-business-type="distribution">
+            <span>03</span>
+            <h4 data-cc="businessDistribution">Дистрибуция вашего бренда</h4>
+            <p data-cc="businessDistributionText">Для производителей и владельцев торговых марок, которым нужна региональная система продаж.</p>
+            <button class="cc-business-button" type="button" data-romi-open="partnership-distribution" aria-controls="aromika-assistant"><span data-cc="businessCta">Продолжить в ROMI</span><i>→</i></button>
+          </article>
+        </div>
+      </div>
+
+      <div class="cc-collab-grid cc-reveal">
+        <article class="cc-collab-card cc-collab-card--rep">
+          <span class="cc-collab-tag" data-cc="repTag">Клиентам и партнёрам</span>
+          <h3 data-cc="repTitle">Связаться с представителем</h3>
+          <p data-cc="repText">Получите актуальный прайс-лист, запросите сертификаты или пригласите торгового агента в вашу торговую точку.</p>
+          <ul class="cc-collab-items" aria-label="Доступные запросы">
+            <li data-cc="repItem1">Прайс-лист</li>
+            <li data-cc="repItem2">Сертификаты</li>
+            <li data-cc="repItem3">Визит агента</li>
+          </ul>
+          <button class="cc-romi-button" type="button" data-romi-open="representative" aria-controls="aromika-assistant"><span data-cc="repCta">Открыть в ROMI</span><i>→</i></button>
+        </article>
+
+        <article class="cc-collab-card cc-collab-card--supply">
+          <span class="cc-collab-tag" data-cc="supplyTag">Поставщикам</span>
+          <h3 data-cc="supplyTitle">Предложить сотрудничество</h3>
+          <p data-cc="supplyText">Рассматриваем предложения от типографий, производителей упаковки и тары, поставщиков сырья, отдушек, комплектующих, оборудования и других решений для производства бытовой химии и косметической продукции.</p>
+          <ul class="cc-collab-items" aria-label="Направления сотрудничества">
+            <li data-cc="supplyItem1">Типография и этикетки</li>
+            <li data-cc="supplyItem2">Упаковка и тара</li>
+            <li data-cc="supplyItem3">Сырьё и отдушки</li>
+            <li data-cc="supplyItem4">Оборудование</li>
+            <li data-cc="supplyItem5">Технические услуги</li>
+          </ul>
+          <button class="cc-romi-button" type="button" data-romi-open="cooperation" aria-controls="aromika-assistant"><span data-cc="supplyCta">Выбрать направление в ROMI</span><i>→</i></button>
+        </article>
+      </div>
+    </div>
+  </section>
+
+  <section class="cc-end cc-reveal">
+    <div class="cc-wrap cc-end-inner">
+      <div><div class="cc-kicker"><span></span><b data-cc="endKicker">Aromika</b></div><h2 data-cc-html="endTitle">Продукт создаётся здесь.<br><em>Партнёрство начинается с разговора.</em></h2></div>
+      <a class="cc-btn cc-btn--dark" href="#cooperation"><span data-cc="endCta">Связаться</span><i>↑</i></a>
+    </div>
+  </section>
+</main>
+<footer class="arf-footer" id="aromika-footer"><div class="arf-wrap"><div class="arf-top"><div class="arf-brand"><a aria-label="Aromika" class="arf-logo-link" href="/"><img alt="Aromika" class="arf-logo" src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/logo.webp"/></a><p data-arf-i18n="brandText">Казахстанский производитель бытовой химии и косметической продукции.</p><a class="arf-shop-btn" href="https://aromika.shop/" rel="noopener" target="_blank"><span data-arf-i18n="shopBtn">Интернет-магазин</span><svg viewbox="0 0 24 24"><path d="M5 12h14M13 6l6 6-6 6"></path></svg></a></div><nav aria-label="Компания" class="arf-col"><div class="arf-col-title" data-arf-i18n="company">Компания</div><a data-arf-i18n="about" href="/okompanii#cooperation">Сотрудничество</a><a data-arf-i18n="production" href="/proizvodstvo">Производство</a><a data-arf-i18n="contacts" href="/kontakty">Контакты</a><a data-arf-i18n="careers" href="/vacancies">Работа в компании</a></nav><nav aria-label="Бренды" class="arf-col"><div class="arf-col-title" data-arf-i18n="brands">Бренды</div><a data-arf-i18n="allBrands" href="/brands">Все бренды</a><a href="/perfect">Perfect</a><a href="/washexpert">Wash Expert</a><a href="/maxipower">Maxi Power</a><a href="/prachka">Prachka</a><a href="/antibak">Antibak</a></nav><nav aria-label="Партнёрам" class="arf-col"><div class="arf-col-title" data-arf-i18n="partners">Партнёрам</div><a data-arf-i18n="distributors" href="/okompanii#cooperation">Дистрибьюторам</a><a data-arf-i18n="retail" href="/okompanii#cooperation">Торговым сетям</a><a href="/okompanii#cooperation">HoReCa</a><a data-arf-i18n="corporate" href="/okompanii#cooperation">Корпоративным клиентам</a></nav><nav aria-label="Покупателям" class="arf-col"><div class="arf-col-title" data-arf-i18n="buyers">Покупателям</div><a data-arf-i18n="catalog" href="https://aromika.shop/vse-tovary/" rel="noopener" target="_blank">Каталог</a><a data-arf-i18n="online" href="https://aromika.shop/" rel="noopener" target="_blank">Интернет-магазин</a><a href="https://kaspi.kz/shop/info/merchant/1359004/address-tab/" rel="noopener" target="_blank">Kaspi Магазин</a><a data-arf-i18n="where" href="https://aromika.shop/index.php?dispatch=store_locator.search" rel="noopener" target="_blank">Где купить</a></nav></div><div class="arf-contact-strip"><div class="arf-contact"><small data-arf-i18n="office">Головной офис</small><b data-arf-i18n="city">Костанай, Казахстан</b></div><a class="arf-contact" href="tel:+77142524044"><small data-arf-i18n="phone">Телефон</small><b>+7 (7142) 52-40-44</b></a><a class="arf-contact" href="mailto:info@aromika.info"><small>E-mail</small><b>info@aromika.info</b></a><div aria-label="Language" class="arf-lang"><button data-lang="ru" type="button">RU</button><i></i><button data-lang="kk" type="button">ҚАЗ</button></div></div><div class="arf-bottom"><span>© 2026 Aromika</span><div class="arf-legal"><a data-arf-i18n="about" href="/okompanii#cooperation">Сотрудничество</a><a data-arf-i18n="feedback" href="/kontakty">Обратная связь</a></div><a aria-label="Наверх" class="arf-to-top" href="#top"><span data-arf-i18n="top">Наверх</span><svg viewbox="0 0 24 24"><path d="M12 19V5M6 11l6-6 6 6"></path></svg></a></div></div></footer></div>
+<script src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/company-coop-v5.js?v=5.0.0" defer></script>
