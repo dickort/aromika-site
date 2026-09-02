@@ -1,0 +1,221 @@
+#aromika-assistant{
+  --aa-pink:#ea2f78;--aa-pink-soft:rgba(234,47,120,.09);--aa-ink:#171717;--aa-muted:#706b6d;--aa-paper:#fff;--aa-soft:#f7f4f5;--aa-line:rgba(23,23,23,.10);--aa-shadow:0 26px 74px rgba(24,18,21,.18);
+  position:fixed;right:24px;bottom:24px;z-index:999999;font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;color:var(--aa-ink);pointer-events:none
+}
+#aromika-assistant *{box-sizing:border-box}
+#aromika-assistant button,#aromika-assistant a,#aromika-assistant input,#aromika-assistant textarea,#aromika-assistant select{font:inherit}
+#aromika-assistant button,#aromika-assistant a{-webkit-tap-highlight-color:transparent;touch-action:manipulation}
+#aromika-assistant img{-webkit-user-drag:none;user-select:none}
+
+/* Romi assets */
+#aromika-assistant .aa-romi{display:grid;place-items:end center;overflow:hidden;flex:0 0 auto;isolation:isolate}
+#aromika-assistant .aa-romi img{display:block;width:100%;height:100%;object-fit:contain;object-position:center bottom}
+#aromika-assistant .aa-romi--launcher{width:58px;height:58px;border-radius:50%;background:radial-gradient(circle at 50% 28%,#fff 0 38%,#f9e9ef 72%,#f6d7e3 100%)}
+#aromika-assistant .aa-romi--teaser{width:68px;height:76px;margin:-11px 0 -13px -5px;overflow:visible}
+#aromika-assistant .aa-romi--head{width:43px;height:43px;border-radius:14px;background:linear-gradient(145deg,#fff,#f8e9ef);border:1px solid rgba(234,47,120,.13)}
+#aromika-assistant .aa-romi--hero{width:138px;height:174px;align-self:end;overflow:visible;filter:drop-shadow(0 14px 18px rgba(97,28,58,.10))}
+#aromika-assistant .aa-romi--stage{width:130px;height:166px;overflow:visible;filter:drop-shadow(0 12px 16px rgba(97,28,58,.08))}
+#aromika-assistant .aa-romi--success{width:160px;height:196px;overflow:visible;filter:drop-shadow(0 14px 18px rgba(97,28,58,.10))}
+
+#aromika-assistant .aa-launcher{pointer-events:auto;width:68px;height:68px;padding:3px;border:1px solid rgba(234,47,120,.22);border-radius:50%;background:var(--aa-paper);color:var(--aa-ink);display:grid;place-items:center;cursor:pointer;box-shadow:0 16px 38px rgba(42,19,30,.20),0 0 0 5px rgba(234,47,120,.06);transition:transform .22s ease,border-color .22s ease,box-shadow .22s ease}
+#aromika-assistant .aa-launcher:hover{transform:translateY(-3px) scale(1.02);border-color:rgba(234,47,120,.48);box-shadow:0 20px 44px rgba(42,19,30,.22),0 0 0 7px rgba(234,47,120,.07)}
+#aromika-assistant .aa-launcher>.aa-close-icon{display:none;width:25px;height:25px;fill:none;stroke:currentColor;stroke-width:1.8;stroke-linecap:round;stroke-linejoin:round}
+#aromika-assistant.is-open .aa-launcher .aa-launcher-mascot{display:none}
+#aromika-assistant.is-open .aa-launcher>.aa-close-icon{display:block}
+#aromika-assistant.is-open .aa-launcher{background:var(--aa-ink);color:#fff;border-color:var(--aa-ink)}
+
+#aromika-assistant .aa-teaser{pointer-events:auto;position:absolute;right:0;bottom:82px;width:326px;min-height:82px;padding:13px 42px 13px 82px;border:1px solid var(--aa-line);border-radius:21px;background:var(--aa-paper);box-shadow:var(--aa-shadow);opacity:0;transform:translateY(10px) scale(.98);visibility:hidden;transition:.25s ease;cursor:pointer;overflow:hidden}
+#aromika-assistant .aa-teaser.is-visible{opacity:1;transform:none;visibility:visible}
+#aromika-assistant .aa-teaser-mascot{position:absolute;left:7px;bottom:0;width:72px;height:82px;display:grid;align-items:end;justify-items:center}
+#aromika-assistant .aa-teaser-copy{min-width:0}
+#aromika-assistant .aa-teaser strong{display:block;margin-bottom:4px;font-size:15px;line-height:1.25;font-weight:760;letter-spacing:-.25px}
+#aromika-assistant .aa-teaser p{margin:0;color:var(--aa-muted);font-size:12px;line-height:1.43}
+#aromika-assistant .aa-teaser-close{position:absolute;right:9px;top:9px;width:30px;height:30px;border:0;background:transparent;color:var(--aa-muted);cursor:pointer;border-radius:50%;font-size:19px;line-height:1}
+#aromika-assistant .aa-teaser-close:hover{background:var(--aa-soft)}
+
+#aromika-assistant .aa-panel{pointer-events:auto;position:absolute;right:0;bottom:82px;width:min(424px,calc(100vw - 32px));max-height:min(720px,calc(100vh - 120px));max-height:min(720px,calc(100dvh - 120px));overflow:auto;-webkit-overflow-scrolling:touch;overscroll-behavior:contain;border:1px solid var(--aa-line);border-radius:28px;background:var(--aa-paper);box-shadow:var(--aa-shadow);opacity:0;visibility:hidden;transform:translateY(12px) scale(.985);transform-origin:bottom right;transition:.24s cubic-bezier(.22,1,.36,1);scrollbar-width:thin;scrollbar-color:rgba(120,120,120,.25) transparent}
+#aromika-assistant.is-open .aa-panel{opacity:1;visibility:visible;transform:none}
+#aromika-assistant .aa-panel::-webkit-scrollbar{width:7px}
+#aromika-assistant .aa-panel::-webkit-scrollbar-thumb{background:rgba(120,120,120,.20);border-radius:10px}
+
+#aromika-assistant .aa-topbar{position:sticky;top:0;z-index:10;height:46px;padding:8px 10px;display:flex;align-items:center;justify-content:space-between;background:linear-gradient(var(--aa-paper) 72%,rgba(255,255,255,0));pointer-events:none}
+#aromika-assistant .aa-back,#aromika-assistant .aa-panel-close{pointer-events:auto;border:0;background:var(--aa-paper);color:var(--aa-muted);cursor:pointer;min-height:32px;border-radius:10px}
+#aromika-assistant .aa-back{padding:6px 10px;font-size:11.5px;font-weight:720;opacity:0;visibility:hidden;transform:translateX(4px);transition:.18s ease}
+#aromika-assistant .aa-back.is-visible{opacity:1;visibility:visible;transform:none}
+#aromika-assistant .aa-panel-close{width:34px;font-size:21px;line-height:1}
+#aromika-assistant .aa-back:hover,#aromika-assistant .aa-panel-close:hover{background:var(--aa-soft);color:var(--aa-ink)}
+
+#aromika-assistant .aa-head{padding:4px 24px 20px;border-bottom:1px solid var(--aa-line)}
+#aromika-assistant .aa-persona{display:flex;align-items:center;gap:10px;margin:-1px 0 13px;padding:7px 9px;border-radius:15px;background:linear-gradient(135deg,rgba(234,47,120,.075),rgba(234,47,120,.02));border:1px solid rgba(234,47,120,.11)}
+#aromika-assistant .aa-persona b{display:block;font-size:12.5px;font-weight:780;letter-spacing:-.1px}
+#aromika-assistant .aa-persona small{display:block;margin-top:2px;color:var(--aa-muted);font-size:10.5px}
+#aromika-assistant .aa-kicker{display:flex;align-items:center;gap:9px;margin-bottom:11px;color:var(--aa-pink);font-size:10px;font-weight:820;letter-spacing:1.05px;text-transform:uppercase}
+#aromika-assistant .aa-kicker:before{content:"";width:22px;height:1px;background:currentColor}
+#aromika-assistant .aa-title{margin:0;font-size:30px;line-height:1.02;font-weight:690;letter-spacing:-1.1px}
+#aromika-assistant .aa-subtitle{margin:10px 0 0;color:var(--aa-muted);font-size:13px;line-height:1.55}
+
+#aromika-assistant .aa-hero--home{position:relative;min-height:184px;padding:0 146px 0 0;border-bottom:1px solid var(--aa-line);background:radial-gradient(circle at 92% 18%,rgba(234,47,120,.12),transparent 44%)}
+#aromika-assistant .aa-hero--home>.aa-romi--hero{position:absolute;right:8px;bottom:0}
+#aromika-assistant .aa-hero--home .aa-head{border-bottom:0;padding-right:4px}
+#aromika-assistant .aa-hero--home .aa-persona{display:none}
+#aromika-assistant .aa-hero--home .aa-title{font-size:29px}
+
+#aromika-assistant .aa-stage-visual,#aromika-assistant .aa-success-visual{position:relative;height:122px;display:flex;justify-content:flex-end;align-items:flex-end;padding:0 20px;border-bottom:0;background:radial-gradient(circle at 76% 20%,rgba(234,47,120,.12),transparent 44%);overflow:hidden}
+#aromika-assistant .aa-stage-visual .aa-romi--stage{transform:translateY(27px)}
+#aromika-assistant .aa-stage-visual--compact{height:92px}
+#aromika-assistant .aa-stage-visual--compact .aa-romi--stage{width:112px;height:142px;transform:translateY(39px)}
+#aromika-assistant .aa-success-visual{height:152px;justify-content:center}
+#aromika-assistant .aa-success-visual .aa-romi--success{transform:translateY(42px)}
+
+#aromika-assistant .aa-body{padding:14px}
+#aromika-assistant .aa-actions{display:grid;gap:8px}
+#aromika-assistant .aa-action{width:100%;min-height:58px;padding:13px 14px;border:1px solid var(--aa-line);border-radius:16px;background:var(--aa-paper);color:var(--aa-ink);display:grid;grid-template-columns:39px 1fr auto;gap:11px;align-items:center;text-align:left;text-decoration:none;cursor:pointer;transition:background .18s ease,border-color .18s ease,transform .18s ease}
+#aromika-assistant .aa-action:hover{background:var(--aa-soft);border-color:rgba(234,47,120,.24);transform:translateY(-1px)}
+#aromika-assistant .aa-action-icon{width:39px;height:39px;border-radius:12px;background:var(--aa-soft);display:grid;place-items:center;color:var(--aa-ink)}
+#aromika-assistant .aa-action-icon svg{width:18px;height:18px;fill:none;stroke:currentColor;stroke-width:1.7;stroke-linecap:round;stroke-linejoin:round}
+#aromika-assistant .aa-action-copy b{display:block;font-size:13.5px;font-weight:690;line-height:1.22;letter-spacing:-.15px}
+#aromika-assistant .aa-action-copy small{display:block;margin-top:3px;color:var(--aa-muted);font-size:11.5px;line-height:1.3}
+#aromika-assistant .aa-arrow{color:#999;font-size:18px}
+#aromika-assistant .aa-action--primary{background:var(--aa-ink);color:#fff;border-color:var(--aa-ink)}
+#aromika-assistant .aa-action--primary:hover{background:var(--aa-pink);border-color:var(--aa-pink)}
+#aromika-assistant .aa-action--primary .aa-action-icon{background:rgba(255,255,255,.12);color:#fff}
+#aromika-assistant .aa-action--primary .aa-action-copy small{color:rgba(255,255,255,.68)}
+#aromika-assistant .aa-action--primary .aa-arrow{color:rgba(255,255,255,.72)}
+#aromika-assistant .aa-action--compact{margin-top:10px;min-height:54px}
+
+#aromika-assistant .aa-choice-grid{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+#aromika-assistant .aa-choice{position:relative;min-height:108px;padding:15px;border:1px solid var(--aa-line);border-radius:17px;background:var(--aa-paper);color:var(--aa-ink);text-align:left;cursor:pointer;transition:.18s ease}
+#aromika-assistant .aa-choice:hover{background:var(--aa-soft);border-color:rgba(234,47,120,.24);transform:translateY(-1px)}
+#aromika-assistant .aa-choice b{display:block;padding-right:20px;font-size:14px;font-weight:690;letter-spacing:-.2px}
+#aromika-assistant .aa-choice span{display:block;margin-top:6px;color:var(--aa-muted);font-size:11.5px;line-height:1.4}
+#aromika-assistant .aa-choice i{position:absolute;right:13px;top:13px;font-style:normal;color:#aaa}
+#aromika-assistant .aa-need-grid,#aromika-assistant .aa-volume-grid{grid-template-columns:1fr 1fr}
+#aromika-assistant .aa-choice--need{min-height:84px}
+#aromika-assistant .aa-choice--need b{font-size:13.5px}
+#aromika-assistant .aa-choice--volume{min-height:76px;display:flex;align-items:center}
+#aromika-assistant .aa-choice--volume b{font-size:15px}
+
+#aromika-assistant .aa-simple-link{display:flex;justify-content:space-between;gap:12px;margin-top:10px;padding:11px 5px;color:var(--aa-muted);font-size:11.5px;font-weight:700;text-decoration:none}
+#aromika-assistant .aa-simple-link:hover{color:var(--aa-pink)}
+#aromika-assistant .aa-simple-button{min-height:44px;padding:10px 14px;border:1px solid var(--aa-line);border-radius:13px;background:var(--aa-paper);color:var(--aa-muted);cursor:pointer;font-size:12px;font-weight:720}
+#aromika-assistant .aa-simple-button:hover{background:var(--aa-soft);color:var(--aa-ink)}
+#aromika-assistant .aa-simple-button--wide{width:100%}
+#aromika-assistant .aa-result-actions{display:grid;gap:8px;margin-top:10px}
+#aromika-assistant .aa-note{margin:0 0 10px;padding:11px 12px;border-radius:13px;background:var(--aa-pink-soft);color:var(--aa-muted);font-size:11.5px;line-height:1.45}
+
+#aromika-assistant .aa-brand-list{display:grid;gap:7px}
+#aromika-assistant .aa-brand-link{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:48px;padding:13px 14px;border-radius:14px;background:var(--aa-soft);color:var(--aa-ink);text-decoration:none;font-size:13px}
+#aromika-assistant .aa-brand-link b{font-weight:690}
+#aromika-assistant .aa-brand-link:hover{background:rgba(234,47,120,.09);color:var(--aa-pink)}
+
+#aromika-assistant .aa-field{display:block;margin-bottom:13px}
+#aromika-assistant .aa-field-label{display:block;margin:0 0 7px;color:var(--aa-muted);font-size:10.5px;font-weight:820;letter-spacing:.65px;text-transform:uppercase}
+#aromika-assistant .aa-select-wrap{position:relative;display:block}
+#aromika-assistant .aa-select,#aromika-assistant .aa-feedback input,#aromika-assistant .aa-feedback textarea{width:100%;border:1px solid var(--aa-line);border-radius:13px;background:var(--aa-paper);color:var(--aa-ink);outline:none;transition:border-color .18s ease,box-shadow .18s ease}
+#aromika-assistant .aa-select{height:48px;padding:0 12px;appearance:auto}
+#aromika-assistant .aa-feedback input{height:46px;padding:0 12px}
+#aromika-assistant .aa-feedback textarea{padding:11px 12px;resize:vertical;min-height:92px}
+#aromika-assistant .aa-select:focus,#aromika-assistant .aa-feedback input:focus,#aromika-assistant .aa-feedback textarea:focus{border-color:rgba(234,47,120,.55);box-shadow:0 0 0 3px rgba(234,47,120,.09)}
+#aromika-assistant .aa-contact-results{display:grid;gap:8px;margin-top:12px}
+#aromika-assistant .aa-contact{padding:14px;border:1px solid var(--aa-line);border-radius:16px;background:var(--aa-soft)}
+#aromika-assistant .aa-contact small{display:block;color:var(--aa-pink);font-size:10.5px;font-weight:800;text-transform:uppercase;letter-spacing:.6px}
+#aromika-assistant .aa-contact>b{display:block;margin-top:5px;font-size:14px}
+#aromika-assistant .aa-contact>span{display:block;margin-top:3px;color:var(--aa-muted);font-size:11.5px}
+#aromika-assistant .aa-phone{display:inline-block;margin-top:9px;color:var(--aa-ink);font-size:13px;font-weight:760;text-decoration:none}
+#aromika-assistant .aa-contact-actions{display:flex;flex-wrap:wrap;gap:6px;margin-top:10px}
+#aromika-assistant .aa-contact-actions a{min-height:38px;padding:9px 11px;border-radius:10px;background:var(--aa-paper);border:1px solid var(--aa-line);color:var(--aa-ink);font-size:11px;font-weight:720;text-decoration:none}
+#aromika-assistant .aa-contact-actions a:hover{border-color:rgba(234,47,120,.28);color:var(--aa-pink)}
+
+#aromika-assistant .aa-stars{display:flex;gap:4px}
+#aromika-assistant .aa-star{width:40px;height:40px;border:1px solid var(--aa-line);border-radius:11px;background:var(--aa-paper);color:#c9c4c6;cursor:pointer;font-size:21px;line-height:1}
+#aromika-assistant .aa-star.is-active{color:var(--aa-pink);border-color:rgba(234,47,120,.28);background:rgba(234,47,120,.06)}
+#aromika-assistant .aa-submit{width:100%;height:47px;border:0;border-radius:13px;background:var(--aa-ink);color:#fff;display:flex;align-items:center;justify-content:space-between;padding:0 14px;cursor:pointer;font-size:12.5px;font-weight:760}
+#aromika-assistant .aa-submit:hover{background:var(--aa-pink)}
+#aromika-assistant .aa-form-hint{margin:7px 0 0;color:var(--aa-muted);font-size:10.5px;line-height:1.4}
+#aromika-assistant .aa-form-error{min-height:0;margin:0 0 8px;color:#c52d50;font-size:11px;font-weight:680}
+#aromika-assistant .aa-foot{padding:5px 18px 17px;color:#9a9597;font-size:10.5px;text-align:center}
+
+/* Dark mode follows the site */
+html[data-aromika-theme="dark"] #aromika-assistant{--aa-ink:#f5f5f6;--aa-muted:#aaa6a8;--aa-paper:#141518;--aa-soft:#1d1f23;--aa-line:rgba(255,255,255,.10);--aa-shadow:0 28px 74px rgba(0,0,0,.46);--aa-pink-soft:rgba(234,47,120,.13)}
+html[data-aromika-theme="dark"] #aromika-assistant .aa-topbar{background:linear-gradient(var(--aa-paper) 72%,rgba(20,21,24,0))}
+html[data-aromika-theme="dark"] #aromika-assistant .aa-launcher{background:#17181b;color:#f5f5f6;border-color:rgba(234,47,120,.32);box-shadow:0 16px 38px rgba(0,0,0,.42),0 0 0 5px rgba(234,47,120,.08)}
+html[data-aromika-theme="dark"] #aromika-assistant.is-open .aa-launcher{background:#f5f5f6;color:#171717;border-color:#f5f5f6}
+html[data-aromika-theme="dark"] #aromika-assistant .aa-romi--launcher,html[data-aromika-theme="dark"] #aromika-assistant .aa-romi--head{background:linear-gradient(145deg,#24262a,#1b1c20)}
+html[data-aromika-theme="dark"] #aromika-assistant .aa-persona{background:linear-gradient(135deg,rgba(234,47,120,.15),rgba(234,47,120,.035));border-color:rgba(234,47,120,.19)}
+html[data-aromika-theme="dark"] #aromika-assistant .aa-action--primary,html[data-aromika-theme="dark"] #aromika-assistant .aa-submit{background:#f5f5f6;color:#171717;border-color:#f5f5f6}
+html[data-aromika-theme="dark"] #aromika-assistant .aa-action--primary:hover,html[data-aromika-theme="dark"] #aromika-assistant .aa-submit:hover{background:var(--aa-pink);color:#fff;border-color:var(--aa-pink)}
+html[data-aromika-theme="dark"] #aromika-assistant .aa-action--primary .aa-action-icon{background:rgba(0,0,0,.08);color:inherit}
+html[data-aromika-theme="dark"] #aromika-assistant .aa-action--primary .aa-action-copy small,html[data-aromika-theme="dark"] #aromika-assistant .aa-action--primary .aa-arrow{color:rgba(0,0,0,.56)}
+
+/* Tablet / mobile */
+@media(max-width:720px){
+  html.aa-lock-mobile{overscroll-behavior:none}
+  #aromika-assistant{right:12px;bottom:max(12px,env(safe-area-inset-bottom));left:auto}
+  #aromika-assistant .aa-launcher{width:62px;height:62px}
+  #aromika-assistant .aa-romi--launcher{width:53px;height:53px}
+  #aromika-assistant .aa-teaser{right:0;bottom:74px;width:min(304px,calc(100vw - 24px));min-height:78px;padding-left:76px;border-radius:19px}
+  #aromika-assistant .aa-teaser-mascot{width:67px;height:78px}
+  #aromika-assistant .aa-panel{position:fixed;left:12px;right:12px;bottom:calc(82px + env(safe-area-inset-bottom));width:auto;max-height:calc(100dvh - 104px - env(safe-area-inset-bottom));border-radius:24px;transform-origin:bottom center}
+  #aromika-assistant .aa-topbar{height:45px;padding:7px 8px}
+  #aromika-assistant .aa-back,#aromika-assistant .aa-panel-close{min-height:34px}
+  #aromika-assistant .aa-head{padding:2px 18px 18px}
+  #aromika-assistant .aa-title{font-size:27px;letter-spacing:-.8px}
+  #aromika-assistant .aa-subtitle{font-size:12.5px;line-height:1.48}
+  #aromika-assistant .aa-body{padding:11px}
+  #aromika-assistant .aa-action{min-height:58px;padding:12px}
+  #aromika-assistant .aa-choice{min-height:98px;padding:13px}
+  #aromika-assistant .aa-hero--home{min-height:170px;padding-right:125px}
+  #aromika-assistant .aa-romi--hero{width:122px;height:158px}
+  #aromika-assistant .aa-hero--home .aa-title{font-size:27px}
+  #aromika-assistant .aa-stage-visual{height:100px;padding-right:12px}
+  #aromika-assistant .aa-stage-visual .aa-romi--stage{width:116px;height:148px;transform:translateY(35px)}
+  #aromika-assistant .aa-stage-visual--compact{height:76px}
+  #aromika-assistant .aa-stage-visual--compact .aa-romi--stage{width:96px;height:124px;transform:translateY(43px)}
+  #aromika-assistant .aa-success-visual{height:130px}
+  #aromika-assistant .aa-success-visual .aa-romi--success{width:142px;height:175px;transform:translateY(43px)}
+  #aromika-assistant .aa-contact-actions a{min-height:42px;padding:11px 12px}
+  #aromika-assistant .aa-select,#aromika-assistant .aa-feedback input{height:48px}
+  #aromika-assistant .aa-submit{height:48px}
+}
+
+@media(max-width:480px){
+  #aromika-assistant{right:10px;bottom:max(10px,env(safe-area-inset-bottom))}
+  #aromika-assistant .aa-panel{left:8px;right:8px;bottom:calc(76px + env(safe-area-inset-bottom));max-height:calc(100dvh - 92px - env(safe-area-inset-bottom));border-radius:22px}
+  #aromika-assistant .aa-launcher{width:58px;height:58px}
+  #aromika-assistant .aa-romi--launcher{width:50px;height:50px}
+  #aromika-assistant .aa-teaser{bottom:68px;width:min(294px,calc(100vw - 20px))}
+  #aromika-assistant .aa-choice-grid{grid-template-columns:1fr 1fr;gap:7px}
+  #aromika-assistant .aa-choice{min-height:92px}
+  #aromika-assistant .aa-choice b{font-size:13.5px}
+  #aromika-assistant .aa-choice span{font-size:11px}
+  #aromika-assistant .aa-hero--home{min-height:158px;padding-right:112px}
+  #aromika-assistant .aa-romi--hero{width:108px;height:145px}
+}
+
+@media(max-width:390px){
+  #aromika-assistant .aa-panel{left:6px;right:6px;border-radius:20px}
+  #aromika-assistant .aa-choice-grid{grid-template-columns:1fr}
+  #aromika-assistant .aa-need-grid,#aromika-assistant .aa-volume-grid{grid-template-columns:1fr 1fr}
+  #aromika-assistant .aa-choice{min-height:74px}
+  #aromika-assistant .aa-choice--need,#aromika-assistant .aa-choice--volume{min-height:70px}
+  #aromika-assistant .aa-hero--home{padding-right:0;min-height:210px}
+  #aromika-assistant .aa-hero--home>.aa-romi--hero{right:2px;width:104px;height:138px;opacity:.96}
+  #aromika-assistant .aa-hero--home .aa-head{padding-right:96px}
+  #aromika-assistant .aa-hero--home .aa-title{font-size:25px}
+}
+
+@media(max-height:650px) and (max-width:720px){
+  #aromika-assistant .aa-panel{max-height:calc(100dvh - 86px - env(safe-area-inset-bottom));bottom:calc(70px + env(safe-area-inset-bottom))}
+  #aromika-assistant .aa-stage-visual,#aromika-assistant .aa-success-visual{display:none}
+  #aromika-assistant .aa-hero--home{min-height:auto;padding-right:0}
+  #aromika-assistant .aa-hero--home>.aa-romi--hero{display:none}
+  #aromika-assistant .aa-hero--home .aa-head{padding-right:18px}
+}
+
+@media(prefers-reduced-motion:reduce){
+  #aromika-assistant *,#aromika-assistant *:before,#aromika-assistant *:after{transition:none!important;scroll-behavior:auto!important;animation:none!important}
+}
+
+/* V7: informational brand context — the bubble itself is not interactive. */
+#aromika-assistant .aa-teaser.aa-teaser--info{cursor:default}
+#aromika-assistant .aa-teaser.aa-teaser--info:hover{transform:none}

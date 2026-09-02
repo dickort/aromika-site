@@ -1,0 +1,5 @@
+<!-- AROMIKA.INFO · ROMI V7 GLOBAL
+Добавить один раз в общий HTML-код сайта aromika.info перед </body>.
+На aromika.shop этот блок не добавлять. -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/assistant-v7.css">
+<script src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/assistant-v7.js" defer></script>

@@ -1,31 +1,44 @@
-AROMIKA — FINAL DEPLOY PACKAGE
+AROMIKA.INFO — ROMI V7 GLOBAL + «СОТРУДНИЧЕСТВО» В НАВИГАЦИИ
 
-1. Upload the CONTENTS of this folder to the public web directory:
-   https://vip54-fm.sweb.ru/aromika-site/
+ЧТО ИЗМЕНЕНО
+1. ROMI V7 подключается глобально на всех страницах aromika.info.
+2. На aromika.shop новая версия не запускается и не подключается.
+3. На страницах брендов возле аватара ROMI появляется небольшая информационная реплика:
+   • /perfect — кратко о Perfect;
+   • /washexpert — кратко о Wash Expert;
+   • /maxipower — кратко о Maxi Power;
+   • /prachka — кратко о Prachka;
+   • /antibak — кратко об Antibak;
+   • /brands — общее пояснение о брендах Aromika.
+4. Реплика не содержит кнопок и ссылок. Нажатие на неё не открывает ассистента.
+5. Реплика появляется через 6 секунд или после начала прокрутки, автоматически скрывается через 12 секунд и показывается один раз для каждого бренда за сеанс.
+6. Все реплики работают на русском и казахском языках.
+7. Во всём верхнем меню и футере aromika.info пункт «О компании» заменяется на «Сотрудничество» / «Ынтымақтастық».
+8. Новый пункт ведёт на /okompanii#cooperation.
+9. Корпоративная информация внутри самой страницы не удаляется.
+10. Сценарии прайса, сертификатов, приглашения торгового агента и предложений поставщиков из ROMI V6 сохранены.
 
-Expected URLs:
-   https://vip54-fm.sweb.ru/aromika-site/site.css
-   https://vip54-fm.sweb.ru/aromika-site/site.js
-   https://vip54-fm.sweb.ru/aromika-site/images/logo.webp
-   https://vip54-fm.sweb.ru/aromika-site/images/perfect.png
-   https://vip54-fm.sweb.ru/aromika-site/images/wash-expert.png
-   https://vip54-fm.sweb.ru/aromika-site/images/maxi-power.png
-   https://vip54-fm.sweb.ru/aromika-site/images/prachka.png
-   https://vip54-fm.sweb.ru/aromika-site/images/antibak.png
+УСТАНОВКА
+1. Загрузить в корень GitHub-репозитория dickort/aromika-site файлы из папки github:
+   • assistant-v7.css
+   • assistant-v7.js
+   • company-coop-v4.js
+   • company-coop-v3.css — только если он ещё не был загружен с предыдущим комплектом.
 
-2. IMPORTANT:
-   These URLs must open in an incognito browser WITHOUT login/password.
-   If the server returns 401/403, Tilda will not display the assets.
+2. В Tilda для сайта aromika.info добавить ОДИН РАЗ в общий HTML-код перед </body> содержимое файла:
+   tilda/ROMI_V7_ДЛЯ_ВСЕХ_СТРАНИЦ_INFO.txt
 
-3. In Tilda add ONE T123 HTML block.
-   Paste the full contents of:
-   TILDA_T123_SNIPPET.txt
+3. Удалить со страниц aromika.info старые индивидуальные подключения:
+   • assistant-v5.css / assistant-v5.js;
+   • assistant-v6.js.
+   ROMI V7 теперь подключается из общего кода сайта, поэтому дубли на отдельных страницах не нужны.
 
-4. Publish the page.
+4. На странице /okompanii полностью заменить HTML-блок содержимым файла:
+   tilda/О_КОМПАНИИ_ROMI_V4.txt
 
-5. If you upload the files to another folder/domain, replace:
-   https://vip54-fm.sweb.ru/aromika-site
-   in TILDA_T123_SNIPPET.txt with your real public base URL.
+5. На aromika.shop ничего не менять.
 
-The Tilda HTML itself is intentionally light.
-CSS, JS and images are loaded from the external host.
+6. Переопубликовать все страницы aromika.info, чтобы общий код появился везде.
+
+ПРИМЕЧАНИЕ
+Новые имена файлов V7/V4 исключают конфликт со старым кэшем CDN.
