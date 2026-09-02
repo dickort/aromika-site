@@ -1,256 +1,716 @@
 (function(){
 'use strict';
-if(window.__ROMI_V8_COMMERCE_CORE__) return;
-window.__ROMI_V8_COMMERCE_CORE__=true;
+if (window.__ROMI_V81__) return;
+window.__ROMI_V81__ = true;
 
-var C=Object.assign({
-  site: location.hostname.indexOf('aromika.shop')>=0?'shop':'info',
-  apiBase:'https://aromika.shop/index.php?dispatch=romi.',
-  shopOrigin:'https://aromika.shop',
-  infoOrigin:'https://aromika.info'
-},window.ROMI_V8_CONFIG||{});
+var C = Object.assign({
+  site: location.hostname.indexOf('aromika.shop') >= 0 ? 'shop' : 'info',
+  apiBase: 'https://aromika.shop/index.php?dispatch=romi.',
+  shopOrigin: 'https://aromika.shop',
+  infoOrigin: 'https://aromika.info'
+}, window.ROMI_V8_CONFIG || {});
 
-var SID_KEY='romi-v8-session-id';
-var ROOT=null, PANEL=null, CHAT=null, FORM=null, INPUT=null;
-var STATE={session_id:'',messages:[],last_products:[],customer_type:'',city:'',selected_product_id:0,lang:'ru'};
-
-var TXT={
- ru:{
-  entry:'Подобрать товар с Romi',
-  hello:'Здравствуйте. Напишите, что нужно — я подберу реальные товары Aromika, сравню варианты или помогу с покупкой.',
-  ph:'Например: гель для чёрного белья около 3 литров',
-  typing:'Ищу в каталоге…',found:'Вот что нашла в интернет-магазине:',none:'Точного варианта не нашла. Уточните бренд, назначение или объём.',
-  buy:'Купить',details:'Подробнее',compare:'Сравнить',add:'В корзину',added:'Добавлено в корзину',
-  cart:'Корзина',checkout:'Оформить заказ',continue:'Продолжить',
-  b2b:'Похоже, это запрос для бизнеса. Уточните город, компанию и оставьте телефон или e-mail — я подготовлю обращение.',
-  complaint:'Я помогу оформить обращение. Укажите товар, что произошло, город, где покупали и контакт для связи.',
-  review:'Напишите товар, оценку от 1 до 5 и сам отзыв.',
-  sent:'Передано в Aromika. Номер обращения:',needContact:'Нужен телефон или e-mail для связи.',
-  fail:'Не удалось отправить. Можно написать напрямую на info@aromika.info.',
-  back:'Назад',close:'Закрыть'
- },
- kk:{
-  entry:'Romi көмегімен өнім таңдау',
-  hello:'Сәлеметсіз бе. Не қажет екенін жазыңыз — мен Aromika тауарларын тауып, салыстырып немесе сатып алуға көмектесемін.',
-  ph:'Мысалы: қара киімге шамамен 3 литр гель',
-  typing:'Каталогтан іздеп жатырмын…',found:'Интернет-дүкеннен тапқан нұсқалар:',none:'Дәл нұсқа табылмады. Брендті, міндетті немесе көлемді нақтылаңыз.',
-  buy:'Сатып алу',details:'Толығырақ',compare:'Салыстыру',add:'Себетке',added:'Себетке қосылды',
-  cart:'Себет',checkout:'Тапсырысты рәсімдеу',continue:'Жалғастыру',
-  b2b:'Бұл бизнеске арналған сұраныс сияқты. Қаланы, компанияны және телефон немесе e-mail көрсетіңіз.',
-  complaint:'Өтінішті рәсімдеуге көмектесемін. Тауарды, мәселені, қаланы, сатып алған жерді және байланыс деректерін жазыңыз.',
-  review:'Тауарды, 1-ден 5-ке дейін бағаны және пікірді жазыңыз.',
-  sent:'Aromika-ға жіберілді. Өтініш нөмірі:',needContact:'Байланыс үшін телефон немесе e-mail қажет.',
-  fail:'Жіберу мүмкін болмады. info@aromika.info мекенжайына жаза аласыз.',
-  back:'Артқа',close:'Жабу'
- }
+var SID_KEY = 'romi-v8-session-id';
+var ROOT, PANEL, LAYER, CHAT, FORM, INPUT;
+var STATE = {
+  session_id: '',
+  messages: [],
+  last_products: [],
+  last_query: '',
+  customer_type: '',
+  city: '',
+  selected_product_id: 0,
+  compare_ids: [],
+  lang: 'ru'
 };
 
-function lang(){
-  var l='ru'; try{l=localStorage.getItem('aromika-language')||document.documentElement.lang||'ru'}catch(e){}
-  return /^kk|^kz/i.test(l)?'kk':'ru';
-}
-function t(){return TXT[lang()]||TXT.ru}
-function esc(v){return String(v==null?'':v).replace(/[&<>"']/g,function(c){return{'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
+var RU = {
+  entry:'Подобрать товар',
+  entrySub:'Поиск · сравнение · покупка',
+  hello:'Что подобрать? Напишите обычными словами — например «Antibak для посуды 1100 мл».',
+  placeholder:'Напишите, что вам нужно…',
+  searching:'Ищу подходящие товары…',
+  found:'Подходящие варианты',
+  none:'Точного совпадения не нашла. Попробуйте уточнить назначение, бренд или объём.',
+  error:'Не удалось выполнить поиск. Каталог доступен, но запрос не обработан. Повторите ещё раз.',
+  add:'В корзину',
+  added:'В корзине ✓',
+  buy:'Купить',
+  details:'Подробнее',
+  compare:'Сравнить',
+  compareSelected:'Сравнить выбранные',
+  clearCompare:'Сбросить',
+  stock:'В наличии',
+  noStock:'Нет в наличии',
+  cart:'Открыть корзину',
+  close:'Закрыть',
+  back:'Назад',
+  status:'Каталог aromika.shop подключён',
+  b2b:'Для бизнеса',
+  complaint:'Жалоба',
+  review:'Отзыв',
+  send:'Отправить',
+  sent:'Передано в Aromika. Номер:',
+  needContact:'Укажите телефон или e-mail.',
+  failed:'Не удалось отправить. Можно написать на info@aromika.info.'
+};
+
+function esc(v){return String(v == null ? '' : v).replace(/[&<>"']/g,function(c){return {'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]})}
 function money(v){var n=Number(v);return isFinite(n)&&n>0?Math.round(n).toLocaleString('ru-RU')+' ₸':''}
-function api(mode,opts){
-  opts=opts||{};var url=C.apiBase+encodeURIComponent(mode);
-  if(opts.query){var q=new URLSearchParams(opts.query);url+='&'+q.toString()}
-  return fetch(url,{method:opts.method||'GET',credentials:'include',headers:Object.assign({'Accept':'application/json'},opts.body?{'Content-Type':'application/json'}:{}),body:opts.body?JSON.stringify(opts.body):undefined})
-    .then(function(r){return r.json().then(function(j){if(!r.ok||j.ok===false)throw new Error(j.error||('HTTP '+r.status));return j})});
+function uniq(a){return a.filter(function(v,i){return v && a.indexOf(v)===i})}
+function lower(s){return String(s||'').toLowerCase().replace(/ё/g,'е')}
+function asset(name){
+  var base = window.AROMIKA_ASSISTANT_ASSET_BASE || 'https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/romi/';
+  return base.replace(/\/?$/,'/') + name;
 }
-function sid(){
-  var s='';try{s=localStorage.getItem(SID_KEY)||''}catch(e){}
-  if(/^[a-zA-Z0-9_-]{24,80}$/.test(s))return s;
-  try{s='rs_'+Array.from(crypto.getRandomValues(new Uint8Array(24))).map(function(x){return x.toString(16).padStart(2,'0')}).join('')}
-  catch(e){s='rs_'+Date.now()+Math.random().toString(36).slice(2)}
+function api(mode, opts){
+  opts=opts||{};
+  var url=C.apiBase + encodeURIComponent(mode);
+  if(opts.query){
+    var sp=new URLSearchParams();
+    Object.keys(opts.query).forEach(function(k){
+      if(opts.query[k]!==undefined && opts.query[k]!==null && opts.query[k]!=='') sp.set(k,opts.query[k]);
+    });
+    var qs=sp.toString(); if(qs) url += '&'+qs;
+  }
+  return fetch(url,{
+    method:opts.method||'GET',
+    credentials:'include',
+    headers:Object.assign({'Accept':'application/json'},opts.body?{'Content-Type':'application/json'}:{}),
+    body:opts.body?JSON.stringify(opts.body):undefined
+  }).then(function(r){
+    return r.text().then(function(txt){
+      var j; try{j=JSON.parse(txt)}catch(e){throw new Error('invalid_json')}
+      if(!r.ok || j.ok===false) throw new Error(j.error||('http_'+r.status));
+      return j;
+    });
+  });
+}
+function initialSid(){
+  var incoming='';
+  try{incoming=(new URL(location.href)).searchParams.get('romi_session')||''}catch(e){}
+  if(/^[a-zA-Z0-9_-]{24,80}$/.test(incoming)){
+    try{localStorage.setItem(SID_KEY,incoming)}catch(e){}
+    return incoming;
+  }
+  var s=''; try{s=localStorage.getItem(SID_KEY)||''}catch(e){}
+  if(/^[a-zA-Z0-9_-]{24,80}$/.test(s)) return s;
+  try{
+    s='rs_'+Array.from(crypto.getRandomValues(new Uint8Array(24))).map(function(x){return x.toString(16).padStart(2,'0')}).join('');
+  }catch(e){s='rs_'+Date.now()+Math.random().toString(36).slice(2)}
   try{localStorage.setItem(SID_KEY,s)}catch(e){}
   return s;
 }
 function saveSession(){
-  STATE.lang=lang();
-  return api('session_save',{method:'POST',body:{session_id:STATE.session_id,session:STATE}}).catch(function(){});
+  var payload={
+    messages:STATE.messages.slice(-18),
+    last_query:STATE.last_query,
+    last_products:STATE.last_products.slice(0,8),
+    customer_type:STATE.customer_type,
+    city:STATE.city,
+    selected_product_id:STATE.selected_product_id,
+    lang:'ru'
+  };
+  return api('session_save',{method:'POST',body:{session_id:STATE.session_id,session:payload}}).catch(function(){});
 }
 function loadSession(){
-  STATE.session_id=sid();
+  STATE.session_id=initialSid();
   return api('session_get',{query:{session_id:STATE.session_id}}).then(function(j){
-    var s=j.session||{};Object.keys(s).forEach(function(k){STATE[k]=s[k]});
     STATE.session_id=j.session_id||STATE.session_id;
+    var s=j.session||{};
+    ['messages','last_query','last_products','customer_type','city','selected_product_id'].forEach(function(k){
+      if(s[k]!==undefined) STATE[k]=s[k];
+    });
     try{localStorage.setItem(SID_KEY,STATE.session_id)}catch(e){}
   }).catch(function(){});
 }
-function msg(role,html,plain){
-  if(!CHAT)return null;
-  var d=document.createElement('div');d.className='rv8-msg rv8-msg--'+role;d.innerHTML=html;CHAT.appendChild(d);CHAT.scrollTop=CHAT.scrollHeight;
-  if(plain){STATE.messages.push({role:role,text:String(plain).slice(0,1000)});STATE.messages=STATE.messages.slice(-20);saveSession()}
+function record(role,text){
+  STATE.messages.push({role:role,text:String(text||'').slice(0,900)});
+  STATE.messages=STATE.messages.slice(-18);
+  saveSession();
+}
+function addMessage(role, html, plain){
+  var d=document.createElement('div');
+  d.className='rv81-msg rv81-msg--'+role;
+  d.innerHTML=html;
+  CHAT.appendChild(d);
+  CHAT.scrollTop=CHAT.scrollHeight;
+  if(plain) record(role,plain);
   return d;
 }
-function say(text){return msg('assistant','<div class="rv8-bubble">'+esc(text)+'</div>',text)}
-function user(text){return msg('user','<div class="rv8-bubble">'+esc(text)+'</div>',text)}
-function loading(){return msg('assistant','<div class="rv8-bubble rv8-loading"><i></i><i></i><i></i><span>'+esc(t().typing)+'</span></div>')}
-function remove(el){if(el&&el.parentNode)el.parentNode.removeChild(el)}
+function say(text){return addMessage('assistant','<div class="rv81-bubble">'+esc(text)+'</div>',text)}
+function user(text){return addMessage('user','<div class="rv81-bubble">'+esc(text)+'</div>',text)}
+function loading(){
+  return addMessage('assistant','<div class="rv81-bubble rv81-loading"><span></span><span></span><span></span><b>'+esc(RU.searching)+'</b></div>');
+}
+function remove(el){if(el&&el.parentNode) el.parentNode.removeChild(el)}
 
 function build(){
-  var root=document.getElementById('aromika-assistant');
-  if(!root)return false;
-  ROOT=root;
-  var panel=root.querySelector('.aa-panel');if(!panel)return false;
+  ROOT=document.getElementById('aromika-assistant');
+  if(!ROOT) return false;
+  PANEL=ROOT.querySelector('.aa-panel');
+  if(!PANEL) return false;
 
-  var layer=document.createElement('div');layer.className='rv8-layer';layer.innerHTML=
-    '<div class="rv8-head"><button type="button" data-rv8-back>← '+esc(t().back)+'</button><div><b>Romi</b><small>Commerce Core</small></div><button type="button" data-rv8-close>×</button></div>'+
-    '<div class="rv8-chat"></div>'+
-    '<form class="rv8-form"><textarea rows="1" maxlength="500" placeholder="'+esc(t().ph)+'"></textarea><button type="submit">→</button></form>';
-  panel.appendChild(layer);PANEL=layer;CHAT=layer.querySelector('.rv8-chat');FORM=layer.querySelector('.rv8-form');INPUT=FORM.querySelector('textarea');
+  var old=PANEL.querySelector('.rv8-layer,.rv81-layer');
+  if(old) old.remove();
 
-  var actions=root.querySelector('.aa-screen .aa-actions');
-  if(actions){
-    var b=document.createElement('button');b.type='button';b.className='aa-action aa-action--primary rv8-entry';
-    b.innerHTML='<span class="aa-action-icon">✦</span><span class="aa-action-copy"><b>'+esc(t().entry)+'</b><small>Каталог · сравнение · покупка</small></span><span class="aa-arrow">→</span>';
-    b.addEventListener('click',open);actions.insertBefore(b,actions.firstChild);
+  LAYER=document.createElement('section');
+  LAYER.className='rv81-layer';
+  LAYER.innerHTML=
+    '<header class="rv81-head">'+
+      '<div class="rv81-person"><span class="rv81-avatar"><img src="'+esc(asset('romi-finder.webp'))+'" alt=""></span><div><b>Romi</b><small>'+esc(RU.status)+'</small></div></div>'+
+      '<div class="rv81-head-actions"><button type="button" class="rv81-back" title="'+esc(RU.back)+'">←</button><button type="button" class="rv81-x" title="'+esc(RU.close)+'">×</button></div>'+
+    '</header>'+
+    '<div class="rv81-chat"></div>'+
+    '<div class="rv81-quick">'+
+      '<button type="button" data-q="гель для стирки">Стирка</button>'+
+      '<button type="button" data-q="гель для мытья посуды">Посуда</button>'+
+      '<button type="button" data-q="жидкое мыло">Мыло</button>'+
+      '<button type="button" data-action="b2b">Для бизнеса</button>'+
+    '</div>'+
+    '<form class="rv81-form"><textarea rows="1" maxlength="500" placeholder="'+esc(RU.placeholder)+'"></textarea><button type="submit" aria-label="Найти">→</button></form>';
+
+  PANEL.appendChild(LAYER);
+  CHAT=LAYER.querySelector('.rv81-chat');
+  FORM=LAYER.querySelector('.rv81-form');
+  INPUT=FORM.querySelector('textarea');
+
+  var actions=ROOT.querySelector('.aa-screen .aa-actions');
+  if(actions && !actions.querySelector('.rv81-entry')){
+    var b=document.createElement('button');
+    b.type='button';
+    b.className='aa-action aa-action--primary rv81-entry';
+    b.innerHTML='<span class="aa-action-icon">✦</span><span class="aa-action-copy"><b>'+RU.entry+'</b><small>'+RU.entrySub+'</small></span><span class="aa-arrow">→</span>';
+    b.addEventListener('click',open);
+    actions.insertBefore(b,actions.firstChild);
   }
 
-  FORM.addEventListener('submit',function(e){e.preventDefault();var q=INPUT.value.trim();if(!q)return;INPUT.value='';handle(q)});
-  INPUT.addEventListener('keydown',function(e){if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();FORM.requestSubmit()}});
-  layer.querySelector('[data-rv8-back]').addEventListener('click',close);
-  layer.querySelector('[data-rv8-close]').addEventListener('click',function(){close();var x=root.querySelector('.aa-close');if(x)x.click()});
-  layer.addEventListener('click',dynamicClick);
+  FORM.addEventListener('submit',function(e){
+    e.preventDefault();
+    var q=INPUT.value.trim();
+    if(!q) return;
+    INPUT.value='';
+    handle(q);
+  });
+  INPUT.addEventListener('keydown',function(e){
+    if(e.key==='Enter'&&!e.shiftKey){e.preventDefault();FORM.requestSubmit()}
+  });
+  LAYER.addEventListener('click',clicks);
+  LAYER.querySelector('.rv81-back').addEventListener('click',closeToHome);
+  LAYER.querySelector('.rv81-x').addEventListener('click',closeAll);
 
   loadSession().then(function(){
-    if(STATE.messages.length){
-      STATE.messages.forEach(function(m){msg(m.role==='user'?'user':'assistant','<div class="rv8-bubble">'+esc(m.text)+'</div>')});
-    }else say(t().hello);
-    deepLink();
+    if(Array.isArray(STATE.messages)&&STATE.messages.length){
+      STATE.messages.forEach(function(m){
+        addMessage(m.role==='user'?'user':'assistant','<div class="rv81-bubble">'+esc(m.text)+'</div>');
+      });
+    } else {
+      intro();
+    }
+    try{
+      var q=(new URL(location.href)).searchParams.get('romi');
+      if(q){open();setTimeout(function(){handle(q)},120)}
+    }catch(e){}
   });
-
   return true;
 }
-function open(){if(!ROOT||!PANEL)return;ROOT.classList.add('is-rv8');PANEL.classList.add('is-active');setTimeout(function(){INPUT&&INPUT.focus({preventScroll:true})},60)}
-function close(){if(!ROOT||!PANEL)return;ROOT.classList.remove('is-rv8');PANEL.classList.remove('is-active')}
-
-function normalizeQuery(q){
-  var s=q.toLowerCase().replace(/ё/g,'е');
-  // Strip conversational filler but keep product terms.
-  return s.replace(/\b(мне|нужно|нужен|нужна|хочу|покажи|подбери|найди|что есть|пожалуйста)\b/g,' ').replace(/\s+/g,' ').trim();
+function intro(){
+  say(RU.hello);
 }
+function open(){
+  ROOT.classList.add('is-rv8');
+  LAYER.classList.add('is-active');
+  setTimeout(function(){INPUT&&INPUT.focus({preventScroll:true})},80);
+}
+function closeToHome(){
+  ROOT.classList.remove('is-rv8');
+  LAYER.classList.remove('is-active');
+}
+function closeAll(){
+  closeToHome();
+  var x=ROOT.querySelector('.aa-panel-close');
+  if(x) x.click();
+}
+function clicks(e){
+  var q=e.target.closest('[data-q]');
+  if(q){open();handle(q.getAttribute('data-q'));return}
+  var a=e.target.closest('[data-action]');
+  if(a&&a.getAttribute('data-action')==='b2b'){say('Расскажите, для какого бизнеса нужна продукция и в каком городе.');renderFeedback('b2b');return}
+  var add=e.target.closest('[data-add]');
+  if(add){addCart(add);return}
+  var cmp=e.target.closest('[data-compare]');
+  if(cmp){toggleCompare(cmp);return}
+  var doCmp=e.target.closest('[data-do-compare]');
+  if(doCmp){compareSelected();return}
+  var clear=e.target.closest('[data-clear-compare]');
+  if(clear){STATE.compare_ids=[];updateCompareBar();return}
+}
+
 function intent(q){
-  var s=q.toLowerCase().replace(/ё/g,'е');
-  if(/жалоб|претенз|протек|сломал|брак|поврежд|не работает|проблем/.test(s))return'complaint';
-  if(/отзыв|оценк|понравил|не понравил/.test(s))return'review';
-  if(/гостиниц|отел|ресторан|кафе|опт|дистриб|магазин|торговая сеть|бизнес|horeca|корпоратив/.test(s))return'b2b';
-  if(/сравн/.test(s))return'compare';
-  return'search';
+  var s=lower(q);
+  if(/жалоб|претенз|протек|сломал|брак|поврежд|не работает|проблем/.test(s)) return 'complaint';
+  if(/оставить отзыв|отзыв|оценк/.test(s)) return 'review';
+  if(/гостиниц|отел|ресторан|кафе|опт|дистриб|торговая сеть|для бизнеса|horeca|корпоратив/.test(s)) return 'b2b';
+  return 'search';
 }
 function handle(q){
   user(q);
-  var mode=intent(q);
-  if(mode==='complaint'){say(t().complaint);renderFeedbackForm('complaint');return}
-  if(mode==='review'){say(t().review);renderFeedbackForm('review');return}
-  if(mode==='b2b'){STATE.customer_type='b2b';say(t().b2b);renderFeedbackForm('b2b');return}
-  if(mode==='compare'){compareLast();return}
-  search(q);
+  var i=intent(q);
+  if(i==='complaint'){say('Помогу оформить обращение. Укажите товар, что произошло, город, где покупали, и контакт для связи.');renderFeedback('complaint');return}
+  if(i==='review'){say('Оставьте товар, оценку и текст отзыва.');renderFeedback('review');return}
+  if(i==='b2b'){STATE.customer_type='b2b';say('Для B2B-запроса укажите город, компанию и телефон или e-mail.');renderFeedback('b2b');return}
+  smartSearch(q);
 }
-function search(q){
-  var wait=loading(),query=normalizeQuery(q);
-  api('search',{query:{q:query}}).then(function(j){
-    remove(wait);var products=j.products||[];STATE.last_products=products.map(function(p){return p.product_id});STATE.last_query=q;saveSession();
-    if(!products.length){say(t().none);return}
-    renderProducts(products);
-  }).catch(function(){remove(wait);say(t().none)});
+
+function normalizeQuery(q){
+  return lower(q)
+    .replace(/[!?.,;:()]/g,' ')
+    .replace(/\b(мне|нужно|нужен|нужна|хочу|покажи|подбери|найди|пожалуйста|есть ли|что есть)\b/g,' ')
+    .replace(/\s+/g,' ').trim();
 }
+function volumeTarget(q){
+  var s=lower(q),m=s.match(/(\d+(?:[.,]\d+)?)\s*(мл|ml|л|литр(?:а|ов)?|l)\b/);
+  if(!m) return 0;
+  var n=parseFloat(m[1].replace(',','.'));
+  return /мл|ml/.test(m[2])?Math.round(n):Math.round(n*1000);
+}
+function productVolume(p){
+  var features=p.features||[], i, v;
+  for(i=0;i<features.length;i++){
+    if(/объ[её]м|volume/i.test(features[i].name||'')){
+      v=parseFloat(String(features[i].value||'').replace(',','.'));
+      if(isFinite(v)) return v>20?Math.round(v):Math.round(v*1000);
+    }
+  }
+  var s=lower(p.name),m=s.match(/(\d{3,5})\s*мл\b/);
+  if(m) return parseInt(m[1],10);
+  m=s.match(/(\d+(?:[.,]\d+)?)\s*л\b/);
+  return m?Math.round(parseFloat(m[1].replace(',','.'))*1000):0;
+}
+function detect(q){
+  var s=lower(q);
+  var d={
+    brand:'',
+    category:'',
+    subcategory:'',
+    purpose:'',
+    volume:volumeTarget(q),
+    explicitCategory:false
+  };
+
+  [
+    ['wash expert','Wash Expert'],
+    ['washexpert','Wash Expert'],
+    ['maxi power','Maxi Power'],
+    ['antibak','Antibak'],
+    ['perfect','Perfect'],
+    ['prachka','Prachka']
+  ].some(function(pair){
+    if(s.indexOf(pair[0])>=0){d.brand=pair[1];return true}
+  });
+
+  // Hard product intent. Order matters.
+  if(/гель\s+для\s+стир|для\s+стирк|стиральн|бель[яе]|laundry/.test(s)){
+    d.category='laundry'; d.explicitCategory=true;
+  } else if(/гель\s+для\s+мытья\s+посуд|для\s+посуд|посуд/.test(s)){
+    d.category='dish'; d.explicitCategory=true;
+  } else if(/гель\s+для\s+душ|душ/.test(s)){
+    d.category='shower'; d.explicitCategory=true;
+  } else if(/жидк\w*\s+мыл|крем[-\s]?мыл/.test(s)){
+    d.category='liquid_soap'; d.explicitCategory=true;
+  } else if(/кусков\w*\s+мыл|банн\w*\s+мыл|тверд\w*\s+мыл/.test(s)){
+    d.category='bar_soap'; d.explicitCategory=true;
+  } else if(/\bмыл[оа]?\b/.test(s)){
+    // Generic "мыло" should first show liquid soap, not bath/bar soap.
+    d.category='soap_generic'; d.explicitCategory=true;
+  } else if(/шампун/.test(s)){
+    d.category='shampoo'; d.explicitCategory=true;
+  } else if(/кондиционер.*бель|для\s+белья/.test(s)){
+    d.category='laundry_conditioner'; d.explicitCategory=true;
+  } else if(/чистящ|уборк|антижир|стекл|сануз/.test(s)){
+    d.category='cleaning'; d.explicitCategory=true;
+  }
+
+  if(/черн|темн|black|dark/.test(s)) d.purpose='black';
+  else if(/бел|white/.test(s)) d.purpose='white';
+  else if(/цветн|color|colour/.test(s)) d.purpose='color';
+  else if(/гипо|hypo|эко|eco/.test(s)) d.purpose='hypo';
+
+  return d;
+}
+
+function productText(p){
+  return lower(
+    (p.name||'')+' '+(p.sku||'')+' '+
+    (p.short_description||'')+' '+
+    (p.features||[]).map(function(f){return (f.name||'')+' '+(f.value||'')}).join(' ')
+  );
+}
+
+function categoryMatch(p,d){
+  var s=productText(p);
+
+  if(!d.category) return true;
+
+  if(d.category==='laundry'){
+    // Positive match + hard negatives prevent shower gels and soap.
+    return (/стир|бель|laundry/.test(s) || /wash expert|maxi power|prachka/.test(s))
+      && !/для\s+душ|шампун|жидк\w*\s+мыл|крем[-\s]?мыл|посуд/.test(s);
+  }
+  if(d.category==='dish'){
+    return /посуд|dish/.test(s) && !/стир|душ|шампун/.test(s);
+  }
+  if(d.category==='shower'){
+    return /для\s+душ|гель\s+душ|shower/.test(s);
+  }
+  if(d.category==='liquid_soap'){
+    return /жидк\w*\s+мыл|крем[-\s]?мыл/.test(s) && !/кусков|банн\w*\s+мыл/.test(s);
+  }
+  if(d.category==='bar_soap'){
+    return /кусков\w*\s+мыл|банн\w*\s+мыл|тверд\w*\s+мыл/.test(s);
+  }
+  if(d.category==='soap_generic'){
+    return /мыл/.test(s);
+  }
+  if(d.category==='shampoo'){
+    return /шампун|shampoo/.test(s);
+  }
+  if(d.category==='laundry_conditioner'){
+    return /кондиционер/.test(s) && /бель|стир/.test(s);
+  }
+  if(d.category==='cleaning'){
+    return /чистящ|уборк|антижир|стекл|сануз|clean/.test(s);
+  }
+  return true;
+}
+
+function brandMatch(p,d){
+  if(!d.brand) return true;
+  return productText(p).indexOf(lower(d.brand))>=0;
+}
+
+function searchTerms(q){
+  var n=normalizeQuery(q),d=detect(q),a=[n];
+
+  // Query the most discriminating combinations first.
+  if(d.brand && d.category==='laundry') a.push(d.brand+' гель для стирки');
+  if(d.brand && d.category==='dish') a.push(d.brand+' для мытья посуды');
+  if(d.brand && d.category==='liquid_soap') a.push(d.brand+' жидкое мыло');
+  if(d.brand && d.category==='shower') a.push(d.brand+' гель для душа');
+
+  if(d.category==='laundry') a.push('гель для стирки','для стирки');
+  if(d.category==='dish') a.push('гель для мытья посуды','посуды');
+  if(d.category==='shower') a.push('гель для душа');
+  if(d.category==='liquid_soap') a.push('жидкое мыло');
+  if(d.category==='soap_generic') a.push('жидкое мыло','мыло');
+  if(d.category==='bar_soap') a.push('кусковое мыло','банное мыло');
+  if(d.category==='shampoo') a.push('шампунь');
+  if(d.category==='cleaning') a.push('чистящее средство');
+
+  if(d.brand) a.push(d.brand);
+  if(d.purpose==='black') a.push('black','черного');
+  if(d.purpose==='white') a.push('white','белого');
+  if(d.purpose==='color') a.push('color','цветного');
+  if(d.purpose==='hypo') a.push('гипоаллергенный','eco');
+
+  return uniq(a).slice(0,7);
+}
+
+function score(p,q){
+  var s=productText(p),d=detect(q),sc=0;
+
+  if(d.brand){
+    if(s.indexOf(lower(d.brand))>=0) sc+=40;
+    else sc-=80;
+  }
+
+  if(categoryMatch(p,d)) sc+=35;
+  else if(d.explicitCategory) sc-=120;
+
+  if(d.purpose==='black' && /black|dark|черн|темн/.test(s)) sc+=22;
+  if(d.purpose==='white' && /white|бел/.test(s)) sc+=22;
+  if(d.purpose==='color' && /color|colour|цвет/.test(s)) sc+=20;
+  if(d.purpose==='hypo' && /гипо|hypo|eco|эко/.test(s)) sc+=20;
+
+  if(d.category==='soap_generic'){
+    // Prefer liquid soap for a generic "мыло" request.
+    if(/жидк\w*\s+мыл|крем[-\s]?мыл/.test(s)) sc+=24;
+    if(/кусков|банн\w*\s+мыл|тверд\w*\s+мыл/.test(s)) sc-=10;
+  }
+
+  if(d.volume){
+    var pv=productVolume(p), diff=Math.abs(pv-d.volume);
+    if(pv){
+      if(diff<=100) sc+=25;
+      else if(diff<=350) sc+=18;
+      else if(diff<=800) sc+=10;
+      else if(diff<=1400) sc+=3;
+      else sc-=8;
+    }
+  }
+
+  normalizeQuery(q).split(' ').filter(function(x){
+    return x.length>=4 && !/^(гель|мыло|товар|продукт)$/.test(x);
+  }).forEach(function(tok){
+    if(s.indexOf(tok)>=0) sc+=3;
+  });
+
+  if(p.in_stock===true) sc+=3;
+  return sc;
+}
+
+function smartSearch(q){
+  var wait=loading(),terms=searchTerms(q),d=detect(q);
+
+  Promise.all(terms.map(function(term){
+    return api('search',{query:{q:term}})
+      .then(function(j){return j.products||[]})
+      .catch(function(){return []});
+  })).then(function(groups){
+    remove(wait);
+
+    var byId={};
+    groups.forEach(function(g){
+      g.forEach(function(p){byId[p.product_id]=p});
+    });
+
+    var list=Object.keys(byId).map(function(k){return byId[k]});
+
+    // Hard filtering is the main correctness gate.
+    if(d.explicitCategory){
+      list=list.filter(function(p){return categoryMatch(p,d)});
+    }
+    if(d.brand){
+      list=list.filter(function(p){return brandMatch(p,d)});
+    }
+
+    list.sort(function(a,b){return score(b,q)-score(a,q)});
+
+    STATE.last_query=q;
+    STATE.last_products=list.slice(0,8).map(function(p){return p.product_id});
+    saveSession();
+
+    if(!list.length){
+      say(RU.none);
+      return;
+    }
+    renderProducts(list.slice(0,6));
+  }).catch(function(err){
+    remove(wait);
+    console.error('[Romi search]',err);
+    say(RU.error);
+  });
+}
+
+function meta(p){
+  var v=productVolume(p),bits=[];
+  if(v) bits.push(v>=1000?(Math.round(v/100)/10)+' л':v+' мл');
+  if(p.in_stock===true) bits.push(RU.stock);
+  return bits;
+}
+
 function productCard(p){
-  var canCart=C.site==='shop',price=money(p.price),old=money(p.old_price);
-  return '<article class="rv8-product" data-pid="'+esc(p.product_id)+'">'+
-    '<a href="'+esc(p.url)+'" target="_blank" rel="noopener" class="rv8-img">'+(p.image?'<img src="'+esc(p.image)+'" alt="" loading="lazy">':'<span>AROMIKA</span>')+'</a>'+
-    '<div class="rv8-copy"><small>'+esc(p.sku||'Aromika')+'</small><b>'+esc(p.name)+'</b>'+
-      '<div class="rv8-price">'+(price?'<strong>'+esc(price)+'</strong>':'')+(old?'<del>'+esc(old)+'</del>':'')+(p.discount_percent?'<em>−'+esc(p.discount_percent)+'%</em>':'')+'</div>'+
-      '<div class="rv8-stock">'+(p.in_stock===true?'✓ В наличии':p.in_stock===false?'Нет в наличии':'')+'</div>'+
-      '<div class="rv8-actions">'+
-        (canCart?'<button type="button" data-rv8-add="'+esc(p.product_id)+'">'+esc(t().add)+'</button>':'<a href="'+esc(withSession(p.url))+'" target="_blank" rel="noopener">'+esc(t().buy)+' ↗</a>')+
-        '<a href="'+esc(withSession(p.url))+'" target="_blank" rel="noopener">'+esc(t().details)+'</a>'+
-        '<button type="button" data-rv8-select="'+esc(p.product_id)+'">'+esc(t().compare)+'</button>'+
+  var old=money(p.old_price),price=money(p.price),inCmp=STATE.compare_ids.indexOf(Number(p.product_id))>=0;
+  var primary=C.site==='shop'
+    ? '<button type="button" class="rv81-primary" data-add="'+esc(p.product_id)+'">'+RU.add+'</button>'
+    : '<a class="rv81-primary" href="'+esc(withSession(p.url))+'" target="_blank" rel="noopener">'+RU.buy+' ↗</a>';
+
+  return '<article class="rv81-product" data-pid="'+esc(p.product_id)+'">'+
+    '<a class="rv81-product-img" href="'+esc(withSession(p.url))+'" target="_blank" rel="noopener">'+
+      (p.image?'<img src="'+esc(p.image)+'" alt="" loading="lazy">':'<span>AROMIKA</span>')+
+    '</a>'+
+    '<div class="rv81-product-main">'+
+      '<div class="rv81-sku">SKU '+esc(p.sku||'—')+'</div>'+
+      '<a class="rv81-name" href="'+esc(withSession(p.url))+'" target="_blank" rel="noopener">'+esc(p.name)+'</a>'+
+      '<div class="rv81-meta">'+meta(p).map(function(x){return '<span>'+esc(x)+'</span>'}).join('')+'</div>'+
+      '<div class="rv81-price">'+
+        (price?'<strong>'+esc(price)+'</strong>':'')+
+        (old?'<del>'+esc(old)+'</del>':'')+
+        (p.discount_percent?'<em>−'+esc(p.discount_percent)+'%</em>':'')+
       '</div>'+
-    '</div></article>';
+    '</div>'+
+    '<div class="rv81-card-actions">'+
+      primary+
+      '<a href="'+esc(withSession(p.url))+'" target="_blank" rel="noopener">'+RU.details+'</a>'+
+      '<button type="button" class="'+(inCmp?'is-selected':'')+'" data-compare="'+esc(p.product_id)+'">'+(inCmp?'✓ ':'')+RU.compare+'</button>'+
+    '</div>'+
+  '</article>';
 }
+
 function renderProducts(products){
-  msg('assistant','<div class="rv8-title">'+esc(t().found)+'</div><div class="rv8-products">'+products.slice(0,6).map(productCard).join('')+'</div>','');
+  var box=addMessage('assistant','<div class="rv81-result-head"><b>'+RU.found+'</b><span>'+products.length+' шт.</span></div><div class="rv81-products">'+products.map(productCard).join('')+'</div><div class="rv81-comparebar"></div>');
+  updateCompareBar(box);
 }
-function compareLast(){
-  var ids=STATE.last_products.slice(0,3);if(ids.length<2){say(t().none);return}
+function compareBar(){
+  return CHAT.querySelectorAll('.rv81-comparebar');
+}
+function updateCompareBar(scope){
+  var bars=scope?[scope.querySelector('.rv81-comparebar')]:Array.from(compareBar());
+  bars.forEach(function(bar){
+    if(!bar) return;
+    if(STATE.compare_ids.length<2){bar.innerHTML='';return}
+    bar.innerHTML='<button type="button" data-do-compare>'+RU.compareSelected+' ('+STATE.compare_ids.length+')</button><button type="button" data-clear-compare>'+RU.clearCompare+'</button>';
+  });
+}
+function toggleCompare(btn){
+  var id=Number(btn.getAttribute('data-compare')),i=STATE.compare_ids.indexOf(id);
+  if(i>=0){STATE.compare_ids.splice(i,1);btn.classList.remove('is-selected');btn.textContent=RU.compare}
+  else{
+    if(STATE.compare_ids.length>=3) STATE.compare_ids.shift();
+    STATE.compare_ids.push(id);btn.classList.add('is-selected');btn.textContent='✓ '+RU.compare;
+  }
+  updateCompareBar();
+}
+function compareSelected(){
+  if(STATE.compare_ids.length<2) return;
   var wait=loading();
-  api('compare',{query:{ids:ids.join(',')}}).then(function(j){remove(wait);renderCompare(j.products||[])}).catch(function(){remove(wait);say(t().none)});
+  api('compare',{query:{ids:STATE.compare_ids.join(',')}}).then(function(j){
+    remove(wait);renderCompare(j.products||[]);
+  }).catch(function(){remove(wait);say(RU.error)});
 }
 function renderCompare(ps){
-  if(ps.length<2){say(t().none);return}
-  var html='<div class="rv8-title">'+esc(t().compare)+'</div><div class="rv8-compare"><table><thead><tr><th></th>'+ps.map(function(p){return'<th>'+esc(p.name)+'</th>'}).join('')+'</tr></thead><tbody>'+
-    '<tr><td>Цена</td>'+ps.map(function(p){return'<td>'+esc(money(p.price)||'—')+'</td>'}).join('')+'</tr>'+
-    '<tr><td>Наличие</td>'+ps.map(function(p){return'<td>'+(p.in_stock===true?'✓':p.in_stock===false?'—':'?')+'</td>'}).join('')+'</tr>'+
-    '<tr><td></td>'+ps.map(function(p){return'<td><a href="'+esc(withSession(p.url))+'" target="_blank" rel="noopener">'+esc(t().buy)+' ↗</a></td>'}).join('')+'</tr>'+
-    '</tbody></table></div>';
-  msg('assistant',html,'');
-}
-function dynamicClick(e){
-  var add=e.target.closest('[data-rv8-add]');if(add){addCart(add);return}
-  var sel=e.target.closest('[data-rv8-select]');if(sel){
-    var id=Number(sel.getAttribute('data-rv8-select'));STATE.selected_product_id=id;
-    var a=STATE.last_products.filter(function(x){return Number(x)!==id});STATE.last_products=[id].concat(a);saveSession();compareLast();return
-  }
+  if(ps.length<2) return;
+  var html='<div class="rv81-result-head"><b>Сравнение</b></div><div class="rv81-compare">';
+  ps.forEach(function(p){
+    html+='<div><b>'+esc(p.name)+'</b><span>'+esc(money(p.price)||'—')+'</span><small>'+esc(meta(p).join(' · '))+'</small><a href="'+esc(withSession(p.url))+'" target="_blank" rel="noopener">'+RU.details+' ↗</a></div>';
+  });
+  html+='</div>';
+  addMessage('assistant',html);
 }
 function addCart(btn){
-  var id=Number(btn.getAttribute('data-rv8-add'));btn.disabled=true;
+  var id=Number(btn.getAttribute('data-add'));
+  btn.disabled=true;btn.textContent='Добавляю…';
   api('cart_add',{method:'POST',body:{product_id:id,amount:1}}).then(function(j){
-    btn.textContent=t().added;renderCart(j.cart||{});
-  }).catch(function(){btn.disabled=false});
+    btn.textContent=RU.added;
+    btn.classList.add('is-added');
+    var c=j.cart||{};
+    addMessage('assistant','<div class="rv81-cartmsg"><b>Товар добавлен</b><span>'+esc((c.amount||0)+' товар(а) · '+(money(c.total)||''))+'</span><a href="'+esc(c.cart_url||C.shopOrigin+'/cart/')+'">'+RU.cart+' →</a></div>');
+  }).catch(function(err){
+    console.error('[Romi cart]',err);
+    btn.disabled=false;btn.textContent=RU.add;
+    say('Не удалось добавить товар в корзину. Попробуйте ещё раз.');
+  });
 }
-function renderCart(c){
-  msg('assistant','<div class="rv8-cart"><b>'+esc(t().cart)+'</b><span>'+esc((c.amount||0)+' товар(а) · '+(money(c.total)||''))+'</span><div><a href="'+esc(c.cart_url||C.shopOrigin+'/index.php?dispatch=checkout.cart')+'">'+esc(t().cart)+'</a><a href="'+esc(c.checkout_url||C.shopOrigin+'/index.php?dispatch=checkout.checkout')+'">'+esc(t().checkout)+'</a></div></div>','');
-}
-function renderFeedbackForm(type){
-  var labels=type==='review'?{msg:'Отзыв',extra:'Оценка 1–5'}:{msg:'Описание',extra:'Товар / компания'};
-  var html='<form class="rv8-feedback" data-type="'+esc(type)+'"><input name="company_url" class="rv8-hp" tabindex="-1" autocomplete="off">'+
-    '<input name="name" placeholder="Имя">'+
-    '<input name="phone" placeholder="Телефон">'+
-    '<input name="email" placeholder="E-mail">'+
-    '<input name="city" placeholder="Город">'+
-    '<input name="product_name" placeholder="'+esc(labels.extra)+'">'+
+function renderFeedback(type){
+  var title=type==='b2b'?'B2B-запрос':type==='review'?'Отзыв':'Обращение';
+  var html='<form class="rv81-feedback" data-type="'+esc(type)+'">'+
+    '<b>'+esc(title)+'</b>'+
+    '<input name="company_url" class="rv81-hp" tabindex="-1" autocomplete="off">'+
+    '<div class="rv81-fields"><input name="name" placeholder="Имя"><input name="city" placeholder="Город"></div>'+
+    '<div class="rv81-fields"><input name="phone" placeholder="Телефон"><input name="email" placeholder="E-mail"></div>'+
+    '<input name="product_name" placeholder="'+(type==='b2b'?'Компания / что требуется':'Товар')+'">'+
     (type==='review'?'<input name="rating" inputmode="numeric" placeholder="Оценка 1–5">':'')+
-    '<textarea name="message" rows="4" placeholder="'+esc(labels.msg)+'"></textarea>'+
-    (type==='complaint'?'<label class="rv8-file"><span>Фото (необязательно)</span><input name="photo" type="file" accept="image/jpeg,image/png,image/webp"></label>':'')+
-    '<button type="submit">Отправить →</button><div class="rv8-error"></div></form>';
-  var box=msg('assistant',html,'');var form=box.querySelector('form');
+    '<textarea name="message" rows="4" placeholder="Комментарий"></textarea>'+
+    (type==='complaint'?'<label class="rv81-file">Фото, если нужно<input name="photo" type="file" accept="image/jpeg,image/png,image/webp"></label>':'')+
+    '<button type="submit">'+RU.send+' →</button><small class="rv81-form-error"></small></form>';
+  var box=addMessage('assistant',html),form=box.querySelector('form');
   form.addEventListener('submit',function(e){e.preventDefault();submitFeedback(form,type)});
 }
-function fileToDataURL(file){
+function fileData(file){
   return new Promise(function(resolve,reject){
     if(!file){resolve('');return}
-    if(file.size>5*1024*1024){reject(new Error('file_too_large'));return}
-    var r=new FileReader();r.onload=function(){resolve(String(r.result||''))};r.onerror=function(){reject(r.error||new Error('file_read'))};r.readAsDataURL(file);
+    if(file.size>5*1024*1024){reject(new Error('too_large'));return}
+    var r=new FileReader();r.onload=function(){resolve(String(r.result||''))};r.onerror=function(){reject(new Error('read'))};r.readAsDataURL(file);
   });
 }
 function submitFeedback(form,type){
   var fd=new FormData(form),body={type:type,session_id:STATE.session_id,source:C.site};
-  fd.forEach(function(v,k){if(k!=='photo')body[k]=String(v||'').trim()});
-  if((type==='b2b')&&!body.phone&&!body.email){form.querySelector('.rv8-error').textContent=t().needContact;return}
-  var mode=type==='b2b'?'b2b':'feedback',b=form.querySelector('button');b.disabled=true;
-  var fileInput=form.querySelector('input[name="photo"]'),file=fileInput&&fileInput.files&&fileInput.files[0];
-  fileToDataURL(file).then(function(data){
-    if(data)body.photo_data=data;
-    return api(mode,{method:'POST',body:body});
-  }).then(function(j){form.remove();say(t().sent+' '+(j.reference||''))}).catch(function(err){b.disabled=false;form.querySelector('.rv8-error').textContent=(err&&err.message==='file_too_large')?'Фото слишком большое (максимум 5 МБ).':t().fail});
+  fd.forEach(function(v,k){if(k!=='photo') body[k]=String(v||'').trim()});
+  if(type==='b2b'&&!body.phone&&!body.email){form.querySelector('.rv81-form-error').textContent=RU.needContact;return}
+  var submit=form.querySelector('button[type=submit]'),file=form.querySelector('input[name=photo]');
+  submit.disabled=true;
+  fileData(file&&file.files&&file.files[0]).then(function(data){
+    if(data) body.photo_data=data;
+    return api(type==='b2b'?'b2b':'feedback',{method:'POST',body:body});
+  }).then(function(j){
+    form.remove();say(RU.sent+' '+(j.reference||''));
+  }).catch(function(){
+    submit.disabled=false;form.querySelector('.rv81-form-error').textContent=RU.failed;
+  });
 }
 function withSession(url){
-  try{var u=new URL(url,location.href);u.searchParams.set('romi_session',STATE.session_id);return u.toString()}catch(e){return url}
-}
-function deepLink(){
   try{
-    var u=new URL(location.href),incoming=u.searchParams.get('romi_session'),q=u.searchParams.get('romi');
-    if(incoming&&incoming!==STATE.session_id){STATE.session_id=incoming;try{localStorage.setItem(SID_KEY,incoming)}catch(e){}}
-    if(q){open();setTimeout(function(){handle(q)},150)}
-  }catch(e){}
+    var u=new URL(url,location.href);
+    u.searchParams.set('romi_session',STATE.session_id);
+    return u.toString();
+  }catch(e){return url}
 }
+
+function fixLegacyInfoLinks(){
+  if(C.site!=='shop') return;
+
+  var commerceBrandRoutes={
+    '/perfect':'Perfect',
+    '/washexpert':'Wash Expert',
+    '/maxipower':'Maxi Power',
+    '/prachka':'Prachka',
+    '/antibak':'Antibak'
+  };
+
+  var infoRoutes=[
+    '/', '/brands', '/okompanii', '/careers', '/kontakty'
+  ];
+
+  document.addEventListener('click',function(e){
+    var a=e.target && e.target.closest ? e.target.closest('#aromika-assistant a[href]') : null;
+    if(!a) return;
+
+    var raw=a.getAttribute('href')||'';
+    if(!raw || raw.charAt(0)!=='/' || raw.indexOf('//')===0) return;
+
+    var pathOnly=raw.split('?')[0].split('#')[0]||'/';
+
+    // "Актуальные акции" on aromika.shop must stay inside the shop.
+    if(pathOnly==='/akcii'){
+      e.preventDefault();
+      e.stopPropagation();
+      window.location.href=C.shopOrigin.replace(/\/$/,'')+'/bestsellery/';
+      return;
+    }
+
+    // Product/brand recommendations on the shop stay in commerce:
+    // open live CS-Cart results inside Romi instead of aromika.info.
+    if(commerceBrandRoutes[pathOnly]){
+      e.preventDefault();
+      e.stopPropagation();
+      open();
+      var brandQuery=commerceBrandRoutes[pathOnly];
+      setTimeout(function(){
+        user(brandQuery);
+        smartSearch(brandQuery);
+      },60);
+      return;
+    }
+
+    // Generic product route also remains a shop flow.
+    if(raw.indexOf('/#products')===0){
+      e.preventDefault();
+      e.stopPropagation();
+      open();
+      setTimeout(function(){
+        user('Продукция Aromika');
+        smartSearch('Aromika');
+      },60);
+      return;
+    }
+
+    // Only genuinely corporate/informational routes go to aromika.info.
+    if(infoRoutes.indexOf(pathOnly)!==-1){
+      e.preventDefault();
+      var dest=C.infoOrigin.replace(/\/$/,'')+raw;
+      if(a.target==='_blank') window.open(dest,'_blank','noopener');
+      else window.location.href=dest;
+    }
+  },true);
+}
+
 function boot(){
-  var tries=0;(function find(){
-    if(build())return;
-    if(++tries<80)setTimeout(find,125);
+  fixLegacyInfoLinks();
+  var tries=0;(function wait(){
+    if(build()) return;
+    if(++tries<100) setTimeout(wait,120);
   })();
 }
-if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',boot,{once:true});else boot();
+if(document.readyState==='loading') document.addEventListener('DOMContentLoaded',boot,{once:true});
+else boot();
 })();
