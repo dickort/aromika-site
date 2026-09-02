@@ -1,0 +1,1292 @@
+/* Romi V8.1 UI — fixed panel geometry, compact product assistant */
+#aromika-assistant.is-rv8 .aa-panel{
+  width:min(500px,calc(100vw - 32px));
+  height:min(690px,calc(100dvh - 120px));
+  max-height:none;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+#aromika-assistant.is-rv8 .aa-topbar,
+#aromika-assistant.is-rv8 .aa-screen,
+#aromika-assistant.is-rv8 .aa-foot{display:none!important}
+
+#aromika-assistant .rv81-layer{
+  display:none;
+  flex:1 1 auto;
+  min-height:0;
+  width:100%;
+  background:var(--aa-paper,#fff);
+  color:var(--aa-ink,#171717);
+  flex-direction:column;
+}
+#aromika-assistant .rv81-layer.is-active{display:flex}
+#aromika-assistant .rv81-head{
+  flex:0 0 64px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:9px 12px 9px 14px;
+  border-bottom:1px solid var(--aa-line,rgba(0,0,0,.08));
+  background:var(--aa-paper,#fff);
+}
+#aromika-assistant .rv81-person{display:flex;align-items:center;gap:10px;min-width:0}
+#aromika-assistant .rv81-avatar{
+  width:43px;height:43px;border-radius:14px;overflow:hidden;display:grid;place-items:end center;
+  background:linear-gradient(145deg,#fff,#f8e9ef);border:1px solid rgba(234,47,120,.16);flex:0 0 auto
+}
+#aromika-assistant .rv81-avatar img{width:100%;height:100%;object-fit:contain;object-position:center bottom}
+#aromika-assistant .rv81-person b{display:block;font-size:14px;line-height:1.15}
+#aromika-assistant .rv81-person small{display:flex;align-items:center;gap:5px;margin-top:3px;color:var(--aa-muted,#706b6d);font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#aromika-assistant .rv81-person small:before{content:"";width:6px;height:6px;border-radius:50%;background:#35a853;flex:0 0 auto}
+#aromika-assistant .rv81-head-actions{display:flex;gap:5px}
+#aromika-assistant .rv81-head-actions button{
+  width:36px;height:36px;border:1px solid var(--aa-line,rgba(0,0,0,.08));border-radius:11px;background:var(--aa-soft,#f7f4f5);
+  color:var(--aa-ink,#171717);font-size:18px;line-height:1;cursor:pointer
+}
+#aromika-assistant .rv81-head-actions button:hover{border-color:rgba(234,47,120,.28);color:var(--aa-pink,#ea2f78)}
+
+#aromika-assistant .rv81-chat{
+  flex:1 1 auto;min-height:0;overflow:auto;padding:15px 14px 10px;overscroll-behavior:contain;scrollbar-width:thin
+}
+#aromika-assistant .rv81-msg{display:flex;margin:0 0 10px}
+#aromika-assistant .rv81-msg--user{justify-content:flex-end}
+#aromika-assistant .rv81-bubble{
+  max-width:88%;padding:10px 12px;border-radius:15px 15px 15px 5px;
+  background:var(--aa-soft,#f7f4f5);border:1px solid var(--aa-line,rgba(0,0,0,.08));
+  font-size:12px;line-height:1.48
+}
+#aromika-assistant .rv81-msg--user .rv81-bubble{
+  background:var(--aa-ink,#171717);border-color:var(--aa-ink,#171717);color:#fff;border-radius:15px 15px 5px 15px
+}
+#aromika-assistant .rv81-loading{display:flex;align-items:center;gap:4px}
+#aromika-assistant .rv81-loading span{width:5px;height:5px;border-radius:50%;background:var(--aa-pink,#ea2f78);animation:rv81dot .75s infinite alternate}
+#aromika-assistant .rv81-loading span:nth-child(2){animation-delay:.12s}
+#aromika-assistant .rv81-loading span:nth-child(3){animation-delay:.24s}
+#aromika-assistant .rv81-loading b{margin-left:5px;font-size:10px;font-weight:650;color:var(--aa-muted,#706b6d)}
+@keyframes rv81dot{to{transform:translateY(-3px);opacity:.45}}
+
+#aromika-assistant .rv81-quick{
+  flex:0 0 auto;display:flex;gap:6px;overflow-x:auto;padding:8px 12px 4px;background:var(--aa-paper,#fff);scrollbar-width:none
+}
+#aromika-assistant .rv81-quick::-webkit-scrollbar{display:none}
+#aromika-assistant .rv81-quick button{
+  flex:0 0 auto;height:32px;padding:0 11px;border:1px solid var(--aa-line,rgba(0,0,0,.08));border-radius:999px;
+  background:var(--aa-paper,#fff);color:var(--aa-ink,#171717);font-size:10.5px;font-weight:680;cursor:pointer
+}
+#aromika-assistant .rv81-quick button:hover{border-color:rgba(234,47,120,.35);color:var(--aa-pink,#ea2f78)}
+
+#aromika-assistant .rv81-form{
+  flex:0 0 auto;display:grid;grid-template-columns:minmax(0,1fr) 46px;gap:7px;padding:9px 12px 12px;
+  border-top:1px solid var(--aa-line,rgba(0,0,0,.08));background:var(--aa-paper,#fff)
+}
+#aromika-assistant .rv81-form textarea{
+  width:100%;height:46px;min-height:46px;max-height:92px;resize:none;padding:12px 13px;border:1px solid var(--aa-line,rgba(0,0,0,.10));
+  border-radius:14px;background:var(--aa-soft,#f7f4f5);color:var(--aa-ink,#171717);font-size:12px;line-height:1.35;outline:none
+}
+#aromika-assistant .rv81-form textarea:focus{border-color:rgba(234,47,120,.5);box-shadow:0 0 0 3px rgba(234,47,120,.08)}
+#aromika-assistant .rv81-form>button{
+  width:46px;height:46px;border:0;border-radius:14px;background:var(--aa-pink,#ea2f78);color:#fff;font-size:20px;cursor:pointer
+}
+
+#aromika-assistant .rv81-result-head{width:100%;display:flex;justify-content:space-between;align-items:center;margin:4px 0 8px}
+#aromika-assistant .rv81-result-head b{font-size:12.5px}
+#aromika-assistant .rv81-result-head span{font-size:10px;color:var(--aa-muted,#706b6d)}
+#aromika-assistant .rv81-products{width:100%;display:grid;gap:8px}
+#aromika-assistant .rv81-product{
+  display:grid;grid-template-columns:92px minmax(0,1fr);gap:11px;padding:10px;
+  border:1px solid var(--aa-line,rgba(0,0,0,.08));border-radius:16px;background:var(--aa-paper,#fff)
+}
+#aromika-assistant .rv81-product-img{
+  width:92px;height:108px;border-radius:12px;background:var(--aa-soft,#f7f4f5);display:grid;place-items:center;overflow:hidden;text-decoration:none;color:#999;font-size:9px;font-weight:800
+}
+#aromika-assistant .rv81-product-img img{width:100%;height:100%;object-fit:contain}
+#aromika-assistant .rv81-product-main{min-width:0}
+#aromika-assistant .rv81-sku{color:var(--aa-pink,#ea2f78);font-size:9px;font-weight:800;letter-spacing:.15px}
+#aromika-assistant .rv81-name{display:block;margin-top:2px;color:var(--aa-ink,#171717);font-size:12px;font-weight:740;line-height:1.3;text-decoration:none}
+#aromika-assistant .rv81-name:hover{color:var(--aa-pink,#ea2f78)}
+#aromika-assistant .rv81-meta{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+#aromika-assistant .rv81-meta span{padding:3px 6px;border-radius:999px;background:var(--aa-soft,#f7f4f5);color:var(--aa-muted,#706b6d);font-size:8.8px}
+#aromika-assistant .rv81-price{display:flex;align-items:center;gap:6px;margin-top:7px}
+#aromika-assistant .rv81-price strong{font-size:14px}
+#aromika-assistant .rv81-price del{color:#999;font-size:10px}
+#aromika-assistant .rv81-price em{font-style:normal;color:var(--aa-pink,#ea2f78);font-size:9px;font-weight:800}
+#aromika-assistant .rv81-card-actions{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+#aromika-assistant .rv81-card-actions a,
+#aromika-assistant .rv81-card-actions button{
+  min-height:31px;padding:7px 9px;border:1px solid var(--aa-line,rgba(0,0,0,.10));border-radius:9px;background:var(--aa-paper,#fff);
+  color:var(--aa-ink,#171717);font:inherit;font-size:9.5px;font-weight:720;text-decoration:none;cursor:pointer
+}
+#aromika-assistant .rv81-card-actions .rv81-primary{background:var(--aa-ink,#171717);color:#fff;border-color:var(--aa-ink,#171717)}
+#aromika-assistant .rv81-card-actions button.is-selected{border-color:rgba(234,47,120,.38);background:rgba(234,47,120,.08);color:var(--aa-pink,#ea2f78)}
+#aromika-assistant .rv81-card-actions .is-added{background:var(--aa-pink,#ea2f78);border-color:var(--aa-pink,#ea2f78);color:#fff}
+
+#aromika-assistant .rv81-comparebar{display:flex;gap:6px;margin-top:8px}
+#aromika-assistant .rv81-comparebar button{height:34px;padding:0 11px;border:0;border-radius:9px;background:var(--aa-ink,#171717);color:#fff;font-size:9.5px;font-weight:740;cursor:pointer}
+#aromika-assistant .rv81-comparebar button+button{background:var(--aa-soft,#f7f4f5);color:var(--aa-muted,#706b6d)}
+#aromika-assistant .rv81-compare{width:100%;display:grid;gap:7px}
+#aromika-assistant .rv81-compare>div{padding:10px;border:1px solid var(--aa-line,rgba(0,0,0,.08));border-radius:12px;display:grid;grid-template-columns:1fr auto;gap:4px 8px}
+#aromika-assistant .rv81-compare b{font-size:10.5px;line-height:1.3}
+#aromika-assistant .rv81-compare span{font-size:11px;font-weight:800}
+#aromika-assistant .rv81-compare small{font-size:9px;color:var(--aa-muted,#706b6d)}
+#aromika-assistant .rv81-compare a{font-size:9px;color:var(--aa-pink,#ea2f78);text-decoration:none;font-weight:700;text-align:right}
+
+#aromika-assistant .rv81-cartmsg{width:100%;padding:11px;border-radius:13px;background:rgba(234,47,120,.07);border:1px solid rgba(234,47,120,.14);display:grid;grid-template-columns:1fr auto;gap:3px 9px}
+#aromika-assistant .rv81-cartmsg b{font-size:11px}
+#aromika-assistant .rv81-cartmsg span{font-size:9px;color:var(--aa-muted,#706b6d)}
+#aromika-assistant .rv81-cartmsg a{grid-row:1/3;grid-column:2;color:var(--aa-pink,#ea2f78);font-size:9.5px;font-weight:750;text-decoration:none;align-self:center}
+
+#aromika-assistant .rv81-feedback{width:100%;display:grid;gap:7px}
+#aromika-assistant .rv81-feedback>b{font-size:12px}
+#aromika-assistant .rv81-fields{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+#aromika-assistant .rv81-feedback input,
+#aromika-assistant .rv81-feedback textarea{
+  width:100%;border:1px solid var(--aa-line,rgba(0,0,0,.10));border-radius:10px;background:var(--aa-soft,#f7f4f5);
+  color:var(--aa-ink,#171717);font:inherit;font-size:10.5px;padding:9px;outline:none
+}
+#aromika-assistant .rv81-feedback>button{height:38px;border:0;border-radius:10px;background:var(--aa-ink,#171717);color:#fff;font:inherit;font-size:10.5px;font-weight:750;cursor:pointer}
+#aromika-assistant .rv81-file{display:grid;gap:4px;color:var(--aa-muted,#706b6d);font-size:9px}
+#aromika-assistant .rv81-form-error{color:#b3264f;font-size:9px}
+#aromika-assistant .rv81-hp{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;opacity:0!important}
+
+html[data-aromika-theme="dark"] #aromika-assistant .rv81-person small:before{background:#62c77b}
+
+@media(max-width:720px){
+  #aromika-assistant.is-rv8 .aa-panel{
+    position:fixed;left:8px;right:8px;bottom:calc(76px + env(safe-area-inset-bottom));
+    width:auto;height:calc(100dvh - 94px - env(safe-area-inset-bottom));max-height:none;border-radius:22px
+  }
+}
+@media(max-width:480px){
+  #aromika-assistant .rv81-head{flex-basis:58px;padding:7px 9px}
+  #aromika-assistant .rv81-avatar{width:39px;height:39px;border-radius:12px}
+  #aromika-assistant .rv81-chat{padding:11px 9px 7px}
+  #aromika-assistant .rv81-quick{padding-left:9px;padding-right:9px}
+  #aromika-assistant .rv81-form{padding:8px 9px 9px}
+  #aromika-assistant .rv81-product{grid-template-columns:78px minmax(0,1fr);gap:9px;padding:8px}
+  #aromika-assistant .rv81-product-img{width:78px;height:94px}
+  #aromika-assistant .rv81-name{font-size:11px}
+  #aromika-assistant .rv81-fields{grid-template-columns:1fr}
+}
+
+
+/* V8.2 card layout override: compact, full-width, adapted to Romi panel */
+#aromika-assistant .rv81-products{
+  grid-template-columns:minmax(0,1fr);
+  width:100%;
+}
+#aromika-assistant .rv81-product{
+  width:100%;
+  min-width:0;
+  display:grid;
+  grid-template-columns:82px minmax(0,1fr);
+  grid-template-rows:auto auto;
+  gap:9px 11px;
+  padding:10px;
+  overflow:hidden;
+}
+#aromika-assistant .rv81-product-img{
+  width:82px;
+  height:94px;
+  align-self:start;
+}
+#aromika-assistant .rv81-product-main{
+  min-width:0;
+  overflow:hidden;
+}
+#aromika-assistant .rv81-name{
+  display:-webkit-box;
+  -webkit-line-clamp:3;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  font-size:11.5px;
+  line-height:1.28;
+}
+#aromika-assistant .rv81-meta{
+  margin-top:5px;
+}
+#aromika-assistant .rv81-price{
+  margin-top:6px;
+}
+#aromika-assistant .rv81-price strong{
+  font-size:14px;
+}
+#aromika-assistant .rv81-card-actions{
+  grid-column:1 / -1;
+  width:100%;
+  display:grid;
+  grid-template-columns:1.15fr 1fr 1fr;
+  gap:6px;
+  margin-top:0;
+}
+#aromika-assistant .rv81-card-actions a,
+#aromika-assistant .rv81-card-actions button{
+  width:100%;
+  min-width:0;
+  min-height:34px;
+  padding:7px 6px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  font-size:9.5px;
+}
+#aromika-assistant .rv81-result-head{
+  position:sticky;
+  top:-15px;
+  z-index:2;
+  padding:7px 0 5px;
+  background:var(--aa-paper,#fff);
+}
+@media(max-width:480px){
+  #aromika-assistant .rv81-product{
+    grid-template-columns:74px minmax(0,1fr);
+    gap:8px 9px;
+    padding:9px;
+  }
+  #aromika-assistant .rv81-product-img{
+    width:74px;
+    height:86px;
+  }
+  #aromika-assistant .rv81-name{
+    font-size:10.8px;
+    -webkit-line-clamp:3;
+  }
+  #aromika-assistant .rv81-meta span{
+    font-size:8px;
+    padding:3px 5px;
+  }
+  #aromika-assistant .rv81-card-actions{
+    gap:5px;
+  }
+  #aromika-assistant .rv81-card-actions a,
+  #aromika-assistant .rv81-card-actions button{
+    min-height:33px;
+    font-size:9px;
+    padding:6px 4px;
+  }
+}
+
+
+/* =========================================================
+   ROMI INFO V8.5 — WINDOW FIX
+   The info site uses the V5 shell only as launcher/container.
+   V8 owns the visible panel geometry.
+   ========================================================= */
+
+#aromika-assistant.is-rv8{
+  z-index:2147483000 !important;
+}
+
+#aromika-assistant.is-rv8 .aa-panel{
+  position:fixed !important;
+  right:24px !important;
+  bottom:24px !important;
+  left:auto !important;
+  top:auto !important;
+  width:min(500px,calc(100vw - 48px)) !important;
+  height:min(690px,calc(100dvh - 48px)) !important;
+  min-height:420px !important;
+  max-height:none !important;
+  overflow:hidden !important;
+  border-radius:24px !important;
+  transform:none !important;
+  transform-origin:center !important;
+  opacity:1 !important;
+  visibility:visible !important;
+  display:flex !important;
+  flex-direction:column !important;
+  background:var(--aa-paper,#fff) !important;
+}
+
+#aromika-assistant.is-rv8 .rv81-layer{
+  position:relative !important;
+  inset:auto !important;
+  width:100% !important;
+  height:100% !important;
+  min-height:0 !important;
+  flex:1 1 auto !important;
+  overflow:hidden !important;
+}
+
+#aromika-assistant.is-rv8 .aa-launcher{
+  display:none !important;
+}
+
+#aromika-assistant.is-rv8 .aa-teaser{
+  display:none !important;
+}
+
+#aromika-assistant.is-rv8 .rv81-chat{
+  flex:1 1 0 !important;
+  min-height:0 !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+}
+
+#aromika-assistant.is-rv8 .rv81-head,
+#aromika-assistant.is-rv8 .rv81-quick,
+#aromika-assistant.is-rv8 .rv81-form{
+  width:100% !important;
+  flex-shrink:0 !important;
+}
+
+@media (max-width:720px){
+  html.aa-lock-mobile,
+  html.aa-lock-mobile body{
+    overflow:hidden !important;
+  }
+
+  #aromika-assistant.is-rv8 .aa-panel{
+    left:8px !important;
+    right:8px !important;
+    top:8px !important;
+    bottom:8px !important;
+    width:auto !important;
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    border-radius:20px !important;
+  }
+
+  #aromika-assistant.is-rv8 .rv81-layer{
+    height:100% !important;
+  }
+}
+
+@media (max-height:520px){
+  #aromika-assistant.is-rv8 .aa-panel{
+    top:6px !important;
+    bottom:6px !important;
+    height:auto !important;
+    min-height:0 !important;
+  }
+
+  #aromika-assistant.is-rv8 .rv81-head{
+    flex-basis:54px !important;
+    min-height:54px !important;
+  }
+
+  #aromika-assistant.is-rv8 .rv81-quick{
+    padding-top:5px !important;
+    padding-bottom:3px !important;
+  }
+
+  #aromika-assistant.is-rv8 .rv81-form{
+    padding-top:6px !important;
+    padding-bottom:7px !important;
+  }
+}
+
+
+/* =========================================================
+   ROMI INFO V8.6 — SEPARATE SHELL
+   Completely decouples V8 from the old V5 panel geometry.
+   ========================================================= */
+
+html.rv81-info-ready #aromika-assistant .aa-panel{
+  display:none !important;
+}
+
+#romi-v8-info-shell{
+  position:fixed;
+  right:24px;
+  bottom:24px;
+  width:min(460px,calc(100vw - 48px));
+  height:min(680px,calc(100dvh - 48px));
+  z-index:2147483001;
+  display:none;
+  overflow:hidden;
+  border-radius:24px;
+  background:var(--aa-paper,#fff);
+  box-shadow:0 24px 70px rgba(20,10,15,.20);
+  border:1px solid rgba(0,0,0,.08);
+}
+
+#romi-v8-info-shell.is-open{
+  display:flex;
+  flex-direction:column;
+}
+
+#romi-v8-info-shell .rv81-layer{
+  display:none;
+  width:100%;
+  height:100%;
+  min-height:0;
+  flex:1 1 auto;
+  flex-direction:column;
+  background:var(--aa-paper,#fff);
+}
+
+#romi-v8-info-shell .rv81-layer.is-active{
+  display:flex;
+}
+
+#romi-v8-info-shell .rv81-head{
+  flex:0 0 64px;
+  min-height:64px;
+}
+
+#romi-v8-info-shell .rv81-chat{
+  flex:1 1 0;
+  min-height:0;
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+
+#romi-v8-info-shell .rv81-quick,
+#romi-v8-info-shell .rv81-form{
+  flex:0 0 auto;
+}
+
+html.rv81-info-open #aromika-assistant .aa-launcher,
+html.rv81-info-open #aromika-assistant .aa-teaser{
+  display:none !important;
+}
+
+@media(max-width:720px){
+  #romi-v8-info-shell{
+    left:8px;
+    right:8px;
+    top:8px;
+    bottom:8px;
+    width:auto;
+    height:auto;
+    border-radius:20px;
+  }
+}
+
+@media(max-height:560px) and (min-width:721px){
+  #romi-v8-info-shell{
+    top:8px;
+    bottom:8px;
+    height:auto;
+  }
+}
+
+
+/* =========================================================
+   ROMI INFO V8.7 — FINAL WINDOW + PRODUCT IMAGE FIX
+   ========================================================= */
+
+/* Old V5 dialog is never shown on info; only its round launcher remains. */
+html.rv81-info-ready #aromika-assistant .aa-panel{
+  display:none !important;
+}
+
+/* Independent V8 dialog */
+#romi-v8-info-shell{
+  right:24px !important;
+  bottom:24px !important;
+  width:min(500px,calc(100vw - 48px)) !important;
+  height:min(700px,calc(100dvh - 48px)) !important;
+  min-height:480px !important;
+  max-height:none !important;
+  border-radius:24px !important;
+}
+#romi-v8-info-shell .rv81-layer.is-active{
+  display:flex !important;
+  flex-direction:column !important;
+  width:100% !important;
+  height:100% !important;
+}
+#romi-v8-info-shell .rv81-chat{
+  flex:1 1 0 !important;
+  min-height:0 !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+}
+
+/* Product must be visible completely, never cropped. */
+#romi-v8-info-shell .rv81-product{
+  grid-template-columns:104px minmax(0,1fr) !important;
+  align-items:start !important;
+}
+#romi-v8-info-shell .rv81-product-img{
+  width:104px !important;
+  height:126px !important;
+  padding:7px !important;
+  box-sizing:border-box !important;
+  background:#fff !important;
+  overflow:hidden !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+#romi-v8-info-shell .rv81-product-img img{
+  width:100% !important;
+  height:100% !important;
+  max-width:100% !important;
+  max-height:100% !important;
+  object-fit:contain !important;
+  object-position:center center !important;
+  transform:none !important;
+  clip-path:none !important;
+}
+#romi-v8-info-shell .rv81-card-actions{
+  grid-template-columns:1.15fr 1fr 1fr !important;
+}
+
+@media(max-width:720px){
+  #romi-v8-info-shell{
+    left:8px !important;
+    right:8px !important;
+    top:8px !important;
+    bottom:8px !important;
+    width:auto !important;
+    height:auto !important;
+    min-height:0 !important;
+    border-radius:20px !important;
+  }
+}
+@media(max-width:480px){
+  #romi-v8-info-shell .rv81-product{
+    grid-template-columns:92px minmax(0,1fr) !important;
+  }
+  #romi-v8-info-shell .rv81-product-img{
+    width:92px !important;
+    height:114px !important;
+    padding:6px !important;
+  }
+  #romi-v8-info-shell .rv81-card-actions{
+    grid-template-columns:1fr 1fr !important;
+  }
+  #romi-v8-info-shell .rv81-card-actions .rv81-primary{
+    grid-column:1 / -1 !important;
+  }
+}
+
+/* V8.8 mirrored component styles for independent info shell */
+/* Romi V8.1 UI — fixed panel geometry, compact product assistant */
+#aromika-assistant.is-rv8 .aa-panel{
+  width:min(500px,calc(100vw - 32px));
+  height:min(690px,calc(100dvh - 120px));
+  max-height:none;
+  overflow:hidden;
+  display:flex;
+  flex-direction:column;
+}
+#aromika-assistant.is-rv8 .aa-topbar,
+#aromika-assistant.is-rv8 .aa-screen,
+#aromika-assistant.is-rv8 .aa-foot{display:none!important}
+
+#romi-v8-info-shell .rv81-layer{
+  display:none;
+  flex:1 1 auto;
+  min-height:0;
+  width:100%;
+  background:var(--aa-paper,#fff);
+  color:var(--aa-ink,#171717);
+  flex-direction:column;
+}
+#romi-v8-info-shell .rv81-layer.is-active{display:flex}
+#romi-v8-info-shell .rv81-head{
+  flex:0 0 64px;
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  gap:12px;
+  padding:9px 12px 9px 14px;
+  border-bottom:1px solid var(--aa-line,rgba(0,0,0,.08));
+  background:var(--aa-paper,#fff);
+}
+#romi-v8-info-shell .rv81-person{display:flex;align-items:center;gap:10px;min-width:0}
+#romi-v8-info-shell .rv81-avatar{
+  width:43px;height:43px;border-radius:14px;overflow:hidden;display:grid;place-items:end center;
+  background:linear-gradient(145deg,#fff,#f8e9ef);border:1px solid rgba(234,47,120,.16);flex:0 0 auto
+}
+#romi-v8-info-shell .rv81-avatar img{width:100%;height:100%;object-fit:contain;object-position:center bottom}
+#romi-v8-info-shell .rv81-person b{display:block;font-size:14px;line-height:1.15}
+#romi-v8-info-shell .rv81-person small{display:flex;align-items:center;gap:5px;margin-top:3px;color:var(--aa-muted,#706b6d);font-size:10px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#romi-v8-info-shell .rv81-person small:before{content:"";width:6px;height:6px;border-radius:50%;background:#35a853;flex:0 0 auto}
+#romi-v8-info-shell .rv81-head-actions{display:flex;gap:5px}
+#romi-v8-info-shell .rv81-head-actions button{
+  width:36px;height:36px;border:1px solid var(--aa-line,rgba(0,0,0,.08));border-radius:11px;background:var(--aa-soft,#f7f4f5);
+  color:var(--aa-ink,#171717);font-size:18px;line-height:1;cursor:pointer
+}
+#romi-v8-info-shell .rv81-head-actions button:hover{border-color:rgba(234,47,120,.28);color:var(--aa-pink,#ea2f78)}
+
+#romi-v8-info-shell .rv81-chat{
+  flex:1 1 auto;min-height:0;overflow:auto;padding:15px 14px 10px;overscroll-behavior:contain;scrollbar-width:thin
+}
+#romi-v8-info-shell .rv81-msg{display:flex;margin:0 0 10px}
+#romi-v8-info-shell .rv81-msg--user{justify-content:flex-end}
+#romi-v8-info-shell .rv81-bubble{
+  max-width:88%;padding:10px 12px;border-radius:15px 15px 15px 5px;
+  background:var(--aa-soft,#f7f4f5);border:1px solid var(--aa-line,rgba(0,0,0,.08));
+  font-size:12px;line-height:1.48
+}
+#romi-v8-info-shell .rv81-msg--user .rv81-bubble{
+  background:var(--aa-ink,#171717);border-color:var(--aa-ink,#171717);color:#fff;border-radius:15px 15px 5px 15px
+}
+#romi-v8-info-shell .rv81-loading{display:flex;align-items:center;gap:4px}
+#romi-v8-info-shell .rv81-loading span{width:5px;height:5px;border-radius:50%;background:var(--aa-pink,#ea2f78);animation:rv81dot .75s infinite alternate}
+#romi-v8-info-shell .rv81-loading span:nth-child(2){animation-delay:.12s}
+#romi-v8-info-shell .rv81-loading span:nth-child(3){animation-delay:.24s}
+#romi-v8-info-shell .rv81-loading b{margin-left:5px;font-size:10px;font-weight:650;color:var(--aa-muted,#706b6d)}
+@keyframes rv81dot{to{transform:translateY(-3px);opacity:.45}}
+
+#romi-v8-info-shell .rv81-quick{
+  flex:0 0 auto;display:flex;gap:6px;overflow-x:auto;padding:8px 12px 4px;background:var(--aa-paper,#fff);scrollbar-width:none
+}
+#romi-v8-info-shell .rv81-quick::-webkit-scrollbar{display:none}
+#romi-v8-info-shell .rv81-quick button{
+  flex:0 0 auto;height:32px;padding:0 11px;border:1px solid var(--aa-line,rgba(0,0,0,.08));border-radius:999px;
+  background:var(--aa-paper,#fff);color:var(--aa-ink,#171717);font-size:10.5px;font-weight:680;cursor:pointer
+}
+#romi-v8-info-shell .rv81-quick button:hover{border-color:rgba(234,47,120,.35);color:var(--aa-pink,#ea2f78)}
+
+#romi-v8-info-shell .rv81-form{
+  flex:0 0 auto;display:grid;grid-template-columns:minmax(0,1fr) 46px;gap:7px;padding:9px 12px 12px;
+  border-top:1px solid var(--aa-line,rgba(0,0,0,.08));background:var(--aa-paper,#fff)
+}
+#romi-v8-info-shell .rv81-form textarea{
+  width:100%;height:46px;min-height:46px;max-height:92px;resize:none;padding:12px 13px;border:1px solid var(--aa-line,rgba(0,0,0,.10));
+  border-radius:14px;background:var(--aa-soft,#f7f4f5);color:var(--aa-ink,#171717);font-size:12px;line-height:1.35;outline:none
+}
+#romi-v8-info-shell .rv81-form textarea:focus{border-color:rgba(234,47,120,.5);box-shadow:0 0 0 3px rgba(234,47,120,.08)}
+#romi-v8-info-shell .rv81-form>button{
+  width:46px;height:46px;border:0;border-radius:14px;background:var(--aa-pink,#ea2f78);color:#fff;font-size:20px;cursor:pointer
+}
+
+#romi-v8-info-shell .rv81-result-head{width:100%;display:flex;justify-content:space-between;align-items:center;margin:4px 0 8px}
+#romi-v8-info-shell .rv81-result-head b{font-size:12.5px}
+#romi-v8-info-shell .rv81-result-head span{font-size:10px;color:var(--aa-muted,#706b6d)}
+#romi-v8-info-shell .rv81-products{width:100%;display:grid;gap:8px}
+#romi-v8-info-shell .rv81-product{
+  display:grid;grid-template-columns:92px minmax(0,1fr);gap:11px;padding:10px;
+  border:1px solid var(--aa-line,rgba(0,0,0,.08));border-radius:16px;background:var(--aa-paper,#fff)
+}
+#romi-v8-info-shell .rv81-product-img{
+  width:92px;height:108px;border-radius:12px;background:var(--aa-soft,#f7f4f5);display:grid;place-items:center;overflow:hidden;text-decoration:none;color:#999;font-size:9px;font-weight:800
+}
+#romi-v8-info-shell .rv81-product-img img{width:100%;height:100%;object-fit:contain}
+#romi-v8-info-shell .rv81-product-main{min-width:0}
+#romi-v8-info-shell .rv81-sku{color:var(--aa-pink,#ea2f78);font-size:9px;font-weight:800;letter-spacing:.15px}
+#romi-v8-info-shell .rv81-name{display:block;margin-top:2px;color:var(--aa-ink,#171717);font-size:12px;font-weight:740;line-height:1.3;text-decoration:none}
+#romi-v8-info-shell .rv81-name:hover{color:var(--aa-pink,#ea2f78)}
+#romi-v8-info-shell .rv81-meta{display:flex;flex-wrap:wrap;gap:4px;margin-top:6px}
+#romi-v8-info-shell .rv81-meta span{padding:3px 6px;border-radius:999px;background:var(--aa-soft,#f7f4f5);color:var(--aa-muted,#706b6d);font-size:8.8px}
+#romi-v8-info-shell .rv81-price{display:flex;align-items:center;gap:6px;margin-top:7px}
+#romi-v8-info-shell .rv81-price strong{font-size:14px}
+#romi-v8-info-shell .rv81-price del{color:#999;font-size:10px}
+#romi-v8-info-shell .rv81-price em{font-style:normal;color:var(--aa-pink,#ea2f78);font-size:9px;font-weight:800}
+#romi-v8-info-shell .rv81-card-actions{display:flex;flex-wrap:wrap;gap:5px;margin-top:8px}
+#romi-v8-info-shell .rv81-card-actions a,
+#romi-v8-info-shell .rv81-card-actions button{
+  min-height:31px;padding:7px 9px;border:1px solid var(--aa-line,rgba(0,0,0,.10));border-radius:9px;background:var(--aa-paper,#fff);
+  color:var(--aa-ink,#171717);font:inherit;font-size:9.5px;font-weight:720;text-decoration:none;cursor:pointer
+}
+#romi-v8-info-shell .rv81-card-actions .rv81-primary{background:var(--aa-ink,#171717);color:#fff;border-color:var(--aa-ink,#171717)}
+#romi-v8-info-shell .rv81-card-actions button.is-selected{border-color:rgba(234,47,120,.38);background:rgba(234,47,120,.08);color:var(--aa-pink,#ea2f78)}
+#romi-v8-info-shell .rv81-card-actions .is-added{background:var(--aa-pink,#ea2f78);border-color:var(--aa-pink,#ea2f78);color:#fff}
+
+#romi-v8-info-shell .rv81-comparebar{display:flex;gap:6px;margin-top:8px}
+#romi-v8-info-shell .rv81-comparebar button{height:34px;padding:0 11px;border:0;border-radius:9px;background:var(--aa-ink,#171717);color:#fff;font-size:9.5px;font-weight:740;cursor:pointer}
+#romi-v8-info-shell .rv81-comparebar button+button{background:var(--aa-soft,#f7f4f5);color:var(--aa-muted,#706b6d)}
+#romi-v8-info-shell .rv81-compare{width:100%;display:grid;gap:7px}
+#romi-v8-info-shell .rv81-compare>div{padding:10px;border:1px solid var(--aa-line,rgba(0,0,0,.08));border-radius:12px;display:grid;grid-template-columns:1fr auto;gap:4px 8px}
+#romi-v8-info-shell .rv81-compare b{font-size:10.5px;line-height:1.3}
+#romi-v8-info-shell .rv81-compare span{font-size:11px;font-weight:800}
+#romi-v8-info-shell .rv81-compare small{font-size:9px;color:var(--aa-muted,#706b6d)}
+#romi-v8-info-shell .rv81-compare a{font-size:9px;color:var(--aa-pink,#ea2f78);text-decoration:none;font-weight:700;text-align:right}
+
+#romi-v8-info-shell .rv81-cartmsg{width:100%;padding:11px;border-radius:13px;background:rgba(234,47,120,.07);border:1px solid rgba(234,47,120,.14);display:grid;grid-template-columns:1fr auto;gap:3px 9px}
+#romi-v8-info-shell .rv81-cartmsg b{font-size:11px}
+#romi-v8-info-shell .rv81-cartmsg span{font-size:9px;color:var(--aa-muted,#706b6d)}
+#romi-v8-info-shell .rv81-cartmsg a{grid-row:1/3;grid-column:2;color:var(--aa-pink,#ea2f78);font-size:9.5px;font-weight:750;text-decoration:none;align-self:center}
+
+#romi-v8-info-shell .rv81-feedback{width:100%;display:grid;gap:7px}
+#romi-v8-info-shell .rv81-feedback>b{font-size:12px}
+#romi-v8-info-shell .rv81-fields{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+#romi-v8-info-shell .rv81-feedback input,
+#romi-v8-info-shell .rv81-feedback textarea{
+  width:100%;border:1px solid var(--aa-line,rgba(0,0,0,.10));border-radius:10px;background:var(--aa-soft,#f7f4f5);
+  color:var(--aa-ink,#171717);font:inherit;font-size:10.5px;padding:9px;outline:none
+}
+#romi-v8-info-shell .rv81-feedback>button{height:38px;border:0;border-radius:10px;background:var(--aa-ink,#171717);color:#fff;font:inherit;font-size:10.5px;font-weight:750;cursor:pointer}
+#romi-v8-info-shell .rv81-file{display:grid;gap:4px;color:var(--aa-muted,#706b6d);font-size:9px}
+#romi-v8-info-shell .rv81-form-error{color:#b3264f;font-size:9px}
+#romi-v8-info-shell .rv81-hp{position:absolute!important;left:-10000px!important;width:1px!important;height:1px!important;opacity:0!important}
+
+html[data-aromika-theme="dark"] #romi-v8-info-shell .rv81-person small:before{background:#62c77b}
+
+@media(max-width:720px){
+  #aromika-assistant.is-rv8 .aa-panel{
+    position:fixed;left:8px;right:8px;bottom:calc(76px + env(safe-area-inset-bottom));
+    width:auto;height:calc(100dvh - 94px - env(safe-area-inset-bottom));max-height:none;border-radius:22px
+  }
+}
+@media(max-width:480px){
+  #romi-v8-info-shell .rv81-head{flex-basis:58px;padding:7px 9px}
+  #romi-v8-info-shell .rv81-avatar{width:39px;height:39px;border-radius:12px}
+  #romi-v8-info-shell .rv81-chat{padding:11px 9px 7px}
+  #romi-v8-info-shell .rv81-quick{padding-left:9px;padding-right:9px}
+  #romi-v8-info-shell .rv81-form{padding:8px 9px 9px}
+  #romi-v8-info-shell .rv81-product{grid-template-columns:78px minmax(0,1fr);gap:9px;padding:8px}
+  #romi-v8-info-shell .rv81-product-img{width:78px;height:94px}
+  #romi-v8-info-shell .rv81-name{font-size:11px}
+  #romi-v8-info-shell .rv81-fields{grid-template-columns:1fr}
+}
+
+
+/* V8.2 card layout override: compact, full-width, adapted to Romi panel */
+#romi-v8-info-shell .rv81-products{
+  grid-template-columns:minmax(0,1fr);
+  width:100%;
+}
+#romi-v8-info-shell .rv81-product{
+  width:100%;
+  min-width:0;
+  display:grid;
+  grid-template-columns:82px minmax(0,1fr);
+  grid-template-rows:auto auto;
+  gap:9px 11px;
+  padding:10px;
+  overflow:hidden;
+}
+#romi-v8-info-shell .rv81-product-img{
+  width:82px;
+  height:94px;
+  align-self:start;
+}
+#romi-v8-info-shell .rv81-product-main{
+  min-width:0;
+  overflow:hidden;
+}
+#romi-v8-info-shell .rv81-name{
+  display:-webkit-box;
+  -webkit-line-clamp:3;
+  -webkit-box-orient:vertical;
+  overflow:hidden;
+  font-size:11.5px;
+  line-height:1.28;
+}
+#romi-v8-info-shell .rv81-meta{
+  margin-top:5px;
+}
+#romi-v8-info-shell .rv81-price{
+  margin-top:6px;
+}
+#romi-v8-info-shell .rv81-price strong{
+  font-size:14px;
+}
+#romi-v8-info-shell .rv81-card-actions{
+  grid-column:1 / -1;
+  width:100%;
+  display:grid;
+  grid-template-columns:1.15fr 1fr 1fr;
+  gap:6px;
+  margin-top:0;
+}
+#romi-v8-info-shell .rv81-card-actions a,
+#romi-v8-info-shell .rv81-card-actions button{
+  width:100%;
+  min-width:0;
+  min-height:34px;
+  padding:7px 6px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  white-space:nowrap;
+  overflow:hidden;
+  text-overflow:ellipsis;
+  font-size:9.5px;
+}
+#romi-v8-info-shell .rv81-result-head{
+  position:sticky;
+  top:-15px;
+  z-index:2;
+  padding:7px 0 5px;
+  background:var(--aa-paper,#fff);
+}
+@media(max-width:480px){
+  #romi-v8-info-shell .rv81-product{
+    grid-template-columns:74px minmax(0,1fr);
+    gap:8px 9px;
+    padding:9px;
+  }
+  #romi-v8-info-shell .rv81-product-img{
+    width:74px;
+    height:86px;
+  }
+  #romi-v8-info-shell .rv81-name{
+    font-size:10.8px;
+    -webkit-line-clamp:3;
+  }
+  #romi-v8-info-shell .rv81-meta span{
+    font-size:8px;
+    padding:3px 5px;
+  }
+  #romi-v8-info-shell .rv81-card-actions{
+    gap:5px;
+  }
+  #romi-v8-info-shell .rv81-card-actions a,
+  #romi-v8-info-shell .rv81-card-actions button{
+    min-height:33px;
+    font-size:9px;
+    padding:6px 4px;
+  }
+}
+
+
+/* =========================================================
+   ROMI INFO V8.5 — WINDOW FIX
+   The info site uses the V5 shell only as launcher/container.
+   V8 owns the visible panel geometry.
+   ========================================================= */
+
+#aromika-assistant.is-rv8{
+  z-index:2147483000 !important;
+}
+
+#aromika-assistant.is-rv8 .aa-panel{
+  position:fixed !important;
+  right:24px !important;
+  bottom:24px !important;
+  left:auto !important;
+  top:auto !important;
+  width:min(500px,calc(100vw - 48px)) !important;
+  height:min(690px,calc(100dvh - 48px)) !important;
+  min-height:420px !important;
+  max-height:none !important;
+  overflow:hidden !important;
+  border-radius:24px !important;
+  transform:none !important;
+  transform-origin:center !important;
+  opacity:1 !important;
+  visibility:visible !important;
+  display:flex !important;
+  flex-direction:column !important;
+  background:var(--aa-paper,#fff) !important;
+}
+
+#romi-v8-info-shell .rv81-layer{
+  position:relative !important;
+  inset:auto !important;
+  width:100% !important;
+  height:100% !important;
+  min-height:0 !important;
+  flex:1 1 auto !important;
+  overflow:hidden !important;
+}
+
+#aromika-assistant.is-rv8 .aa-launcher{
+  display:none !important;
+}
+
+#aromika-assistant.is-rv8 .aa-teaser{
+  display:none !important;
+}
+
+#romi-v8-info-shell .rv81-chat{
+  flex:1 1 0 !important;
+  min-height:0 !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+}
+
+#romi-v8-info-shell .rv81-head,
+#romi-v8-info-shell .rv81-quick,
+#romi-v8-info-shell .rv81-form{
+  width:100% !important;
+  flex-shrink:0 !important;
+}
+
+@media (max-width:720px){
+  html.aa-lock-mobile,
+  html.aa-lock-mobile body{
+    overflow:hidden !important;
+  }
+
+  #aromika-assistant.is-rv8 .aa-panel{
+    left:8px !important;
+    right:8px !important;
+    top:8px !important;
+    bottom:8px !important;
+    width:auto !important;
+    height:auto !important;
+    min-height:0 !important;
+    max-height:none !important;
+    border-radius:20px !important;
+  }
+
+  #romi-v8-info-shell .rv81-layer{
+    height:100% !important;
+  }
+}
+
+@media (max-height:520px){
+  #aromika-assistant.is-rv8 .aa-panel{
+    top:6px !important;
+    bottom:6px !important;
+    height:auto !important;
+    min-height:0 !important;
+  }
+
+  #romi-v8-info-shell .rv81-head{
+    flex-basis:54px !important;
+    min-height:54px !important;
+  }
+
+  #romi-v8-info-shell .rv81-quick{
+    padding-top:5px !important;
+    padding-bottom:3px !important;
+  }
+
+  #romi-v8-info-shell .rv81-form{
+    padding-top:6px !important;
+    padding-bottom:7px !important;
+  }
+}
+
+
+/* =========================================================
+   ROMI INFO V8.6 — SEPARATE SHELL
+   Completely decouples V8 from the old V5 panel geometry.
+   ========================================================= */
+
+html.rv81-info-ready #aromika-assistant .aa-panel{
+  display:none !important;
+}
+
+#romi-v8-info-shell{
+  position:fixed;
+  right:24px;
+  bottom:24px;
+  width:min(460px,calc(100vw - 48px));
+  height:min(680px,calc(100dvh - 48px));
+  z-index:2147483001;
+  display:none;
+  overflow:hidden;
+  border-radius:24px;
+  background:var(--aa-paper,#fff);
+  box-shadow:0 24px 70px rgba(20,10,15,.20);
+  border:1px solid rgba(0,0,0,.08);
+}
+
+#romi-v8-info-shell.is-open{
+  display:flex;
+  flex-direction:column;
+}
+
+#romi-v8-info-shell .rv81-layer{
+  display:none;
+  width:100%;
+  height:100%;
+  min-height:0;
+  flex:1 1 auto;
+  flex-direction:column;
+  background:var(--aa-paper,#fff);
+}
+
+#romi-v8-info-shell .rv81-layer.is-active{
+  display:flex;
+}
+
+#romi-v8-info-shell .rv81-head{
+  flex:0 0 64px;
+  min-height:64px;
+}
+
+#romi-v8-info-shell .rv81-chat{
+  flex:1 1 0;
+  min-height:0;
+  overflow-y:auto;
+  overflow-x:hidden;
+}
+
+#romi-v8-info-shell .rv81-quick,
+#romi-v8-info-shell .rv81-form{
+  flex:0 0 auto;
+}
+
+html.rv81-info-open #aromika-assistant .aa-launcher,
+html.rv81-info-open #aromika-assistant .aa-teaser{
+  display:none !important;
+}
+
+@media(max-width:720px){
+  #romi-v8-info-shell{
+    left:8px;
+    right:8px;
+    top:8px;
+    bottom:8px;
+    width:auto;
+    height:auto;
+    border-radius:20px;
+  }
+}
+
+@media(max-height:560px) and (min-width:721px){
+  #romi-v8-info-shell{
+    top:8px;
+    bottom:8px;
+    height:auto;
+  }
+}
+
+
+/* =========================================================
+   ROMI INFO V8.7 — FINAL WINDOW + PRODUCT IMAGE FIX
+   ========================================================= */
+
+/* Old V5 dialog is never shown on info; only its round launcher remains. */
+html.rv81-info-ready #aromika-assistant .aa-panel{
+  display:none !important;
+}
+
+/* Independent V8 dialog */
+#romi-v8-info-shell{
+  right:24px !important;
+  bottom:24px !important;
+  width:min(500px,calc(100vw - 48px)) !important;
+  height:min(700px,calc(100dvh - 48px)) !important;
+  min-height:480px !important;
+  max-height:none !important;
+  border-radius:24px !important;
+}
+#romi-v8-info-shell .rv81-layer.is-active{
+  display:flex !important;
+  flex-direction:column !important;
+  width:100% !important;
+  height:100% !important;
+}
+#romi-v8-info-shell .rv81-chat{
+  flex:1 1 0 !important;
+  min-height:0 !important;
+  overflow-y:auto !important;
+  overflow-x:hidden !important;
+}
+
+/* Product must be visible completely, never cropped. */
+#romi-v8-info-shell .rv81-product{
+  grid-template-columns:104px minmax(0,1fr) !important;
+  align-items:start !important;
+}
+#romi-v8-info-shell .rv81-product-img{
+  width:104px !important;
+  height:126px !important;
+  padding:7px !important;
+  box-sizing:border-box !important;
+  background:#fff !important;
+  overflow:hidden !important;
+  display:flex !important;
+  align-items:center !important;
+  justify-content:center !important;
+}
+#romi-v8-info-shell .rv81-product-img img{
+  width:100% !important;
+  height:100% !important;
+  max-width:100% !important;
+  max-height:100% !important;
+  object-fit:contain !important;
+  object-position:center center !important;
+  transform:none !important;
+  clip-path:none !important;
+}
+#romi-v8-info-shell .rv81-card-actions{
+  grid-template-columns:1.15fr 1fr 1fr !important;
+}
+
+@media(max-width:720px){
+  #romi-v8-info-shell{
+    left:8px !important;
+    right:8px !important;
+    top:8px !important;
+    bottom:8px !important;
+    width:auto !important;
+    height:auto !important;
+    min-height:0 !important;
+    border-radius:20px !important;
+  }
+}
+@media(max-width:480px){
+  #romi-v8-info-shell .rv81-product{
+    grid-template-columns:92px minmax(0,1fr) !important;
+  }
+  #romi-v8-info-shell .rv81-product-img{
+    width:92px !important;
+    height:114px !important;
+    padding:6px !important;
+  }
+  #romi-v8-info-shell .rv81-card-actions{
+    grid-template-columns:1fr 1fr !important;
+  }
+  #romi-v8-info-shell .rv81-card-actions .rv81-primary{
+    grid-column:1 / -1 !important;
+  }
+}
+
+
+/* =========================================================
+   V8.8 — DEDICATED COMPARISON MODE
+   Only selected products + their characteristics remain visible.
+   ========================================================= */
+.rv81-layer.is-compare .rv81-quick,
+.rv81-layer.is-compare .rv81-form{
+  display:none !important;
+}
+
+.rv88-compare-page{
+  width:100%;
+  min-height:100%;
+  display:flex;
+  flex-direction:column;
+  background:var(--aa-paper,#fff);
+}
+.rv88-compare-top{
+  position:sticky;
+  top:-15px;
+  z-index:5;
+  display:flex;
+  align-items:center;
+  gap:12px;
+  padding:10px 0 12px;
+  background:var(--aa-paper,#fff);
+  border-bottom:1px solid var(--aa-line,rgba(0,0,0,.08));
+}
+.rv88-compare-top>button{
+  flex:0 0 auto;
+  height:34px;
+  padding:0 10px;
+  border:1px solid var(--aa-line,rgba(0,0,0,.10));
+  border-radius:10px;
+  background:var(--aa-soft,#f7f4f5);
+  color:var(--aa-ink,#171717);
+  font:inherit;
+  font-size:9.5px;
+  font-weight:720;
+  cursor:pointer;
+}
+.rv88-compare-top>div{
+  min-width:0;
+  display:grid;
+}
+.rv88-compare-top b{font-size:12px}
+.rv88-compare-top small{font-size:9px;color:var(--aa-muted,#706b6d);margin-top:2px}
+
+.rv88-compare-scroll{
+  width:100%;
+  overflow:auto;
+  padding:10px 0 4px;
+  scrollbar-width:thin;
+}
+.rv88-compare-table{
+  width:100%;
+  border-collapse:separate;
+  border-spacing:0;
+  table-layout:fixed;
+  font-size:9.5px;
+}
+.rv88-compare-table th,
+.rv88-compare-table td{
+  border-right:1px solid var(--aa-line,rgba(0,0,0,.08));
+  border-bottom:1px solid var(--aa-line,rgba(0,0,0,.08));
+  padding:8px;
+  vertical-align:top;
+  background:var(--aa-paper,#fff);
+  word-break:normal;
+  overflow-wrap:anywhere;
+}
+.rv88-compare-table tr>*:first-child{
+  position:sticky;
+  left:0;
+  z-index:2;
+  width:110px;
+  min-width:110px;
+  max-width:110px;
+  background:var(--aa-soft,#f8f6f7);
+  color:var(--aa-muted,#706b6d);
+  font-weight:720;
+}
+.rv88-compare-table thead th{
+  position:sticky;
+  top:0;
+  z-index:3;
+  background:var(--aa-paper,#fff);
+}
+.rv88-compare-table thead th:first-child{
+  z-index:4;
+  background:var(--aa-soft,#f8f6f7);
+}
+.rv88-cproduct{
+  min-width:145px;
+  display:flex;
+  flex-direction:column;
+  gap:7px;
+}
+.rv88-cproduct>b{
+  font-size:10.5px;
+  line-height:1.3;
+  color:var(--aa-ink,#171717);
+}
+.rv88-cimage{
+  height:118px;
+  padding:7px;
+  box-sizing:border-box;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  border-radius:12px;
+  background:#fff;
+  border:1px solid var(--aa-line,rgba(0,0,0,.07));
+  overflow:hidden;
+}
+.rv88-cimage img{
+  width:100%;
+  height:100%;
+  max-width:100%;
+  max-height:100%;
+  object-fit:contain !important;
+  object-position:center !important;
+}
+.rv88-cactions{
+  display:grid;
+  gap:5px;
+}
+.rv88-cactions a,
+.rv88-cactions button{
+  min-height:32px;
+  border-radius:9px;
+  border:1px solid var(--aa-line,rgba(0,0,0,.10));
+  background:#fff;
+  color:var(--aa-ink,#171717);
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-align:center;
+  padding:6px;
+  font:inherit;
+  font-size:9px;
+  font-weight:720;
+  text-decoration:none;
+  cursor:pointer;
+}
+.rv88-cactions .rv88-buy{
+  background:var(--aa-ink,#171717);
+  color:#fff;
+  border-color:var(--aa-ink,#171717);
+}
+
+@media(max-width:480px){
+  .rv88-compare-top{
+    gap:8px;
+  }
+  .rv88-compare-table tr>*:first-child{
+    width:92px;
+    min-width:92px;
+    max-width:92px;
+  }
+  .rv88-cproduct{
+    min-width:132px;
+  }
+  .rv88-cimage{
+    height:104px;
+  }
+}
