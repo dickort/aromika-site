@@ -8,7 +8,7 @@
     window.ROMI_V8_CONFIG && window.ROMI_V8_CONFIG.apiBase
   ) || 'https://aromika.shop/index.php?dispatch=romi.';
 
-  var CACHE_KEY = 'aromika-home-brand-feed-v1';
+  var CACHE_KEY = 'aromika-home-brand-feed-v2';
   var CACHE_TTL = 30 * 60 * 1000;
 
   var BRANDS = {
@@ -20,9 +20,10 @@
       card: '.arb-product--perfect'
     },
     wash: {
-      query: 'Wash Expert гель для стирки 5000',
+      query: 'Wash Expert Color с пятновыводителем 4300',
+      productId: 1655,
       brand: /wash\s*expert/i,
-      preferred: /цветн.{0,35}5000|5000.{0,35}цветн/i,
+      preferred: /color.{0,35}пятновывод.{0,35}4300|4300.{0,35}color.{0,35}пятновывод/i,
       hero: '.ar-wash img',
       card: '.arb-product--wash'
     },
@@ -34,9 +35,10 @@
       card: '.arb-product--maxi'
     },
     prachka: {
-      query: 'Prachka гель для стирки 5000',
+      query: 'Prachka Color 3300',
+      productId: 1680,
       brand: /prachka/i,
-      preferred: /цветн.{0,35}5000|5000.{0,35}цветн/i,
+      preferred: /color.{0,35}3300|3300.{0,35}color/i,
       hero: '.ar-prachka img',
       card: '.arb-product--prachka'
     },
@@ -66,6 +68,11 @@
 
   function selectProduct(products, rules) {
     var valid = (Array.isArray(products) ? products : []).map(safeProduct).filter(Boolean);
+    var exact = valid.find(function (product) {
+      return rules.productId && product.product_id === rules.productId;
+    });
+    if (exact) return exact;
+
     var branded = valid.filter(function (product) {
       return rules.brand.test(product.name) && /стирк/i.test(product.name);
     });

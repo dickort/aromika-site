@@ -3,6 +3,8 @@ AROMIKA.INFO · HOME BRAND FEED V1
 Что делает
 - Берёт из aromika.shop по одному актуальному товару Perfect, Wash Expert,
   Maxi Power, Prachka и Antibak.
+- Для Prachka использует точно Color 3300 мл (ID 1680).
+- Для Wash Expert использует точно Color с пятновыводителем 4300 мл (ID 1655).
 - Подменяет изображения в вращающейся композиции первого экрана.
 - Подменяет изображения в карточках пяти брендов.
 - Сохраняет прежнюю анимацию, размеры, тексты и переходы на страницы брендов.
@@ -13,7 +15,7 @@ AROMIKA.INFO · HOME BRAND FEED V1
 
 https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/wash-expert.png
 на
-https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/home-wash-expert.webp
+https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/home-wash-expert-color-remover-4300.webp
 
 https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/perfect.png
 на
@@ -25,7 +27,7 @@ https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/home-maxi-power.web
 
 https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/prachka.png
 на
-https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/home-prachka.webp
+https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/home-prachka-color-3300.webp
 
 https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/antibak.png
 на
@@ -35,7 +37,7 @@ https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/images/home-antibak.webp
 
 2. В конце кода главной страницы, после site-v23.js, добавить:
 
-<script src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/home-brand-feed-v1.js?v=1.0.0"
+<script src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/home-brand-feed-v1.js?v=1.1.0"
         defer></script>
 
 3. Перепубликовать только главную страницу.
