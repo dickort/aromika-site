@@ -1,0 +1,101 @@
+{
+  "schema": 1,
+  "source": "hh.kz/rss",
+  "employer_id": "1009681",
+  "updated_at": "2026-09-03T04:25:00.177524+00:00",
+  "found": 4,
+  "items": [
+    {
+      "id": "134554652",
+      "name": "Водитель-экспедитор",
+      "area": {
+        "name": "Павлодар"
+      },
+      "salary": null,
+      "experience": null,
+      "schedule": null,
+      "employment": null,
+      "employer": {
+        "id": "1009681",
+        "name": "ТК АРОМИКА"
+      },
+      "snippet": {
+        "responsibility": "Открытая вакансия компании ТК АРОМИКА в городе Павлодар. Подробные обязанности и условия доступны на hh.kz."
+      },
+      "alternate_url": "https://hh.kz/vacancy/134554652",
+      "published_at": "2026-08-24T08:23:50.437+03:00",
+      "archived": false
+    },
+    {
+      "id": "135454098",
+      "name": "Водитель-экспедитор",
+      "area": {
+        "name": "Петропавловск"
+      },
+      "salary": null,
+      "experience": null,
+      "schedule": null,
+      "employment": null,
+      "employer": {
+        "id": "1009681",
+        "name": "ТК АРОМИКА"
+      },
+      "snippet": {
+        "responsibility": "Открытая вакансия компании ТК АРОМИКА в городе Петропавловск. Подробные обязанности и условия доступны на hh.kz."
+      },
+      "alternate_url": "https://hh.kz/vacancy/135454098",
+      "published_at": "2026-08-21T08:55:33.730+03:00",
+      "archived": false
+    },
+    {
+      "id": "136058198",
+      "name": "Карщик (водитель автопогрузчика)",
+      "area": {
+        "name": "Костанай"
+      },
+      "salary": {
+        "currency": "KZT",
+        "gross": null,
+        "from": 350000
+      },
+      "experience": null,
+      "schedule": null,
+      "employment": null,
+      "employer": {
+        "id": "1009681",
+        "name": "ТК АРОМИКА"
+      },
+      "snippet": {
+        "responsibility": "Открытая вакансия компании ТК АРОМИКА в городе Костанай. Подробные обязанности и условия доступны на hh.kz."
+      },
+      "alternate_url": "https://hh.kz/vacancy/136058198",
+      "published_at": "2026-08-10T07:33:31.001+03:00",
+      "archived": false
+    },
+    {
+      "id": "136058085",
+      "name": "Грузчик",
+      "area": {
+        "name": "Костанай"
+      },
+      "salary": {
+        "currency": "KZT",
+        "gross": null,
+        "from": 400000
+      },
+      "experience": null,
+      "schedule": null,
+      "employment": null,
+      "employer": {
+        "id": "1009681",
+        "name": "ТК АРОМИКА"
+      },
+      "snippet": {
+        "responsibility": "Открытая вакансия компании ТК АРОМИКА в городе Костанай. Подробные обязанности и условия доступны на hh.kz."
+      },
+      "alternate_url": "https://hh.kz/vacancy/136058085",
+      "published_at": "2026-08-10T07:27:56.824+03:00",
+      "archived": false
+    }
+  ]
+}

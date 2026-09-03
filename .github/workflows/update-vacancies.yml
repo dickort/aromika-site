@@ -1,0 +1,62 @@
+name: Update Aromika vacancies feed
+
+on:
+  workflow_dispatch:
+  schedule:
+    - cron: '37 */2 * * *'
+
+permissions:
+  contents: write
+
+concurrency:
+  group: update-aromika-vacancies-feed
+  cancel-in-progress: false
+
+jobs:
+  update:
+    runs-on: ubuntu-latest
+    timeout-minutes: 10
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+        with:
+          fetch-depth: 0
+
+      - name: Setup Python
+        uses: actions/setup-python@v5
+        with:
+          python-version: '3.12'
+
+      - name: Collect HeadHunter vacancies
+        run: python collector/collect_vacancies.py
+
+      - name: Show collection result
+        run: |
+          python - <<'PY'
+          import json
+
+          with open('data/vacancies.json', encoding='utf-8') as file:
+              data = json.load(file)
+
+          print('updated_at=', data.get('updated_at'))
+          print('vacancies=', data.get('found'))
+          for vacancy in data.get('items', []):
+              print(vacancy.get('area', {}).get('name'), vacancy.get('name'))
+          PY
+
+      - name: Commit feed when changed
+        run: |
+          git config user.name "aromika-vacancies-bot"
+          git config user.email "actions@users.noreply.github.com"
+
+          git add data/vacancies.json
+
+          if git diff --cached --quiet; then
+            echo "Vacancies feed has not changed."
+            exit 0
+          fi
+
+          git commit -m "Update Aromika vacancies feed"
+          git pull --rebase origin main
+          git push origin HEAD:main
