@@ -1,0 +1,17 @@
+services:
+  - type: web
+    name: romi-ai
+    runtime: node
+    plan: free
+    region: frankfurt
+    rootDir: romi-ai-render
+    buildCommand: npm install --omit=dev
+    startCommand: npm start
+    healthCheckPath: /health
+    envVars:
+      - key: OPENAI_API_KEY
+        sync: false
+      - key: ROMI_PROXY_TOKEN
+        sync: false
+      - key: ALLOWED_MODELS
+        value: gpt-5.6-luna
