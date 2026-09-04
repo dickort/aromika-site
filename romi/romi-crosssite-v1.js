@@ -1,4 +1,4 @@
-/* AROMIKA · ROMI CROSS-SITE BRIDGE V1.0.0
+/* AROMIKA · ROMI CROSS-SITE BRIDGE V1.0.1
  * Syncs ROMI context between aromika.info and aromika.shop.
  * Uses the existing ROMI server session endpoint on aromika.shop.
  */
@@ -71,15 +71,29 @@ function collectContext(){
  return out;
 }
 
+function emitImported(lang,ctx){
+ setTimeout(function(){
+  if(lang==='ru'||lang==='kk'){
+   try{window.dispatchEvent(new CustomEvent('romi:language',{detail:{language:lang,source:'crosssite'}}))}catch(e){}
+  }
+  if(ctx&&ctx.geo&&ctx.geo.city){
+   try{window.dispatchEvent(new CustomEvent('romi:location',{detail:{city:ctx.geo.city,distance:Number(ctx.geo.distance)||0,source:'bridge'}}))}catch(e){}
+  }
+  try{window.dispatchEvent(new CustomEvent('romi:crosssite-import',{detail:{from:IS_INFO?'shop':'info',context:ctx||{}}}))}catch(e){}
+ },0);
+}
+
 function importIncoming(){
  var u;try{u=new URL(location.href)}catch(e){return}
  var sid=u.searchParams.get('romi_session')||'';
  var ctx=dec(u.searchParams.get('romi_ctx')||'');
+ var importedLang='';
  if(validSid(sid)){
   try{localStorage.setItem(SID_KEY,sid)}catch(e){}
  }
  if(ctx&&typeof ctx==='object'){
   if(ctx.lang==='ru'||ctx.lang==='kk'){
+   importedLang=ctx.lang;
    try{localStorage.setItem(LANG_KEY,ctx.lang);localStorage.setItem(SITE_LANG_KEY,ctx.lang)}catch(e){}
   }
   if(ctx.geo&&ctx.geo.city){
@@ -101,6 +115,7 @@ function importIncoming(){
   u.searchParams.delete('romi_ctx');
   try{history.replaceState(history.state,'',u.pathname+(u.search?u.search:'')+u.hash)}catch(e){}
  }
+ if(validSid(sid)||ctx)emitImported(importedLang,ctx);
 }
 
 function saveRemote(){
@@ -154,17 +169,16 @@ function eventAnchor(e){
  if(a)prepareAnchor(a);
 }
 
-/* Import must happen immediately, before DOMContentLoaded-based ROMI boot handlers. */
+/* Import immediately; core itself also understands romi_session. */
 importIncoming();
 
-/* Capture all common navigation gestures, including middle/right-click before opening a new tab. */
+/* Capture navigation gestures, including opening links in a new tab. */
 document.addEventListener('pointerdown',eventAnchor,true);
 document.addEventListener('mousedown',eventAnchor,true);
 document.addEventListener('click',eventAnchor,true);
 document.addEventListener('auxclick',eventAnchor,true);
 document.addEventListener('contextmenu',eventAnchor,true);
 
-/* Public helper for ROMI-generated links. */
 window.AROMIKA_ROMI_BRIDGE={
  decorate:decorate,
  save:saveRemote,
