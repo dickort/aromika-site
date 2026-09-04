@@ -38,7 +38,8 @@ export default {
       return json({
         ok: true,
         service: 'romi-ai-worker',
-        version: '1.0.0',
+        version: '1.0.1-frankfurt',
+        execution_colo: request.cf?.colo || null,
         openai_configured: Boolean(env.OPENAI_API_KEY),
         proxy_token_configured: Boolean(env.ROMI_PROXY_TOKEN),
         allowed_models: allowedModels(env),
@@ -100,7 +101,6 @@ export default {
       }, 400);
     }
 
-    // ROMI conversations must not be retained by the OpenAI Responses API.
     body.store = false;
 
     let upstream;
@@ -125,7 +125,8 @@ export default {
         'content-type': upstream.headers.get('content-type') || 'application/json; charset=utf-8',
         'cache-control': 'no-store',
         'x-content-type-options': 'nosniff',
-        'x-romi-proxy': 'cloudflare-worker-v1',
+        'x-romi-proxy': 'cloudflare-worker-v1.0.1-frankfurt',
+        'x-romi-colo': request.cf?.colo || '',
       },
     });
   },
