@@ -5,12 +5,6 @@
   "compatibility_date": "2026-09-01",
   "workers_dev": true,
   "keep_vars": true,
-  "secrets": {
-    "required": [
-      "OPENAI_API_KEY",
-      "ROMI_PROXY_TOKEN"
-    ]
-  },
   "vars": {
     "ALLOWED_MODELS": "gpt-5.6-luna"
   }
