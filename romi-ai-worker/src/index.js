@@ -1,4 +1,5 @@
 const OPENAI_RESPONSES_URL = 'https://api.openai.com/v1/responses';
+const OPENAI_MODELS_URL = 'https://api.openai.com/v1/models';
 const DEFAULT_ALLOWED_MODEL = 'gpt-5.6-luna';
 const MAX_BODY_BYTES = 180000;
 
@@ -30,6 +31,72 @@ function allowedModels(env) {
     .filter(Boolean);
 }
 
+function authHeaders(env) {
+  return {
+    authorization: `Bearer ${env.OPENAI_API_KEY}`,
+    'content-type': 'application/json',
+    accept: 'application/json',
+  };
+}
+
+function safeErrorPayload(text) {
+  try {
+    const parsed = JSON.parse(text);
+    const e = parsed?.error || parsed;
+    return {
+      code: e?.code ?? null,
+      type: e?.type ?? null,
+      message: e?.message ?? null,
+      param: e?.param ?? null,
+    };
+  } catch {
+    return { code: null, type: null, message: String(text || '').slice(0, 500), param: null };
+  }
+}
+
+async function probeOpenAI(env) {
+  const model = allowedModels(env)[0] || DEFAULT_ALLOWED_MODEL;
+  const result = { model };
+
+  try {
+    const r = await fetch(`${OPENAI_MODELS_URL}/${encodeURIComponent(model)}`, {
+      method: 'GET',
+      headers: {
+        authorization: `Bearer ${env.OPENAI_API_KEY}`,
+        accept: 'application/json',
+      },
+    });
+    const text = await r.text();
+    result.model_probe = {
+      status: r.status,
+      ok: r.ok,
+      request_id: r.headers.get('x-request-id') || null,
+      error: r.ok ? null : safeErrorPayload(text),
+    };
+  } catch (e) {
+    result.model_probe = { status: null, ok: false, request_id: null, error: { code: 'transport', type: null, message: String(e?.message || e), param: null } };
+  }
+
+  try {
+    const r = await fetch(OPENAI_RESPONSES_URL, {
+      method: 'POST',
+      headers: authHeaders(env),
+      body: JSON.stringify({ model, input: 'Reply with exactly: OK', store: false, max_output_tokens: 8 }),
+    });
+    const text = await r.text();
+    result.response_probe = {
+      status: r.status,
+      ok: r.ok,
+      request_id: r.headers.get('x-request-id') || null,
+      error: r.ok ? null : safeErrorPayload(text),
+    };
+  } catch (e) {
+    result.response_probe = { status: null, ok: false, request_id: null, error: { code: 'transport', type: null, message: String(e?.message || e), param: null } };
+  }
+
+  return result;
+}
+
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
@@ -38,11 +105,30 @@ export default {
       return json({
         ok: true,
         service: 'romi-ai-worker',
-        version: '1.0.1-frankfurt',
-        execution_colo: request.cf?.colo || null,
+        version: '1.0.2-diagnostics',
+        ingress_colo: request.cf?.colo || null,
         openai_configured: Boolean(env.OPENAI_API_KEY),
         proxy_token_configured: Boolean(env.ROMI_PROXY_TOKEN),
         allowed_models: allowedModels(env),
+      });
+    }
+
+    if (url.pathname === '/diagnose') {
+      if (request.method !== 'POST') {
+        return json({ ok: false, error: 'method_not_allowed' }, 405, { allow: 'POST' });
+      }
+      if (!env.OPENAI_API_KEY) return json({ ok: false, error: 'openai_not_configured' }, 503);
+      if (!env.ROMI_PROXY_TOKEN) return json({ ok: false, error: 'proxy_token_not_configured' }, 503);
+      const suppliedToken = request.headers.get('x-romi-token') || '';
+      if (!secureEqual(suppliedToken, env.ROMI_PROXY_TOKEN)) return json({ ok: false, error: 'unauthorized' }, 401);
+
+      const probes = await probeOpenAI(env);
+      return json({
+        ok: Boolean(probes.model_probe?.ok && probes.response_probe?.ok),
+        service: 'romi-ai-worker',
+        version: '1.0.2-diagnostics',
+        ingress_colo: request.cf?.colo || null,
+        ...probes,
       });
     }
 
@@ -107,11 +193,7 @@ export default {
     try {
       upstream = await fetch(OPENAI_RESPONSES_URL, {
         method: 'POST',
-        headers: {
-          authorization: `Bearer ${env.OPENAI_API_KEY}`,
-          'content-type': 'application/json',
-          accept: 'application/json',
-        },
+        headers: authHeaders(env),
         body: JSON.stringify(body),
       });
     } catch {
@@ -125,8 +207,9 @@ export default {
         'content-type': upstream.headers.get('content-type') || 'application/json; charset=utf-8',
         'cache-control': 'no-store',
         'x-content-type-options': 'nosniff',
-        'x-romi-proxy': 'cloudflare-worker-v1.0.1-frankfurt',
-        'x-romi-colo': request.cf?.colo || '',
+        'x-romi-proxy': 'cloudflare-worker-v1.0.2-diagnostics',
+        'x-romi-ingress-colo': request.cf?.colo || '',
+        'x-openai-request-id': upstream.headers.get('x-request-id') || '',
       },
     });
   },
