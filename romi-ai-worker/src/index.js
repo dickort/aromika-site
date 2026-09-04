@@ -72,45 +72,79 @@ function safeErrorPayload(text) {
   }
 }
 
+async function runProbe(url, options) {
+  try {
+    const r = await fetch(url, options);
+    const text = await r.text();
+    return {
+      status: r.status,
+      ok: r.ok,
+      request_id: r.headers.get('x-request-id') || null,
+      error: r.ok ? null : safeErrorPayload(text),
+    };
+  } catch (e) {
+    return {
+      status: null,
+      ok: false,
+      request_id: null,
+      error: { code: 'transport', type: null, message: String(e?.message || e), param: null },
+    };
+  }
+}
+
 async function probeOpenAI(env) {
   const model = allowedModels(env)[0] || DEFAULT_ALLOWED_MODEL;
   const result = { model };
 
-  try {
-    const r = await fetch(`${OPENAI_MODELS_URL}/${encodeURIComponent(model)}`, {
-      method: 'GET',
-      headers: {
-        authorization: `Bearer ${env.OPENAI_API_KEY}`,
-        accept: 'application/json',
-      },
-    });
-    const text = await r.text();
-    result.model_probe = {
-      status: r.status,
-      ok: r.ok,
-      request_id: r.headers.get('x-request-id') || null,
-      error: r.ok ? null : safeErrorPayload(text),
-    };
-  } catch (e) {
-    result.model_probe = { status: null, ok: false, request_id: null, error: { code: 'transport', type: null, message: String(e?.message || e), param: null } };
-  }
+  result.model_probe = await runProbe(`${OPENAI_MODELS_URL}/${encodeURIComponent(model)}`, {
+    method: 'GET',
+    headers: {
+      authorization: `Bearer ${env.OPENAI_API_KEY}`,
+      accept: 'application/json',
+    },
+  });
 
-  try {
-    const r = await fetch(OPENAI_RESPONSES_URL, {
-      method: 'POST',
-      headers: authHeaders(env),
-      body: JSON.stringify({ model, input: 'Reply with exactly: OK', store: false, max_output_tokens: 8 }),
-    });
-    const text = await r.text();
-    result.response_probe = {
-      status: r.status,
-      ok: r.ok,
-      request_id: r.headers.get('x-request-id') || null,
-      error: r.ok ? null : safeErrorPayload(text),
-    };
-  } catch (e) {
-    result.response_probe = { status: null, ok: false, request_id: null, error: { code: 'transport', type: null, message: String(e?.message || e), param: null } };
-  }
+  result.response_probe = await runProbe(OPENAI_RESPONSES_URL, {
+    method: 'POST',
+    headers: authHeaders(env),
+    body: JSON.stringify({
+      model,
+      input: 'Reply with exactly: OK',
+      store: false,
+      max_output_tokens: 32,
+    }),
+  });
+
+  result.structured_probe = await runProbe(OPENAI_RESPONSES_URL, {
+    method: 'POST',
+    headers: authHeaders(env),
+    body: JSON.stringify({
+      model,
+      instructions: 'Return the requested object. Keep the answer short.',
+      input: JSON.stringify({ question: 'Say hello briefly.' }),
+      max_output_tokens: 120,
+      store: false,
+      text: {
+        format: {
+          type: 'json_schema',
+          name: 'romi_probe',
+          strict: true,
+          schema: {
+            type: 'object',
+            properties: {
+              answer: { type: 'string' },
+              product_ids: { type: 'array', items: { type: 'integer' } },
+              follow_up: { type: 'array', items: { type: 'string' }, maxItems: 3 },
+              needs_clarification: { type: 'boolean' },
+              confidence: { type: 'string', enum: ['high', 'medium', 'low'] },
+            },
+            required: ['answer', 'product_ids', 'follow_up', 'needs_clarification', 'confidence'],
+            additionalProperties: false,
+          },
+        },
+      },
+    }),
+  });
 
   return result;
 }
@@ -132,7 +166,7 @@ export default {
       return json({
         ok: true,
         service: 'romi-ai-worker',
-        version: '1.0.3-cors-diagnostics',
+        version: '1.0.4-response-probes',
         ingress_colo: request.cf?.colo || null,
         openai_configured: Boolean(env.OPENAI_API_KEY),
         proxy_token_configured: Boolean(env.ROMI_PROXY_TOKEN),
@@ -151,9 +185,9 @@ export default {
 
       const probes = await probeOpenAI(env);
       return json({
-        ok: Boolean(probes.model_probe?.ok && probes.response_probe?.ok),
+        ok: Boolean(probes.model_probe?.ok && probes.response_probe?.ok && probes.structured_probe?.ok),
         service: 'romi-ai-worker',
-        version: '1.0.3-cors-diagnostics',
+        version: '1.0.4-response-probes',
         ingress_colo: request.cf?.colo || null,
         ...probes,
       }, 200, cors);
@@ -234,7 +268,7 @@ export default {
         'content-type': upstream.headers.get('content-type') || 'application/json; charset=utf-8',
         'cache-control': 'no-store',
         'x-content-type-options': 'nosniff',
-        'x-romi-proxy': 'cloudflare-worker-v1.0.3-cors-diagnostics',
+        'x-romi-proxy': 'cloudflare-worker-v1.0.4-response-probes',
         'x-romi-ingress-colo': request.cf?.colo || '',
         'x-openai-request-id': upstream.headers.get('x-request-id') || '',
         ...cors,
