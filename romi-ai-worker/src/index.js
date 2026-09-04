@@ -2,6 +2,24 @@ const OPENAI_RESPONSES_URL = 'https://api.openai.com/v1/responses';
 const OPENAI_MODELS_URL = 'https://api.openai.com/v1/models';
 const DEFAULT_ALLOWED_MODEL = 'gpt-5.6-luna';
 const MAX_BODY_BYTES = 180000;
+const ALLOWED_ORIGINS = new Set([
+  'https://aromika.shop',
+  'https://www.aromika.shop',
+  'https://aromika.info',
+  'https://www.aromika.info',
+]);
+
+function corsHeaders(request) {
+  const origin = request.headers.get('origin') || '';
+  if (!ALLOWED_ORIGINS.has(origin)) return {};
+  return {
+    'access-control-allow-origin': origin,
+    'access-control-allow-methods': 'POST, OPTIONS',
+    'access-control-allow-headers': 'Content-Type, X-Romi-Token',
+    'access-control-max-age': '86400',
+    'vary': 'Origin',
+  };
+}
 
 function json(data, status = 200, extraHeaders = {}) {
   return new Response(JSON.stringify(data), {
@@ -100,82 +118,91 @@ async function probeOpenAI(env) {
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
+    const cors = corsHeaders(request);
+
+    if (request.method === 'OPTIONS') {
+      const origin = request.headers.get('origin') || '';
+      if (!ALLOWED_ORIGINS.has(origin)) {
+        return json({ ok: false, error: 'origin_not_allowed' }, 403);
+      }
+      return new Response(null, { status: 204, headers: cors });
+    }
 
     if (url.pathname === '/health') {
       return json({
         ok: true,
         service: 'romi-ai-worker',
-        version: '1.0.2-diagnostics',
+        version: '1.0.3-cors-diagnostics',
         ingress_colo: request.cf?.colo || null,
         openai_configured: Boolean(env.OPENAI_API_KEY),
         proxy_token_configured: Boolean(env.ROMI_PROXY_TOKEN),
         allowed_models: allowedModels(env),
-      });
+      }, 200, cors);
     }
 
     if (url.pathname === '/diagnose') {
       if (request.method !== 'POST') {
-        return json({ ok: false, error: 'method_not_allowed' }, 405, { allow: 'POST' });
+        return json({ ok: false, error: 'method_not_allowed' }, 405, { allow: 'POST', ...cors });
       }
-      if (!env.OPENAI_API_KEY) return json({ ok: false, error: 'openai_not_configured' }, 503);
-      if (!env.ROMI_PROXY_TOKEN) return json({ ok: false, error: 'proxy_token_not_configured' }, 503);
+      if (!env.OPENAI_API_KEY) return json({ ok: false, error: 'openai_not_configured' }, 503, cors);
+      if (!env.ROMI_PROXY_TOKEN) return json({ ok: false, error: 'proxy_token_not_configured' }, 503, cors);
       const suppliedToken = request.headers.get('x-romi-token') || '';
-      if (!secureEqual(suppliedToken, env.ROMI_PROXY_TOKEN)) return json({ ok: false, error: 'unauthorized' }, 401);
+      if (!secureEqual(suppliedToken, env.ROMI_PROXY_TOKEN)) return json({ ok: false, error: 'unauthorized' }, 401, cors);
 
       const probes = await probeOpenAI(env);
       return json({
         ok: Boolean(probes.model_probe?.ok && probes.response_probe?.ok),
         service: 'romi-ai-worker',
-        version: '1.0.2-diagnostics',
+        version: '1.0.3-cors-diagnostics',
         ingress_colo: request.cf?.colo || null,
         ...probes,
-      });
+      }, 200, cors);
     }
 
     if (url.pathname !== '/chat') {
-      return json({ ok: false, error: 'not_found' }, 404);
+      return json({ ok: false, error: 'not_found' }, 404, cors);
     }
 
     if (request.method !== 'POST') {
-      return json({ ok: false, error: 'method_not_allowed' }, 405, { allow: 'POST' });
+      return json({ ok: false, error: 'method_not_allowed' }, 405, { allow: 'POST', ...cors });
     }
 
     if (!env.OPENAI_API_KEY) {
-      return json({ ok: false, error: 'openai_not_configured' }, 503);
+      return json({ ok: false, error: 'openai_not_configured' }, 503, cors);
     }
     if (!env.ROMI_PROXY_TOKEN) {
-      return json({ ok: false, error: 'proxy_token_not_configured' }, 503);
+      return json({ ok: false, error: 'proxy_token_not_configured' }, 503, cors);
     }
 
     const suppliedToken = request.headers.get('x-romi-token') || '';
     if (!secureEqual(suppliedToken, env.ROMI_PROXY_TOKEN)) {
-      return json({ ok: false, error: 'unauthorized' }, 401);
+      return json({ ok: false, error: 'unauthorized' }, 401, cors);
     }
 
     const contentLength = Number(request.headers.get('content-length') || 0);
     if (contentLength > MAX_BODY_BYTES) {
-      return json({ ok: false, error: 'payload_too_large' }, 413);
+      return json({ ok: false, error: 'payload_too_large' }, 413, cors);
     }
 
     let raw;
     try {
       raw = await request.text();
     } catch {
-      return json({ ok: false, error: 'invalid_body' }, 400);
+      return json({ ok: false, error: 'invalid_body' }, 400, cors);
     }
     if (!raw || raw.length > MAX_BODY_BYTES) {
-      return json({ ok: false, error: raw ? 'payload_too_large' : 'empty_body' }, raw ? 413 : 400);
+      return json({ ok: false, error: raw ? 'payload_too_large' : 'empty_body' }, raw ? 413 : 400, cors);
     }
 
     let body;
     try {
       body = JSON.parse(raw);
     } catch {
-      return json({ ok: false, error: 'invalid_json' }, 400);
+      return json({ ok: false, error: 'invalid_json' }, 400, cors);
     }
 
     if (!body || typeof body !== 'object' || !body.model || body.input === undefined) {
-      return json({ ok: false, error: 'invalid_openai_payload' }, 400);
+      return json({ ok: false, error: 'invalid_openai_payload' }, 400, cors);
     }
 
     const models = allowedModels(env);
@@ -184,7 +211,7 @@ export default {
         ok: false,
         error: 'model_not_allowed_by_proxy',
         allowed_models: models,
-      }, 400);
+      }, 400, cors);
     }
 
     body.store = false;
@@ -197,7 +224,7 @@ export default {
         body: JSON.stringify(body),
       });
     } catch {
-      return json({ ok: false, error: 'openai_transport_error' }, 502);
+      return json({ ok: false, error: 'openai_transport_error' }, 502, cors);
     }
 
     const responseText = await upstream.text();
@@ -207,9 +234,10 @@ export default {
         'content-type': upstream.headers.get('content-type') || 'application/json; charset=utf-8',
         'cache-control': 'no-store',
         'x-content-type-options': 'nosniff',
-        'x-romi-proxy': 'cloudflare-worker-v1.0.2-diagnostics',
+        'x-romi-proxy': 'cloudflare-worker-v1.0.3-cors-diagnostics',
         'x-romi-ingress-colo': request.cf?.colo || '',
         'x-openai-request-id': upstream.headers.get('x-request-id') || '',
+        ...cors,
       },
     });
   },
