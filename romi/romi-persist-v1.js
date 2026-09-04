@@ -1,5 +1,7 @@
-/* AROMIKA · ROMI PERSIST V1.0.0
+/* AROMIKA · ROMI PERSIST V1.0.1
  * Keeps the ROMI shell mounted on aromika.shop and aromika.info.
+ * First choice: reattach the existing DOM root so chat state/listeners stay intact.
+ * Fallback: rebuild the shell only if the previous root is gone or invalid.
  */
 (function(){
 'use strict';
@@ -13,11 +15,29 @@ if(!IS_SHOP&&!IS_INFO) return;
 
 var repairing=false;
 var lastRepair=0;
-var timer=null;
+var lastRoot=null;
 
-function rootReady(){
+function validRoot(r){
+  return !!(r&&r.querySelector&&r.querySelector('.aa-panel')&&r.querySelector('.aa-launcher'));
+}
+function currentRoot(){
   var r=document.getElementById('aromika-assistant');
-  return !!(r&&r.isConnected&&r.querySelector('.aa-panel')&&r.querySelector('.aa-launcher'));
+  if(validRoot(r)) lastRoot=r;
+  return r;
+}
+function rootReady(){
+  var r=currentRoot();
+  return !!(validRoot(r)&&r.isConnected);
+}
+function reattachLastRoot(){
+  if(rootReady()) return true;
+  if(!validRoot(lastRoot)||!document.body) return false;
+  try{
+    var duplicate=document.getElementById('aromika-assistant');
+    if(duplicate&&duplicate!==lastRoot&&duplicate.parentNode) duplicate.parentNode.removeChild(duplicate);
+    document.body.appendChild(lastRoot);
+    return rootReady();
+  }catch(e){return false}
 }
 
 function resetGuards(){
@@ -35,7 +55,6 @@ function assistantSrc(){
   }
   return 'https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/assistant-v9-5-3.js?v=9.5.3-persist-'+Date.now();
 }
-
 function inject(){
   return new Promise(function(resolve){
     var s=document.createElement('script');
@@ -47,7 +66,6 @@ function inject(){
     (document.head||document.documentElement).appendChild(s);
   });
 }
-
 function waitRoot(maxMs){
   return new Promise(function(resolve){
     var started=Date.now();
@@ -62,48 +80,57 @@ function waitRoot(maxMs){
 async function repair(reason){
   if(rootReady()||repairing) return;
   var now=Date.now();
-  if(now-lastRepair<1200) return;
+  if(now-lastRepair<900) return;
   repairing=true;
   lastRepair=now;
   try{
-    // Give Tilda/CS-Cart a moment to finish its own page replacement first.
-    await new Promise(function(r){setTimeout(r,350)});
+    await new Promise(function(r){setTimeout(r,250)});
     if(rootReady()) return;
 
+    // Best path: the site removed our node during a dynamic page update.
+    // Put the very same node back: chat DOM, state and event listeners survive.
+    if(reattachLastRoot()){
+      try{window.dispatchEvent(new CustomEvent('romi:persist-reattach',{detail:{site:IS_SHOP?'shop':'info',reason:String(reason||'watchdog')}}))}catch(e){}
+      return;
+    }
+
+    // Fallback for a hard navigation/complete destruction of the old node.
     var partial=document.getElementById('aromika-assistant');
     if(partial&&partial.parentNode) partial.parentNode.removeChild(partial);
     resetGuards();
     await inject();
     await waitRoot(3500);
+    currentRoot();
 
-    try{
-      window.dispatchEvent(new CustomEvent('romi:persist-repair',{detail:{site:IS_SHOP?'shop':'info',reason:String(reason||'watchdog')}}));
-    }catch(e){}
+    try{window.dispatchEvent(new CustomEvent('romi:persist-repair',{detail:{site:IS_SHOP?'shop':'info',reason:String(reason||'watchdog')}}))}catch(e){}
   }finally{
     repairing=false;
   }
 }
-
 function check(reason){
-  if(!rootReady()) repair(reason);
+  if(rootReady()) return;
+  if(reattachLastRoot()) return;
+  repair(reason);
 }
 
 function start(){
+  currentRoot();
   check('startup');
 
   if(document.body){
     var mo=new MutationObserver(function(){
+      currentRoot();
       if(!rootReady()) check('dom-mutation');
     });
     mo.observe(document.body,{childList:true,subtree:true});
   }
 
-  timer=setInterval(function(){check('interval')},3000);
-  window.addEventListener('pageshow',function(){setTimeout(function(){check('pageshow')},120)});
-  window.addEventListener('popstate',function(){setTimeout(function(){check('popstate')},180)});
-  window.addEventListener('hashchange',function(){setTimeout(function(){check('hashchange')},180)});
+  setInterval(function(){check('interval')},2500);
+  window.addEventListener('pageshow',function(){setTimeout(function(){check('pageshow')},100)});
+  window.addEventListener('popstate',function(){setTimeout(function(){check('popstate')},150)});
+  window.addEventListener('hashchange',function(){setTimeout(function(){check('hashchange')},150)});
   document.addEventListener('visibilitychange',function(){
-    if(document.visibilityState==='visible') setTimeout(function(){check('visible')},120);
+    if(document.visibilityState==='visible') setTimeout(function(){check('visible')},100);
   });
 }
 
