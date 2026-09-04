@@ -166,7 +166,7 @@ export default {
       return json({
         ok: true,
         service: 'romi-ai-worker',
-        version: '1.0.4-response-probes',
+        version: '1.0.5-deploy-trigger',
         ingress_colo: request.cf?.colo || null,
         openai_configured: Boolean(env.OPENAI_API_KEY),
         proxy_token_configured: Boolean(env.ROMI_PROXY_TOKEN),
@@ -187,7 +187,7 @@ export default {
       return json({
         ok: Boolean(probes.model_probe?.ok && probes.response_probe?.ok && probes.structured_probe?.ok),
         service: 'romi-ai-worker',
-        version: '1.0.4-response-probes',
+        version: '1.0.5-deploy-trigger',
         ingress_colo: request.cf?.colo || null,
         ...probes,
       }, 200, cors);
@@ -268,7 +268,7 @@ export default {
         'content-type': upstream.headers.get('content-type') || 'application/json; charset=utf-8',
         'cache-control': 'no-store',
         'x-content-type-options': 'nosniff',
-        'x-romi-proxy': 'cloudflare-worker-v1.0.4-response-probes',
+        'x-romi-proxy': 'cloudflare-worker-v1.0.5-deploy-trigger',
         'x-romi-ingress-colo': request.cf?.colo || '',
         'x-openai-request-id': upstream.headers.get('x-request-id') || '',
         ...cors,
