@@ -1,7 +1,8 @@
-const OPENAI_RESPONSES_URL = 'https://api.openai.com/v1/responses';
-const OPENAI_MODELS_URL = 'https://api.openai.com/v1/models';
 const DEFAULT_ALLOWED_MODEL = 'gpt-5.6-luna';
+const DEFAULT_ACCOUNT_ID = 'c3b1b4860caf1e80323b389cc8e74a7e';
+const DEFAULT_GATEWAY_ID = 'romi-ai';
 const MAX_BODY_BYTES = 180000;
+
 const ALLOWED_ORIGINS = new Set([
   'https://aromika.shop',
   'https://www.aromika.shop',
@@ -17,7 +18,7 @@ function corsHeaders(request) {
     'access-control-allow-methods': 'POST, OPTIONS',
     'access-control-allow-headers': 'Content-Type, X-Romi-Token',
     'access-control-max-age': '86400',
-    'vary': 'Origin',
+    vary: 'Origin',
   };
 }
 
@@ -49,9 +50,22 @@ function allowedModels(env) {
     .filter(Boolean);
 }
 
-function authHeaders(env) {
+function gatewayConfig(env) {
+  const accountId = String(env.AIG_ACCOUNT_ID || DEFAULT_ACCOUNT_ID).trim();
+  const gatewayId = String(env.AIG_GATEWAY_ID || DEFAULT_GATEWAY_ID).trim();
+  const base = `https://gateway.ai.cloudflare.com/v1/${encodeURIComponent(accountId)}/${encodeURIComponent(gatewayId)}/openai`;
   return {
-    authorization: `Bearer ${env.OPENAI_API_KEY}`,
+    accountId,
+    gatewayId,
+    base,
+    responsesUrl: `${base}/responses`,
+    modelsUrl: `${base}/models`,
+  };
+}
+
+function gatewayHeaders(env) {
+  return {
+    'cf-aig-authorization': `Bearer ${env.CLOUDFLARE_AIG_TOKEN}`,
     'content-type': 'application/json',
     accept: 'application/json',
   };
@@ -68,7 +82,12 @@ function safeErrorPayload(text) {
       param: e?.param ?? null,
     };
   } catch {
-    return { code: null, type: null, message: String(text || '').slice(0, 500), param: null };
+    return {
+      code: null,
+      type: null,
+      message: String(text || '').slice(0, 500),
+      param: null,
+    };
   }
 }
 
@@ -80,6 +99,7 @@ async function runProbe(url, options) {
       status: r.status,
       ok: r.ok,
       request_id: r.headers.get('x-request-id') || null,
+      cf_aig_log_id: r.headers.get('cf-aig-log-id') || null,
       error: r.ok ? null : safeErrorPayload(text),
     };
   } catch (e) {
@@ -87,26 +107,36 @@ async function runProbe(url, options) {
       status: null,
       ok: false,
       request_id: null,
-      error: { code: 'transport', type: null, message: String(e?.message || e), param: null },
+      cf_aig_log_id: null,
+      error: {
+        code: 'transport',
+        type: null,
+        message: String(e?.message || e),
+        param: null,
+      },
     };
   }
 }
 
-async function probeOpenAI(env) {
+async function probeGateway(env) {
   const model = allowedModels(env)[0] || DEFAULT_ALLOWED_MODEL;
-  const result = { model };
+  const gateway = gatewayConfig(env);
+  const result = {
+    model,
+    gateway_id: gateway.gatewayId,
+  };
 
-  result.model_probe = await runProbe(`${OPENAI_MODELS_URL}/${encodeURIComponent(model)}`, {
+  result.model_probe = await runProbe(`${gateway.modelsUrl}/${encodeURIComponent(model)}`, {
     method: 'GET',
     headers: {
-      authorization: `Bearer ${env.OPENAI_API_KEY}`,
+      'cf-aig-authorization': `Bearer ${env.CLOUDFLARE_AIG_TOKEN}`,
       accept: 'application/json',
     },
   });
 
-  result.response_probe = await runProbe(OPENAI_RESPONSES_URL, {
+  result.response_probe = await runProbe(gateway.responsesUrl, {
     method: 'POST',
-    headers: authHeaders(env),
+    headers: gatewayHeaders(env),
     body: JSON.stringify({
       model,
       input: 'Reply with exactly: OK',
@@ -115,9 +145,9 @@ async function probeOpenAI(env) {
     }),
   });
 
-  result.structured_probe = await runProbe(OPENAI_RESPONSES_URL, {
+  result.structured_probe = await runProbe(gateway.responsesUrl, {
     method: 'POST',
-    headers: authHeaders(env),
+    headers: gatewayHeaders(env),
     body: JSON.stringify({
       model,
       instructions: 'Return the requested object. Keep the answer short.',
@@ -153,6 +183,7 @@ export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const cors = corsHeaders(request);
+    const gateway = gatewayConfig(env);
 
     if (request.method === 'OPTIONS') {
       const origin = request.headers.get('origin') || '';
@@ -166,10 +197,13 @@ export default {
       return json({
         ok: true,
         service: 'romi-ai-worker',
-        version: '1.0.5-deploy-trigger',
+        version: '1.1.0-ai-gateway-byok',
+        transport: 'cloudflare_ai_gateway',
         ingress_colo: request.cf?.colo || null,
-        openai_configured: Boolean(env.OPENAI_API_KEY),
+        gateway_id: gateway.gatewayId,
+        gateway_token_configured: Boolean(env.CLOUDFLARE_AIG_TOKEN),
         proxy_token_configured: Boolean(env.ROMI_PROXY_TOKEN),
+        legacy_openai_secret_present: Boolean(env.OPENAI_API_KEY),
         allowed_models: allowedModels(env),
       }, 200, cors);
     }
@@ -178,16 +212,20 @@ export default {
       if (request.method !== 'POST') {
         return json({ ok: false, error: 'method_not_allowed' }, 405, { allow: 'POST', ...cors });
       }
-      if (!env.OPENAI_API_KEY) return json({ ok: false, error: 'openai_not_configured' }, 503, cors);
+      if (!env.CLOUDFLARE_AIG_TOKEN) return json({ ok: false, error: 'ai_gateway_not_configured' }, 503, cors);
       if (!env.ROMI_PROXY_TOKEN) return json({ ok: false, error: 'proxy_token_not_configured' }, 503, cors);
-      const suppliedToken = request.headers.get('x-romi-token') || '';
-      if (!secureEqual(suppliedToken, env.ROMI_PROXY_TOKEN)) return json({ ok: false, error: 'unauthorized' }, 401, cors);
 
-      const probes = await probeOpenAI(env);
+      const suppliedToken = request.headers.get('x-romi-token') || '';
+      if (!secureEqual(suppliedToken, env.ROMI_PROXY_TOKEN)) {
+        return json({ ok: false, error: 'unauthorized' }, 401, cors);
+      }
+
+      const probes = await probeGateway(env);
       return json({
         ok: Boolean(probes.model_probe?.ok && probes.response_probe?.ok && probes.structured_probe?.ok),
         service: 'romi-ai-worker',
-        version: '1.0.5-deploy-trigger',
+        version: '1.1.0-ai-gateway-byok',
+        transport: 'cloudflare_ai_gateway',
         ingress_colo: request.cf?.colo || null,
         ...probes,
       }, 200, cors);
@@ -201,8 +239,8 @@ export default {
       return json({ ok: false, error: 'method_not_allowed' }, 405, { allow: 'POST', ...cors });
     }
 
-    if (!env.OPENAI_API_KEY) {
-      return json({ ok: false, error: 'openai_not_configured' }, 503, cors);
+    if (!env.CLOUDFLARE_AIG_TOKEN) {
+      return json({ ok: false, error: 'ai_gateway_not_configured' }, 503, cors);
     }
     if (!env.ROMI_PROXY_TOKEN) {
       return json({ ok: false, error: 'proxy_token_not_configured' }, 503, cors);
@@ -224,6 +262,7 @@ export default {
     } catch {
       return json({ ok: false, error: 'invalid_body' }, 400, cors);
     }
+
     if (!raw || raw.length > MAX_BODY_BYTES) {
       return json({ ok: false, error: raw ? 'payload_too_large' : 'empty_body' }, raw ? 413 : 400, cors);
     }
@@ -252,13 +291,13 @@ export default {
 
     let upstream;
     try {
-      upstream = await fetch(OPENAI_RESPONSES_URL, {
+      upstream = await fetch(gateway.responsesUrl, {
         method: 'POST',
-        headers: authHeaders(env),
+        headers: gatewayHeaders(env),
         body: JSON.stringify(body),
       });
     } catch {
-      return json({ ok: false, error: 'openai_transport_error' }, 502, cors);
+      return json({ ok: false, error: 'ai_gateway_transport_error' }, 502, cors);
     }
 
     const responseText = await upstream.text();
@@ -268,9 +307,11 @@ export default {
         'content-type': upstream.headers.get('content-type') || 'application/json; charset=utf-8',
         'cache-control': 'no-store',
         'x-content-type-options': 'nosniff',
-        'x-romi-proxy': 'cloudflare-worker-v1.0.5-deploy-trigger',
+        'x-romi-proxy': 'cloudflare-worker-v1.1.0-ai-gateway-byok',
+        'x-romi-upstream': 'cloudflare-ai-gateway',
         'x-romi-ingress-colo': request.cf?.colo || '',
         'x-openai-request-id': upstream.headers.get('x-request-id') || '',
+        'x-cf-aig-log-id': upstream.headers.get('cf-aig-log-id') || '',
         ...cors,
       },
     });
