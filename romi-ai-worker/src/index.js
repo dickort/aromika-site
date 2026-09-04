@@ -1,6 +1,5 @@
 const DEFAULT_ALLOWED_MODEL = 'gpt-5.6-luna';
-const DEFAULT_ACCOUNT_ID = 'c3b1b4860caf1e80323b389cc8e74a7e';
-const DEFAULT_GATEWAY_ID = 'romi-ai';
+const DEFAULT_RENDER_BASE_URL = 'https://aromika-site.onrender.com';
 const MAX_BODY_BYTES = 180000;
 
 const ALLOWED_ORIGINS = new Set([
@@ -34,15 +33,6 @@ function json(data, status = 200, extraHeaders = {}) {
   });
 }
 
-function secureEqual(a, b) {
-  a = String(a || '');
-  b = String(b || '');
-  if (!a || !b || a.length !== b.length) return false;
-  let diff = 0;
-  for (let i = 0; i < a.length; i++) diff |= a.charCodeAt(i) ^ b.charCodeAt(i);
-  return diff === 0;
-}
-
 function allowedModels(env) {
   return String(env.ALLOWED_MODELS || DEFAULT_ALLOWED_MODEL)
     .split(',')
@@ -50,25 +40,8 @@ function allowedModels(env) {
     .filter(Boolean);
 }
 
-function gatewayConfig(env) {
-  const accountId = String(env.AIG_ACCOUNT_ID || DEFAULT_ACCOUNT_ID).trim();
-  const gatewayId = String(env.AIG_GATEWAY_ID || DEFAULT_GATEWAY_ID).trim();
-  const base = `https://gateway.ai.cloudflare.com/v1/${encodeURIComponent(accountId)}/${encodeURIComponent(gatewayId)}/openai`;
-  return {
-    accountId,
-    gatewayId,
-    base,
-    responsesUrl: `${base}/responses`,
-    modelsUrl: `${base}/models`,
-  };
-}
-
-function gatewayHeaders(env) {
-  return {
-    'cf-aig-authorization': `Bearer ${env.CLOUDFLARE_AIG_TOKEN}`,
-    'content-type': 'application/json',
-    accept: 'application/json',
-  };
+function renderBase(env) {
+  return String(env.RENDER_BASE_URL || DEFAULT_RENDER_BASE_URL).replace(/\/+$/, '');
 }
 
 function safeErrorPayload(text) {
@@ -91,99 +64,158 @@ function safeErrorPayload(text) {
   }
 }
 
-async function runProbe(url, options) {
+async function readRenderJson(response) {
+  const text = await response.text();
   try {
-    const r = await fetch(url, options);
-    const text = await r.text();
-    return {
-      status: r.status,
-      ok: r.ok,
-      request_id: r.headers.get('x-request-id') || null,
-      cf_aig_log_id: r.headers.get('cf-aig-log-id') || null,
-      error: r.ok ? null : safeErrorPayload(text),
-    };
-  } catch (e) {
-    return {
-      status: null,
-      ok: false,
-      request_id: null,
-      cf_aig_log_id: null,
-      error: {
-        code: 'transport',
-        type: null,
-        message: String(e?.message || e),
-        param: null,
-      },
-    };
+    return { text, data: JSON.parse(text) };
+  } catch {
+    return { text, data: null };
   }
 }
 
-async function probeGateway(env) {
-  const model = allowedModels(env)[0] || DEFAULT_ALLOWED_MODEL;
-  const gateway = gatewayConfig(env);
-  const result = {
-    model,
-    gateway_id: gateway.gatewayId,
-  };
+async function relayDiagnose(request, env, cors) {
+  const suppliedToken = request.headers.get('x-romi-token') || '';
+  if (!suppliedToken) {
+    return json({ ok: false, error: 'proxy_token_missing' }, 401, cors);
+  }
 
-  result.model_probe = await runProbe(`${gateway.modelsUrl}/${encodeURIComponent(model)}`, {
-    method: 'GET',
+  let upstream;
+  try {
+    upstream = await fetch(`${renderBase(env)}/diagnose`, {
+      method: 'POST',
+      headers: {
+        'x-romi-token': suppliedToken,
+        accept: 'application/json',
+      },
+    });
+  } catch (e) {
+    return json({
+      ok: false,
+      service: 'romi-ai-worker',
+      version: '1.2.0-render-relay',
+      transport: 'cloudflare_render_relay',
+      ingress_colo: request.cf?.colo || null,
+      render_http: null,
+      error: 'render_transport_error',
+      render_error: String(e?.message || e),
+    }, 200, cors);
+  }
+
+  const { text, data } = await readRenderJson(upstream);
+  if (!data || typeof data !== 'object') {
+    return json({
+      ok: false,
+      service: 'romi-ai-worker',
+      version: '1.2.0-render-relay',
+      transport: 'cloudflare_render_relay',
+      ingress_colo: request.cf?.colo || null,
+      render_http: upstream.status,
+      error: 'invalid_render_response',
+      render_error: safeErrorPayload(text),
+    }, 200, cors);
+  }
+
+  return json({
+    ok: Boolean(upstream.ok && data.ok),
+    service: 'romi-ai-worker',
+    version: '1.2.0-render-relay',
+    transport: 'cloudflare_render_relay',
+    ingress_colo: request.cf?.colo || null,
+    render_http: upstream.status,
+    render_service: data.service || null,
+    render_version: data.version || null,
+    render_transport: data.transport || null,
+    model: data.model || allowedModels(env)[0] || DEFAULT_ALLOWED_MODEL,
+    model_probe: data.model_probe || null,
+    response_probe: data.response_probe || null,
+    structured_probe: data.structured_probe || null,
+    error: data.error || null,
+  }, 200, cors);
+}
+
+async function relayChat(request, env, cors) {
+  const suppliedToken = request.headers.get('x-romi-token') || '';
+  if (!suppliedToken) {
+    return json({ ok: false, error: 'proxy_token_missing' }, 401, cors);
+  }
+
+  const contentLength = Number(request.headers.get('content-length') || 0);
+  if (contentLength > MAX_BODY_BYTES) {
+    return json({ ok: false, error: 'payload_too_large' }, 413, cors);
+  }
+
+  let raw;
+  try {
+    raw = await request.text();
+  } catch {
+    return json({ ok: false, error: 'invalid_body' }, 400, cors);
+  }
+
+  if (!raw || raw.length > MAX_BODY_BYTES) {
+    return json({ ok: false, error: raw ? 'payload_too_large' : 'empty_body' }, raw ? 413 : 400, cors);
+  }
+
+  let body;
+  try {
+    body = JSON.parse(raw);
+  } catch {
+    return json({ ok: false, error: 'invalid_json' }, 400, cors);
+  }
+
+  if (!body || typeof body !== 'object' || !body.model || body.input === undefined) {
+    return json({ ok: false, error: 'invalid_openai_payload' }, 400, cors);
+  }
+
+  const models = allowedModels(env);
+  if (!models.includes(String(body.model))) {
+    return json({
+      ok: false,
+      error: 'model_not_allowed_by_proxy',
+      allowed_models: models,
+    }, 400, cors);
+  }
+
+  body.store = false;
+
+  let upstream;
+  try {
+    upstream = await fetch(`${renderBase(env)}/chat`, {
+      method: 'POST',
+      headers: {
+        'x-romi-token': suppliedToken,
+        'content-type': 'application/json',
+        accept: 'application/json',
+      },
+      body: JSON.stringify(body),
+    });
+  } catch (e) {
+    return json({
+      ok: false,
+      error: 'render_transport_error',
+      message: String(e?.message || e),
+    }, 502, cors);
+  }
+
+  const responseText = await upstream.text();
+  return new Response(responseText, {
+    status: upstream.status,
     headers: {
-      'cf-aig-authorization': `Bearer ${env.CLOUDFLARE_AIG_TOKEN}`,
-      accept: 'application/json',
+      'content-type': upstream.headers.get('content-type') || 'application/json; charset=utf-8',
+      'cache-control': 'no-store',
+      'x-content-type-options': 'nosniff',
+      'x-romi-proxy': 'cloudflare-worker-v1.2.0-render-relay',
+      'x-romi-upstream': 'render-frankfurt',
+      'x-romi-ingress-colo': request.cf?.colo || '',
+      'x-openai-request-id': upstream.headers.get('x-openai-request-id') || '',
+      ...cors,
     },
   });
-
-  result.response_probe = await runProbe(gateway.responsesUrl, {
-    method: 'POST',
-    headers: gatewayHeaders(env),
-    body: JSON.stringify({
-      model,
-      input: 'Reply with exactly: OK',
-      store: false,
-      max_output_tokens: 32,
-    }),
-  });
-
-  result.structured_probe = await runProbe(gateway.responsesUrl, {
-    method: 'POST',
-    headers: gatewayHeaders(env),
-    body: JSON.stringify({
-      model,
-      instructions: 'Return the requested object. Keep the answer short.',
-      input: JSON.stringify({ question: 'Say hello briefly.' }),
-      max_output_tokens: 120,
-      store: false,
-      text: {
-        format: {
-          type: 'json_schema',
-          name: 'romi_probe',
-          strict: true,
-          schema: {
-            type: 'object',
-            properties: {
-              answer: { type: 'string' },
-              product_ids: { type: 'array', items: { type: 'integer' } },
-              follow_up: { type: 'array', items: { type: 'string' }, maxItems: 3 },
-              needs_clarification: { type: 'boolean' },
-              confidence: { type: 'string', enum: ['high', 'medium', 'low'] },
-            },
-            required: ['answer', 'product_ids', 'follow_up', 'needs_clarification', 'confidence'],
-            additionalProperties: false,
-          },
-        },
-      },
-    }),
-  });
-
-  return result;
 }
 
 export default {
   async fetch(request, env) {
     const url = new URL(request.url);
     const cors = corsHeaders(request);
-    const gateway = gatewayConfig(env);
 
     if (request.method === 'OPTIONS') {
       const origin = request.headers.get('origin') || '';
@@ -197,13 +229,10 @@ export default {
       return json({
         ok: true,
         service: 'romi-ai-worker',
-        version: '1.1.0-ai-gateway-byok',
-        transport: 'cloudflare_ai_gateway',
+        version: '1.2.0-render-relay',
+        transport: 'cloudflare_render_relay',
         ingress_colo: request.cf?.colo || null,
-        gateway_id: gateway.gatewayId,
-        gateway_token_configured: Boolean(env.CLOUDFLARE_AIG_TOKEN),
-        proxy_token_configured: Boolean(env.ROMI_PROXY_TOKEN),
-        legacy_openai_secret_present: Boolean(env.OPENAI_API_KEY),
+        render_upstream: renderBase(env),
         allowed_models: allowedModels(env),
       }, 200, cors);
     }
@@ -212,108 +241,16 @@ export default {
       if (request.method !== 'POST') {
         return json({ ok: false, error: 'method_not_allowed' }, 405, { allow: 'POST', ...cors });
       }
-      if (!env.CLOUDFLARE_AIG_TOKEN) return json({ ok: false, error: 'ai_gateway_not_configured' }, 503, cors);
-      if (!env.ROMI_PROXY_TOKEN) return json({ ok: false, error: 'proxy_token_not_configured' }, 503, cors);
+      return relayDiagnose(request, env, cors);
+    }
 
-      const suppliedToken = request.headers.get('x-romi-token') || '';
-      if (!secureEqual(suppliedToken, env.ROMI_PROXY_TOKEN)) {
-        return json({ ok: false, error: 'unauthorized' }, 401, cors);
+    if (url.pathname === '/chat') {
+      if (request.method !== 'POST') {
+        return json({ ok: false, error: 'method_not_allowed' }, 405, { allow: 'POST', ...cors });
       }
-
-      const probes = await probeGateway(env);
-      return json({
-        ok: Boolean(probes.model_probe?.ok && probes.response_probe?.ok && probes.structured_probe?.ok),
-        service: 'romi-ai-worker',
-        version: '1.1.0-ai-gateway-byok',
-        transport: 'cloudflare_ai_gateway',
-        ingress_colo: request.cf?.colo || null,
-        ...probes,
-      }, 200, cors);
+      return relayChat(request, env, cors);
     }
 
-    if (url.pathname !== '/chat') {
-      return json({ ok: false, error: 'not_found' }, 404, cors);
-    }
-
-    if (request.method !== 'POST') {
-      return json({ ok: false, error: 'method_not_allowed' }, 405, { allow: 'POST', ...cors });
-    }
-
-    if (!env.CLOUDFLARE_AIG_TOKEN) {
-      return json({ ok: false, error: 'ai_gateway_not_configured' }, 503, cors);
-    }
-    if (!env.ROMI_PROXY_TOKEN) {
-      return json({ ok: false, error: 'proxy_token_not_configured' }, 503, cors);
-    }
-
-    const suppliedToken = request.headers.get('x-romi-token') || '';
-    if (!secureEqual(suppliedToken, env.ROMI_PROXY_TOKEN)) {
-      return json({ ok: false, error: 'unauthorized' }, 401, cors);
-    }
-
-    const contentLength = Number(request.headers.get('content-length') || 0);
-    if (contentLength > MAX_BODY_BYTES) {
-      return json({ ok: false, error: 'payload_too_large' }, 413, cors);
-    }
-
-    let raw;
-    try {
-      raw = await request.text();
-    } catch {
-      return json({ ok: false, error: 'invalid_body' }, 400, cors);
-    }
-
-    if (!raw || raw.length > MAX_BODY_BYTES) {
-      return json({ ok: false, error: raw ? 'payload_too_large' : 'empty_body' }, raw ? 413 : 400, cors);
-    }
-
-    let body;
-    try {
-      body = JSON.parse(raw);
-    } catch {
-      return json({ ok: false, error: 'invalid_json' }, 400, cors);
-    }
-
-    if (!body || typeof body !== 'object' || !body.model || body.input === undefined) {
-      return json({ ok: false, error: 'invalid_openai_payload' }, 400, cors);
-    }
-
-    const models = allowedModels(env);
-    if (!models.includes(String(body.model))) {
-      return json({
-        ok: false,
-        error: 'model_not_allowed_by_proxy',
-        allowed_models: models,
-      }, 400, cors);
-    }
-
-    body.store = false;
-
-    let upstream;
-    try {
-      upstream = await fetch(gateway.responsesUrl, {
-        method: 'POST',
-        headers: gatewayHeaders(env),
-        body: JSON.stringify(body),
-      });
-    } catch {
-      return json({ ok: false, error: 'ai_gateway_transport_error' }, 502, cors);
-    }
-
-    const responseText = await upstream.text();
-    return new Response(responseText, {
-      status: upstream.status,
-      headers: {
-        'content-type': upstream.headers.get('content-type') || 'application/json; charset=utf-8',
-        'cache-control': 'no-store',
-        'x-content-type-options': 'nosniff',
-        'x-romi-proxy': 'cloudflare-worker-v1.1.0-ai-gateway-byok',
-        'x-romi-upstream': 'cloudflare-ai-gateway',
-        'x-romi-ingress-colo': request.cf?.colo || '',
-        'x-openai-request-id': upstream.headers.get('x-request-id') || '',
-        'x-cf-aig-log-id': upstream.headers.get('cf-aig-log-id') || '',
-        ...cors,
-      },
-    });
+    return json({ ok: false, error: 'not_found' }, 404, cors);
   },
 };
