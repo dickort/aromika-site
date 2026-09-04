@@ -1,0 +1,12 @@
+name = "aromika-info-redirects"
+main = "seo/aromika-redirect-worker-v1.js"
+compatibility_date = "2026-09-04"
+workers_dev = false
+
+[[routes]]
+pattern = "aromika.info/*"
+zone_name = "aromika.info"
+
+[[routes]]
+pattern = "www.aromika.info/*"
+zone_name = "aromika.info"
