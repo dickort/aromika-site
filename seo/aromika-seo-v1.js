@@ -1,6 +1,8 @@
-/* AROMIKA.INFO · SEO V1.0.0
- * Centralized client-side SEO layer for Tilda pages.
- * IMPORTANT: HTTP redirects are handled server-side/at the edge by seo/aromika-redirect-worker-v1.js.
+/* AROMIKA.INFO · SEO V1.0.1 SAFE
+ * Additive SEO layer for Tilda pages.
+ * Does not change visible H1 unless explicitly enabled.
+ * Does not publish KZ hreflang until explicitly enabled.
+ * HTTP 301 redirects are handled separately at the edge.
  */
 (function () {
   'use strict';
@@ -10,6 +12,9 @@
 
   var ORIGIN = 'https://aromika.info';
   var KZ_PREFIX = '/kz';
+  var CONFIG = window.AROMIKA_SEO_CONFIG || {};
+  var ENABLE_H1 = CONFIG.enableH1 === true;
+  var ENABLE_KZ = CONFIG.enableKz === true;
 
   var PAGES = {
     '/': {
@@ -164,7 +169,7 @@
   }
 
   function setH1(text) {
-    if (!text) return;
+    if (!ENABLE_H1 || !text) return;
     var candidates = [
       '[data-seo-h1]',
       '#aromika-seo-h1',
@@ -175,11 +180,8 @@
     ];
     var h1 = null;
     for (var i = 0; i < candidates.length && !h1; i++) h1 = document.querySelector(candidates[i]);
-    if (!h1) return;
-    if (h1.getAttribute('data-seo-lock') === '1') return;
-    if (!h1.getAttribute('data-aromika-original-h1')) {
-      h1.setAttribute('data-aromika-original-h1', h1.textContent || '');
-    }
+    if (!h1 || h1.getAttribute('data-seo-lock') === '1') return;
+    if (!h1.getAttribute('data-aromika-original-h1')) h1.setAttribute('data-aromika-original-h1', h1.textContent || '');
     h1.textContent = text;
   }
 
@@ -195,6 +197,7 @@
   }
 
   function organizationGraph() {
+    var languages = ENABLE_KZ ? ['ru-KZ', 'kk-KZ'] : ['ru-KZ'];
     return {
       '@context': 'https://schema.org',
       '@graph': [
@@ -203,10 +206,7 @@
           '@id': ORIGIN + '/#organization',
           name: 'Aromika',
           url: ORIGIN + '/',
-          email: 'info@aromika.info',
-          telephone: '+7 7142 52-40-44',
           areaServed: { '@type': 'Country', name: 'Kazakhstan' },
-          address: { '@type': 'PostalAddress', addressLocality: 'Костанай', addressCountry: 'KZ' },
           brand: ['Perfect', 'Wash Expert', 'Maxi Power', 'Prachka', 'Antibak'].map(function (name) {
             return { '@type': 'Brand', name: name };
           })
@@ -217,7 +217,7 @@
           url: ORIGIN + '/',
           name: 'Aromika',
           publisher: { '@id': ORIGIN + '/#organization' },
-          inLanguage: ['ru-KZ', 'kk-KZ']
+          inLanguage: languages
         }
       ]
     };
@@ -243,26 +243,28 @@
     if (!page) return;
 
     var kz = isKzPath(path);
+    if (kz && !ENABLE_KZ) return;
+
     var canonicalPath = kz ? kzPath(basePath) : basePath;
     var canonical = absolute(canonicalPath);
 
     document.title = page.title;
     upsertMeta('meta[name="description"]', { name: 'description', content: page.description });
     upsertMeta('meta[name="robots"]', { name: 'robots', content: 'index,follow,max-image-preview:large,max-snippet:-1,max-video-preview:-1' });
-
     upsertLink('link[rel="canonical"]', { rel: 'canonical', href: canonical });
 
     removeManagedAlternates();
-    addAlternate('ru-KZ', absolute(basePath));
-    addAlternate('kk-KZ', absolute(kzPath(basePath)));
-    addAlternate('x-default', absolute(basePath));
+    if (ENABLE_KZ) {
+      addAlternate('ru-KZ', absolute(basePath));
+      addAlternate('kk-KZ', absolute(kzPath(basePath)));
+      addAlternate('x-default', absolute(basePath));
+    }
 
     upsertMeta('meta[property="og:title"]', { property: 'og:title', content: page.title });
     upsertMeta('meta[property="og:description"]', { property: 'og:description', content: page.description });
     upsertMeta('meta[property="og:type"]', { property: 'og:type', content: page.ogType || 'website' });
     upsertMeta('meta[property="og:url"]', { property: 'og:url', content: canonical });
     upsertMeta('meta[property="og:site_name"]', { property: 'og:site_name', content: 'Aromika' });
-
     upsertMeta('meta[name="twitter:card"]', { name: 'twitter:card', content: 'summary_large_image' });
     upsertMeta('meta[name="twitter:title"]', { name: 'twitter:title', content: page.title });
     upsertMeta('meta[name="twitter:description"]', { name: 'twitter:description', content: page.description });
@@ -285,20 +287,15 @@
       if (bc) jsonLd('aromika-seo-breadcrumb', bc);
     } else {
       ['aromika-seo-brand', 'aromika-seo-breadcrumb'].forEach(function (id) {
-        var old = document.getElementById(id); if (old) old.remove();
+        var old = document.getElementById(id);
+        if (old) old.remove();
       });
     }
   }
 
-  if (document.readyState === 'loading') {
-    document.addEventListener('DOMContentLoaded', apply, { once: true });
-  } else {
-    apply();
-  }
+  if (document.readyState === 'loading') document.addEventListener('DOMContentLoaded', apply, { once: true });
+  else apply();
 
   window.addEventListener('popstate', apply);
-  window.addEventListener('hashchange', function () {
-    // Hash does not affect canonical metadata, but Tilda blocks may update dynamically.
-    setTimeout(apply, 0);
-  });
+  window.addEventListener('hashchange', function () { setTimeout(apply, 0); });
 })();
