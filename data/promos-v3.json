@@ -1,18 +1,18 @@
 {
   "schema": 3,
-  "updated_at": "2026-09-05T10:37:39.521168+00:00",
+  "updated_at": "2026-09-05T15:15:42.640576+00:00",
   "demo": false,
   "sources": {
     "aromika": {
       "status": "ok",
       "count": 37,
-      "last_success": "2026-09-05T10:37:23.172035+00:00",
+      "last_success": "2026-09-05T15:15:29.063693+00:00",
       "message": "Live discounted products detected."
     },
     "kaspi": {
       "status": "empty",
       "count": 0,
-      "last_success": "2026-09-05T10:37:39.520715+00:00",
+      "last_success": "2026-09-05T15:15:42.640154+00:00",
       "message": "Live scan completed; no discounted cards detected.",
       "merchant_id": "1359004"
     }
