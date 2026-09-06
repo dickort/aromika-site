@@ -1,7 +1,6 @@
 /* AROMIKA.INFO · ROMI LIVE LOADER V1
- * INFO shell/core are loaded from the currently installed ROMI Connector on aromika.shop.
- * GitHub remains only as the static image asset host.
- * This prevents INFO and SHOP frontend versions from drifting apart.
+ * Original ROMI 1.0.50 visual shell + site-aware 1.0.50.2 functional layer.
+ * INFO uses aromika.shop as API/runtime source and keeps GitHub only for the loader/assets.
  */
 (function(){
 'use strict';
@@ -12,16 +11,25 @@ if(window.__AROMIKA_ROMI_INFO_LIVE_V1__)return;
 window.__AROMIKA_ROMI_INFO_LIVE_V1__=true;
 
 var SHOP='https://aromika.shop';
+var INFO='https://aromika.info';
 var BASE=SHOP+'/js/addons/romi_connector/';
 var STATIC='https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/romi/';
-var BUILD='1.0.51.1';
+var BUILD='1.0.50.2';
 
 window.AROMIKA_ASSISTANT_ASSET_BASE=STATIC;
 window.ROMI_V8_CONFIG=Object.assign({},window.ROMI_V8_CONFIG||{}, {
   site:'info',
   apiBase:SHOP+'/index.php?dispatch=romi.',
   shopOrigin:SHOP,
-  infoOrigin:'https://aromika.info'
+  infoOrigin:INFO
+});
+window.ROMI_COMPLETE_CONFIG=Object.assign({},window.ROMI_COMPLETE_CONFIG||{}, {
+  site:'info',
+  apiBase:SHOP+'/index.php?dispatch=romi.',
+  shopOrigin:SHOP,
+  infoOrigin:INFO,
+  assetBase:STATIC,
+  promotionsUrl:SHOP+'/bestsellery/'
 });
 
 function hasScript(fragment){
@@ -49,10 +57,18 @@ function js(src,fragment){
   });
 }
 function removeLegacy(){
-  /* Prevent an old Tilda/CDN ROMI shell from booting alongside the live shell. */
+  /* Do not allow old/parallel ROMI cores to boot on INFO. */
   Array.prototype.forEach.call(document.querySelectorAll('script[src]'),function(s){
     var src=String(s.src||'');
-    if(src.indexOf('assistant-v9-5-')!==-1 || src.indexOf('romi-info-bootstrap-v1.js')!==-1){
+    if(
+      src.indexOf('assistant-v9-5-')!==-1 ||
+      src.indexOf('romi-info-bootstrap-v1.js')!==-1 ||
+      src.indexOf('romi-chat-v10-core.js')!==-1 ||
+      src.indexOf('romi-living-v2.js')!==-1 ||
+      src.indexOf('romi-info-cooperation-v2.js')!==-1 ||
+      src.indexOf('romi-ui-stable-patch-v1.js')!==-1 ||
+      src.indexOf('romi-v9-3-core.js')!==-1
+    ){
       try{s.remove()}catch(e){}
     }
   });
@@ -61,23 +77,22 @@ function removeLegacy(){
 async function boot(){
   removeLegacy();
 
+  /* Exact original 1.0.50 visual layer from the installed CS-Cart module. */
   css(BASE+'romi-v9-3-ui.css?v='+BUILD,'romi-v9-3-ui.css');
 
-  /* Shared INFO↔SHOP session before the UI reads localStorage. */
+  /* Shared INFO↔SHOP session first. */
   await js(BASE+'romi-crosssite-v1.js?v='+BUILD,'/romi-crosssite-v1.js');
 
-  /* Current shell + current AI chat core from the installed CS-Cart module. */
+  /* Original 1.0.50 shell/markup. */
   await js(BASE+'assistant-v9-3.js?v='+BUILD,'/assistant-v9-3.js');
-  await js(BASE+'romi-chat-v10-core.js?v='+BUILD,'/romi-chat-v10-core.js');
 
-  /* Additive layers. */
-  await js(BASE+'romi-living-v2.js?v='+BUILD,'/romi-living-v2.js');
-  await js(BASE+'romi-info-cooperation-v2.js?v='+BUILD,'/romi-info-cooperation-v2.js');
-  await js(BASE+'romi-ui-stable-patch-v1.js?v='+BUILD,'/romi-ui-stable-patch-v1.js');
+  /* New site-aware functional layer. No visual replacement. */
+  await js(BASE+'romi-full-function-10502.js?v='+BUILD,'/romi-full-function-10502.js');
 
   window.__ROMI_INFO_FRONTEND_SOURCE__='shop-module';
   window.__ROMI_INFO_FRONTEND_BUILD__=BUILD;
-  try{window.dispatchEvent(new CustomEvent('romi:info-live-ready',{detail:{build:BUILD}}))}catch(e){}
+  window.__ROMI_INFO_SITE_MODE__='info';
+  try{window.dispatchEvent(new CustomEvent('romi:info-live-ready',{detail:{build:BUILD,site:'info'}}))}catch(e){}
 }
 
 function start(){
