@@ -72,7 +72,7 @@ async function boot(){
 
   /* Additive layers. */
   await js(BASE+'romi-living-v2.js?v='+BUILD,'/romi-living-v2.js');
-  await js(BASE+'romi-info-cooperation-v2.js?v='+BUILD,'/romi-info-cooperation-v2.js');
+  await js(BASE+'romi-info-cooperation-v2.js?v=1.0.50.19-info-cta','/romi-info-cooperation-v2.js');
   await js(BASE+'romi-ui-stable-patch-v1.js?v='+BUILD,'/romi-ui-stable-patch-v1.js');
 
   window.__ROMI_INFO_FRONTEND_SOURCE__='shop-module';
