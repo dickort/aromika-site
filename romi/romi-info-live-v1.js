@@ -70,8 +70,9 @@ async function boot(){
   await js(BASE+'assistant-v9-3.js?v='+BUILD,'/assistant-v9-3.js');
   await js(BASE+'romi-chat-v10-core.js?v='+BUILD,'/romi-chat-v10-core.js');
 
-  /* Additive layers. */
+  /* Additive layers. The functional layer is intentionally loaded after the stable shell. */
   await js(BASE+'romi-living-v2.js?v='+BUILD,'/romi-living-v2.js');
+  await js(BASE+'romi-full-function-10502.js?v=1.0.50.21-site-contract','/romi-full-function-10502.js');
   await js(BASE+'romi-info-cooperation-v2.js?v=1.0.50.19-info-cta','/romi-info-cooperation-v2.js');
   await js(BASE+'romi-ui-stable-patch-v1.js?v='+BUILD,'/romi-ui-stable-patch-v1.js');
 
