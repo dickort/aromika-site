@@ -14,6 +14,7 @@
     var VISITOR_KEY = 'aromika_analytics_visitor_v1';
     var SESSION_KEY = 'aromika_analytics_session_v1';
     var SESSION_TS_KEY = 'aromika_analytics_session_ts_v1';
+    var ATTR_KEY = 'aromika_analytics_attribution_v1';
     var SESSION_TTL = 30 * 60 * 1000;
 
     function id(prefix) {
@@ -25,6 +26,7 @@
 
     function safeGet(storage, key) { try { return storage.getItem(key) || ''; } catch (e) { return ''; } }
     function safeSet(storage, key, value) { try { storage.setItem(key, value); } catch (e) {} }
+    function safeRemove(storage, key) { try { storage.removeItem(key); } catch (e) {} }
 
     var visitorId = safeGet(localStorage, VISITOR_KEY);
     if (!visitorId) {
@@ -39,17 +41,9 @@
     if (isNewSession) {
         sessionId = id('s_');
         safeSet(localStorage, SESSION_KEY, sessionId);
+        safeRemove(sessionStorage, ATTR_KEY);
     }
     safeSet(localStorage, SESSION_TS_KEY, String(now));
-
-    var params = new URLSearchParams(location.search || '');
-    var attribution = {
-        utm_source: params.get('utm_source') || '',
-        utm_medium: params.get('utm_medium') || '',
-        utm_campaign: params.get('utm_campaign') || '',
-        utm_content: params.get('utm_content') || '',
-        utm_term: params.get('utm_term') || ''
-    };
 
     function referrerHost() {
         if (!document.referrer) return '';
@@ -57,12 +51,33 @@
         catch (e) { return ''; }
     }
 
-    function source() {
-        if (attribution.utm_source) return attribution.utm_source;
+    function freshAttribution() {
+        var params = new URLSearchParams(location.search || '');
         var ref = referrerHost();
-        if (!ref || ref === 'aromika.info') return 'Direct';
-        return ref;
+        var utmSource = params.get('utm_source') || '';
+        var trafficSource = utmSource || ((!ref || ref === 'aromika.info') ? 'Direct' : ref);
+        return {
+            traffic_source: trafficSource,
+            utm_source: utmSource,
+            utm_medium: params.get('utm_medium') || '',
+            utm_campaign: params.get('utm_campaign') || '',
+            utm_content: params.get('utm_content') || '',
+            utm_term: params.get('utm_term') || ''
+        };
     }
+
+    var attribution = null;
+    var explicitParams = new URLSearchParams(location.search || '');
+    var hasExplicitCampaign = !!explicitParams.get('utm_source');
+    if (!isNewSession && !hasExplicitCampaign) {
+        try { attribution = JSON.parse(safeGet(sessionStorage, ATTR_KEY) || 'null'); } catch (e) { attribution = null; }
+    }
+    if (!attribution || hasExplicitCampaign) {
+        attribution = freshAttribution();
+        safeSet(sessionStorage, ATTR_KEY, JSON.stringify(attribution));
+    }
+
+    function source() { return attribution.traffic_source || 'Direct'; }
 
     function device() {
         var ua = navigator.userAgent || '';
@@ -113,11 +128,11 @@
             page_title: String(document.title || '').slice(0, 255),
             referrer: String(document.referrer || '').slice(0, 768),
             traffic_source: source().slice(0, 190),
-            utm_source: attribution.utm_source.slice(0, 190),
-            utm_medium: attribution.utm_medium.slice(0, 190),
-            utm_campaign: attribution.utm_campaign.slice(0, 190),
-            utm_content: attribution.utm_content.slice(0, 190),
-            utm_term: attribution.utm_term.slice(0, 190),
+            utm_source: String(attribution.utm_source || '').slice(0, 190),
+            utm_medium: String(attribution.utm_medium || '').slice(0, 190),
+            utm_campaign: String(attribution.utm_campaign || '').slice(0, 190),
+            utm_content: String(attribution.utm_content || '').slice(0, 190),
+            utm_term: String(attribution.utm_term || '').slice(0, 190),
             device_type: device(),
             browser: browser(),
             os: os(),
@@ -184,7 +199,7 @@
 
     window.AROMIKA_ANALYTICS = Object.freeze({
         track: track,
-        version: '1.0.0'
+        version: '1.0.1'
     });
 
     if (isNewSession) track('session_start');
