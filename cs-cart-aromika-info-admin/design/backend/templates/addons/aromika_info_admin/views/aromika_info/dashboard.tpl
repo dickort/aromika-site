@@ -18,9 +18,19 @@
 
     <div class="ai-admin__toolbar">
         <div class="ai-admin__periods">
-            <a class="{if $aromika_info_days == 7}is-active{/if}" href="{"aromika_info.`$runtime.mode`?days=7"|fn_url}">7 дней</a>
-            <a class="{if $aromika_info_days == 30}is-active{/if}" href="{"aromika_info.`$runtime.mode`?days=30"|fn_url}">30 дней</a>
-            <a class="{if $aromika_info_days == 90}is-active{/if}" href="{"aromika_info.`$runtime.mode`?days=90"|fn_url}">90 дней</a>
+            {if $runtime.mode == 'analytics'}
+                <a class="{if $aromika_info_days == 7}is-active{/if}" href="{"aromika_info.analytics?days=7"|fn_url}">7 дней</a>
+                <a class="{if $aromika_info_days == 30}is-active{/if}" href="{"aromika_info.analytics?days=30"|fn_url}">30 дней</a>
+                <a class="{if $aromika_info_days == 90}is-active{/if}" href="{"aromika_info.analytics?days=90"|fn_url}">90 дней</a>
+            {elseif $runtime.mode == 'romi'}
+                <a class="{if $aromika_info_days == 7}is-active{/if}" href="{"aromika_info.romi?days=7"|fn_url}">7 дней</a>
+                <a class="{if $aromika_info_days == 30}is-active{/if}" href="{"aromika_info.romi?days=30"|fn_url}">30 дней</a>
+                <a class="{if $aromika_info_days == 90}is-active{/if}" href="{"aromika_info.romi?days=90"|fn_url}">90 дней</a>
+            {else}
+                <a class="{if $aromika_info_days == 7}is-active{/if}" href="{"aromika_info.dashboard?days=7"|fn_url}">7 дней</a>
+                <a class="{if $aromika_info_days == 30}is-active{/if}" href="{"aromika_info.dashboard?days=30"|fn_url}">30 дней</a>
+                <a class="{if $aromika_info_days == 90}is-active{/if}" href="{"aromika_info.dashboard?days=90"|fn_url}">90 дней</a>
+            {/if}
         </div>
         <div class="ai-admin__updated">Обновлено: {$smarty.now|date_format:"%d.%m.%Y %H:%M"}</div>
     </div>
