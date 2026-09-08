@@ -1,7 +1,7 @@
 <?xml version="1.0"?>
 <addon scheme="3.0">
     <id>aromika_info_admin</id>
-    <version>1.0.0</version>
+    <version>1.0.1</version>
     <priority>910</priority>
     <position>910</position>
     <default_language>ru</default_language>
