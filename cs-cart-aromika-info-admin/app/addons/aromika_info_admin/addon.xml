@@ -6,8 +6,6 @@
     <position>910</position>
     <default_language>ru</default_language>
     <status>active</status>
-    <name>AROMIKA.INFO Admin</name>
-    <description>Административная панель, аналитика и настройки aromika.info.</description>
     <compatibility>
         <core_version>
             <min>4.18.1</min>
