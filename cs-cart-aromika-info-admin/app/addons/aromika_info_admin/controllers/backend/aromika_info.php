@@ -2,6 +2,20 @@
 
 defined('BOOTSTRAP') or die('Access denied');
 
+if (!function_exists('fn_aromika_info_admin_get_dashboard')) {
+    $func_file = dirname(dirname(__DIR__)) . '/func.php';
+    if (is_file($func_file)) {
+        require_once $func_file;
+    }
+}
+
+if (!function_exists('fn_aromika_info_admin_get_dashboard')) {
+    fn_set_notification('E', 'AROMIKA.INFO', 'Не удалось загрузить функции модуля AROMIKA.INFO Admin.');
+    return array(CONTROLLER_STATUS_REDIRECT, 'addons.manage');
+}
+
+fn_aromika_info_admin_ensure_schema();
+
 function fn_aromika_info_admin_default_days()
 {
     $value = (int) db_get_field(
