@@ -2,23 +2,19 @@
 
 defined('BOOTSTRAP') or die('Access denied');
 
-use Tygh\Registry;
-
-if ($mode === 'dashboard' || $mode === 'analytics') {
-    $days = isset($_REQUEST['days']) ? (int) $_REQUEST['days'] : 30;
-    $dashboard = fn_aromika_info_admin_get_dashboard($days);
-
-    Tygh::$app['view']->assign('aromika_info_dashboard', $dashboard);
-    Tygh::$app['view']->assign('aromika_info_days', $dashboard['days']);
-
-    if ($mode === 'analytics') {
-        Tygh::$app['view']->assign('aromika_info_full_analytics', true);
-    }
+function fn_aromika_info_admin_default_days()
+{
+    $value = (int) db_get_field(
+        'SELECT setting_value FROM ?:aromika_info_settings WHERE setting_key = ?s',
+        'dashboard_default_days'
+    );
+    return in_array($value, array(7, 30, 90), true) ? $value : 30;
 }
 
-if ($mode === 'romi') {
-    $days = isset($_REQUEST['days']) ? (int) $_REQUEST['days'] : 30;
+if ($mode === 'dashboard' || $mode === 'analytics' || $mode === 'romi') {
+    $days = isset($_REQUEST['days']) ? (int) $_REQUEST['days'] : fn_aromika_info_admin_default_days();
     $dashboard = fn_aromika_info_admin_get_dashboard($days);
+
     Tygh::$app['view']->assign('aromika_info_dashboard', $dashboard);
     Tygh::$app['view']->assign('aromika_info_days', $dashboard['days']);
 }
