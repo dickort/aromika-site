@@ -10,39 +10,53 @@
     </div>
 
     <nav class="ai-admin__nav">
-        <a class="is-active" href="{"aromika_info.dashboard"|fn_url}">Обзор</a>
-        <a href="{"aromika_info.analytics"|fn_url}">Аналитика</a>
-        <a href="{"aromika_info.romi"|fn_url}">ROMI</a>
-        <a href="{"aromika_info.settings"|fn_url}">Настройки</a>
+        <a class="{if $runtime.mode == 'dashboard'}is-active{/if}" href="{"aromika_info.dashboard"|fn_url}">Обзор</a>
+        <a class="{if $runtime.mode == 'analytics'}is-active{/if}" href="{"aromika_info.analytics"|fn_url}">Аналитика</a>
+        <a class="{if $runtime.mode == 'romi'}is-active{/if}" href="{"aromika_info.romi"|fn_url}">ROMI</a>
+        <a class="{if $runtime.mode == 'settings'}is-active{/if}" href="{"aromika_info.settings"|fn_url}">Настройки</a>
     </nav>
 
     <div class="ai-admin__toolbar">
         <div class="ai-admin__periods">
-            {foreach [7,30,90] as $period}
-                <a class="{if $aromika_info_days == $period}is-active{/if}" href="{"aromika_info.dashboard?days=`$period`"|fn_url}">{$period} дней</a>
-            {/foreach}
+            <a class="{if $aromika_info_days == 7}is-active{/if}" href="{"aromika_info.`$runtime.mode`?days=7"|fn_url}">7 дней</a>
+            <a class="{if $aromika_info_days == 30}is-active{/if}" href="{"aromika_info.`$runtime.mode`?days=30"|fn_url}">30 дней</a>
+            <a class="{if $aromika_info_days == 90}is-active{/if}" href="{"aromika_info.`$runtime.mode`?days=90"|fn_url}">90 дней</a>
         </div>
         <div class="ai-admin__updated">Обновлено: {$smarty.now|date_format:"%d.%m.%Y %H:%M"}</div>
     </div>
 
     {$k=$aromika_info_dashboard.kpis}
     <section class="ai-kpis">
-        {foreach [
-            ['label'=>'Посетители','value'=>$k.visitors,'change'=>$k.visitors_change],
-            ['label'=>'Визиты','value'=>$k.sessions,'change'=>$k.sessions_change],
-            ['label'=>'Просмотры','value'=>$k.page_views,'change'=>$k.page_views_change],
-            ['label'=>'ROMI','value'=>$k.romi_opens,'change'=>$k.romi_opens_change],
-            ['label'=>'Переходы SHOP','value'=>$k.shop_clicks,'change'=>$k.shop_clicks_change]
-        ] as $item}
         <article class="ai-kpi">
-            <div class="ai-kpi__label">{$item.label}</div>
-            <strong class="ai-kpi__value">{$item.value|number_format:0:" ":" "}</strong>
-            <span class="ai-kpi__delta {if $item.change >= 0}is-up{else}is-down{/if}">
-                {if $item.change >= 0}↑{else}↓{/if} {$item.change|abs}%
-            </span>
+            <div class="ai-kpi__label">Посетители</div>
+            <strong class="ai-kpi__value">{$k.visitors}</strong>
+            <span class="ai-kpi__delta {if $k.visitors_change >= 0}is-up{else}is-down{/if}">{if $k.visitors_change >= 0}↑ {$k.visitors_change}{else}↓ {$k.visitors_change|replace:'-':''}{/if}%</span>
             <div class="ai-card__meta">к предыдущему периоду</div>
         </article>
-        {/foreach}
+        <article class="ai-kpi">
+            <div class="ai-kpi__label">Визиты</div>
+            <strong class="ai-kpi__value">{$k.sessions}</strong>
+            <span class="ai-kpi__delta {if $k.sessions_change >= 0}is-up{else}is-down{/if}">{if $k.sessions_change >= 0}↑ {$k.sessions_change}{else}↓ {$k.sessions_change|replace:'-':''}{/if}%</span>
+            <div class="ai-card__meta">к предыдущему периоду</div>
+        </article>
+        <article class="ai-kpi">
+            <div class="ai-kpi__label">Просмотры</div>
+            <strong class="ai-kpi__value">{$k.page_views}</strong>
+            <span class="ai-kpi__delta {if $k.page_views_change >= 0}is-up{else}is-down{/if}">{if $k.page_views_change >= 0}↑ {$k.page_views_change}{else}↓ {$k.page_views_change|replace:'-':''}{/if}%</span>
+            <div class="ai-card__meta">к предыдущему периоду</div>
+        </article>
+        <article class="ai-kpi">
+            <div class="ai-kpi__label">ROMI</div>
+            <strong class="ai-kpi__value">{$k.romi_opens}</strong>
+            <span class="ai-kpi__delta {if $k.romi_opens_change >= 0}is-up{else}is-down{/if}">{if $k.romi_opens_change >= 0}↑ {$k.romi_opens_change}{else}↓ {$k.romi_opens_change|replace:'-':''}{/if}%</span>
+            <div class="ai-card__meta">открытия помощника</div>
+        </article>
+        <article class="ai-kpi">
+            <div class="ai-kpi__label">Переходы SHOP</div>
+            <strong class="ai-kpi__value">{$k.shop_clicks}</strong>
+            <span class="ai-kpi__delta {if $k.shop_clicks_change >= 0}is-up{else}is-down{/if}">{if $k.shop_clicks_change >= 0}↑ {$k.shop_clicks_change}{else}↓ {$k.shop_clicks_change|replace:'-':''}{/if}%</span>
+            <div class="ai-card__meta">переходы в магазин</div>
+        </article>
     </section>
 
     <section class="ai-grid-main">
@@ -54,17 +68,12 @@
                 </div>
                 <span class="ai-badge">Live data</span>
             </div>
-            <div class="ai-chart" id="aiTrafficChart">
-                <div class="ai-chart__empty">Данные появятся после подключения трекера на aromika.info</div>
-            </div>
+            <div class="ai-chart" id="aiTrafficChart"><div class="ai-chart__empty">Данные появятся после подключения трекера на aromika.info</div></div>
         </article>
 
         <article class="ai-card ai-romi">
             <div class="ai-card__head">
-                <div>
-                    <h2 class="ai-card__title">ROMI</h2>
-                    <div class="ai-card__meta">Действия помощника за выбранный период</div>
-                </div>
+                <div><h2 class="ai-card__title">ROMI</h2><div class="ai-card__meta">Действия помощника за выбранный период</div></div>
             </div>
             <div class="ai-romi__stats">
                 <div class="ai-romi__stat"><span>Открытия</span><strong>{$aromika_info_dashboard.romi.romi_open|default:0}</strong></div>
@@ -78,48 +87,42 @@
 
     <section class="ai-grid-2">
         <article class="ai-card">
-            <div class="ai-card__head">
-                <div><h2 class="ai-card__title">Источники трафика</h2><div class="ai-card__meta">UTM имеет приоритет над referrer</div></div>
-            </div>
+            <div class="ai-card__head"><div><h2 class="ai-card__title">Источники трафика</h2><div class="ai-card__meta">UTM имеет приоритет над referrer</div></div></div>
             <ul class="ai-list">
-                {foreachelse $aromika_info_dashboard.sources as $row}
+                {foreach $aromika_info_dashboard.sources as $row}
                     <li class="ai-list__row">
-                        <div><div class="ai-list__name">{$row.source|default:"Direct"}</div><div class="ai-list__sub">{$row.visitors} посетителей</div></div>
+                        <div><div class="ai-list__name">{$row.source|default:'Direct'}</div><div class="ai-list__sub">{$row.visitors} посетителей</div></div>
                         <div class="ai-list__value">{$row.sessions} визитов</div>
                     </li>
                 {foreachelse}
                     <li class="ai-card__meta">Пока нет данных.</li>
-                {/foreachelse}
+                {/foreach}
             </ul>
         </article>
 
         <article class="ai-card">
-            <div class="ai-card__head">
-                <div><h2 class="ai-card__title">Популярные страницы</h2><div class="ai-card__meta">Что смотрят посетители aromika.info</div></div>
-            </div>
+            <div class="ai-card__head"><div><h2 class="ai-card__title">Популярные страницы</h2><div class="ai-card__meta">Что смотрят посетители aromika.info</div></div></div>
             <ul class="ai-list">
-                {foreachelse $aromika_info_dashboard.pages as $row}
+                {foreach $aromika_info_dashboard.pages as $row}
                     <li class="ai-list__row">
-                        <div><div class="ai-list__name">{$row.page_title|default:$row.page_path}</div><div class="ai-list__sub">{$row.page_path}</div></div>
+                        <div><div class="ai-list__name">{if $row.page_title}{$row.page_title}{else}{$row.page_path}{/if}</div><div class="ai-list__sub">{$row.page_path}</div></div>
                         <div class="ai-list__value">{$row.views}</div>
                     </li>
                 {foreachelse}
                     <li class="ai-card__meta">Пока нет данных.</li>
-                {/foreachelse}
+                {/foreach}
             </ul>
         </article>
     </section>
 
     <section class="ai-card">
-        <div class="ai-card__head">
-            <div><h2 class="ai-card__title">Устройства</h2><div class="ai-card__meta">Контроль доли мобильного трафика для приоритета адаптации ROMI</div></div>
-        </div>
+        <div class="ai-card__head"><div><h2 class="ai-card__title">Устройства</h2><div class="ai-card__meta">Контроль доли мобильного трафика для приоритета адаптации ROMI</div></div></div>
         <div class="ai-device-row">
-            {foreachelse $aromika_info_dashboard.devices as $row}
+            {foreach $aromika_info_dashboard.devices as $row}
                 <div class="ai-device">{$row.device}<strong>{$row.visitors}</strong></div>
             {foreachelse}
                 <span class="ai-card__meta">Пока нет данных.</span>
-            {/foreachelse}
+            {/foreach}
         </div>
     </section>
 </div>
@@ -128,16 +131,16 @@
 (function(){
     var rows = [
         {foreach $aromika_info_dashboard.chart as $row}
-        { day: '{$row.day|escape:"javascript"}', visitors: {$row.visitors|intval}, views: {$row.page_views|intval} }{if !$row@last},{/if}
+        { day: '{$row.day|escape:"javascript"}', visitors: {$row.visitors}, views: {$row.page_views} }{if !$row@last},{/if}
         {/foreach}
     ];
     var host = document.getElementById('aiTrafficChart');
     if (!host || !rows.length) return;
     var W=1000,H=280,P=24;
-    var max=Math.max.apply(null,rows.map(function(r){return Math.max(1,r.visitors)}));
+    var max=Math.max.apply(null,rows.map(function(r){return Math.max(1,Number(r.visitors)||0)}));
     var pts=rows.map(function(r,i){
         var x=P+(rows.length===1 ? (W-2*P)/2 : i*(W-2*P)/(rows.length-1));
-        var y=H-P-(r.visitors/max)*(H-2*P);
+        var y=H-P-((Number(r.visitors)||0)/max)*(H-2*P);
         return [x,y];
     });
     var line=pts.map(function(p){return p[0].toFixed(1)+','+p[1].toFixed(1)}).join(' ');
