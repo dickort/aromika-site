@@ -2,6 +2,22 @@
 
 defined('BOOTSTRAP') or die('Access denied');
 
+if (!function_exists('fn_aromika_info_admin_store_event')) {
+    $func_file = dirname(dirname(__DIR__)) . '/func.php';
+    if (is_file($func_file)) {
+        require_once $func_file;
+    }
+}
+
+if (!function_exists('fn_aromika_info_admin_store_event')) {
+    http_response_code(500);
+    header('Content-Type: application/json; charset=utf-8');
+    echo json_encode(array('ok' => false, 'error' => 'module_bootstrap_failed'));
+    exit;
+}
+
+fn_aromika_info_admin_ensure_schema();
+
 $origin = isset($_SERVER['HTTP_ORIGIN']) ? strtolower(trim($_SERVER['HTTP_ORIGIN'])) : '';
 $allowed_origins = array('https://aromika.info', 'https://www.aromika.info');
 
