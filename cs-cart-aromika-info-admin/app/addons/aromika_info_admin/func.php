@@ -3,10 +3,71 @@
 defined('BOOTSTRAP') or die('Access denied');
 
 /**
+ * Ensures the analytics tables exist.
+ * This is intentionally idempotent so a partially installed add-on can recover
+ * without taking the whole CS-Cart admin area down.
+ */
+function fn_aromika_info_admin_ensure_schema()
+{
+    static $ready = false;
+    if ($ready) {
+        return true;
+    }
+
+    db_query(
+        "CREATE TABLE IF NOT EXISTS ?:aromika_info_events ("
+        . "event_id bigint unsigned NOT NULL AUTO_INCREMENT,"
+        . "visitor_id varchar(64) NOT NULL DEFAULT '',"
+        . "session_id varchar(64) NOT NULL DEFAULT '',"
+        . "event_type varchar(64) NOT NULL DEFAULT '',"
+        . "page_url varchar(768) NOT NULL DEFAULT '',"
+        . "page_path varchar(255) NOT NULL DEFAULT '',"
+        . "page_title varchar(255) NOT NULL DEFAULT '',"
+        . "referrer varchar(768) NOT NULL DEFAULT '',"
+        . "traffic_source varchar(190) NOT NULL DEFAULT '',"
+        . "utm_source varchar(190) NOT NULL DEFAULT '',"
+        . "utm_medium varchar(190) NOT NULL DEFAULT '',"
+        . "utm_campaign varchar(190) NOT NULL DEFAULT '',"
+        . "utm_content varchar(190) NOT NULL DEFAULT '',"
+        . "utm_term varchar(190) NOT NULL DEFAULT '',"
+        . "device_type varchar(32) NOT NULL DEFAULT '',"
+        . "browser varchar(64) NOT NULL DEFAULT '',"
+        . "os varchar(64) NOT NULL DEFAULT '',"
+        . "language varchar(16) NOT NULL DEFAULT '',"
+        . "screen_width int unsigned NOT NULL DEFAULT 0,"
+        . "screen_height int unsigned NOT NULL DEFAULT 0,"
+        . "event_data text NOT NULL,"
+        . "created_at int unsigned NOT NULL DEFAULT 0,"
+        . "PRIMARY KEY (event_id),"
+        . "KEY created_at (created_at),"
+        . "KEY event_type (event_type),"
+        . "KEY visitor_id (visitor_id),"
+        . "KEY session_id (session_id),"
+        . "KEY traffic_source (traffic_source),"
+        . "KEY utm_campaign (utm_campaign)"
+        . ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4"
+    );
+
+    db_query(
+        "CREATE TABLE IF NOT EXISTS ?:aromika_info_settings ("
+        . "setting_key varchar(190) NOT NULL,"
+        . "setting_value mediumtext NOT NULL,"
+        . "updated_at int unsigned NOT NULL DEFAULT 0,"
+        . "PRIMARY KEY (setting_key)"
+        . ") ENGINE=InnoDB DEFAULT CHARSET=utf8mb4"
+    );
+
+    $ready = true;
+    return true;
+}
+
+/**
  * Returns compact dashboard analytics for aromika.info.
  */
 function fn_aromika_info_admin_get_dashboard($days = 30)
 {
+    fn_aromika_info_admin_ensure_schema();
+
     $days = max(1, min(365, (int) $days));
     $to = TIME;
     $from = strtotime('-' . ($days - 1) . ' days midnight', $to);
@@ -141,11 +202,16 @@ function fn_aromika_info_admin_clean_string($value, $max = 255)
 {
     $value = trim((string) $value);
     $value = strip_tags($value);
-    return mb_substr($value, 0, $max, 'UTF-8');
+    if (function_exists('mb_substr')) {
+        return mb_substr($value, 0, $max, 'UTF-8');
+    }
+    return substr($value, 0, $max);
 }
 
 function fn_aromika_info_admin_store_event(array $payload)
 {
+    fn_aromika_info_admin_ensure_schema();
+
     $allowed_types = array(
         'session_start', 'page_view', 'shop_click', 'phone_click', 'whatsapp_click',
         'romi_open', 'romi_close', 'romi_message', 'romi_quick_action',
