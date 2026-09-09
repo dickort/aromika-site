@@ -1,6 +1,6 @@
 {
   "schema": 3,
-  "updated_at": "2026-09-09T00:15:04.247466+00:00",
+  "updated_at": "2026-09-09T04:40:49.735648+00:00",
   "demo": false,
   "sources": {
     "aromika": {
@@ -12,7 +12,7 @@
     "kaspi": {
       "status": "empty",
       "count": 0,
-      "last_success": "2026-09-09T00:15:04.247069+00:00",
+      "last_success": "2026-09-09T04:40:49.735187+00:00",
       "message": "Live scan completed; no discounted cards detected.",
       "merchant_id": "1359004"
     }
