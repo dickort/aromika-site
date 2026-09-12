@@ -1,0 +1,55 @@
+{
+  "method": "JSDOM against 11 downloaded production HTML documents; no rendering/layout verification",
+  "results": [
+    {
+      "page": "home",
+      "status": "passed"
+    },
+    {
+      "page": "antibak",
+      "status": "passed"
+    },
+    {
+      "page": "okompanii",
+      "status": "passed"
+    },
+    {
+      "page": "careers",
+      "status": "passed"
+    },
+    {
+      "page": "brands",
+      "status": "passed"
+    },
+    {
+      "page": "perfect",
+      "status": "passed"
+    },
+    {
+      "page": "washexpert",
+      "status": "passed"
+    },
+    {
+      "page": "prachka",
+      "status": "passed"
+    },
+    {
+      "page": "maxipower",
+      "status": "passed"
+    },
+    {
+      "page": "kontakty",
+      "status": "passed"
+    },
+    {
+      "page": "akcii",
+      "status": "passed"
+    }
+  ],
+  "contrast": {
+    "button": 5.603980850126564,
+    "mutedLight": 6.1204304989893235,
+    "mutedDark": 11.17298187869916
+  },
+  "cssParse": "passed"
+}

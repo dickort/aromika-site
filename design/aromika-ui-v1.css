@@ -1,0 +1,103 @@
+/* Aromika UI v1. All rules opt in through the companion script. */
+html[data-aromika-ui="1"] {
+  --aui-ink:#202126; --aui-muted:#5e626a; --aui-accent:#c81760;
+  --aui-bg:#ffffff; --aui-soft:#faf8f7; --aui-surface:#ffffff;
+  --aui-line:#dedee3; --aui-font:-apple-system,BlinkMacSystemFont,"Segoe UI",Arial,sans-serif;
+  --aui-shadow:0 12px 36px rgba(35,27,40,.07);
+}
+html[data-aromika-ui="1"][data-aromika-theme="dark"] {
+  --aui-ink:#f5f5f7; --aui-muted:#c5c7cf; --aui-accent:#ff8fba;
+  --aui-bg:#101116; --aui-soft:#15171e; --aui-surface:#1b1e26; --aui-line:#393d49;
+  --aui-shadow:0 12px 36px rgba(0,0,0,.16);
+}
+html[data-aromika-ui="1"] body { background:var(--aui-bg); }
+html[data-aromika-ui="1"] :is(#aromika-hero,#aromika-footer,.arp-section,.arb-section,.arc-section,.arg-section,.arpt-section,.arwb-section,#company-coop-page,#careers-page,#contacts-page) {
+  font-family:var(--aui-font);
+}
+html[data-aromika-ui="1"] :is(#aromika-hero,#aromika-footer,#company-coop-page,#careers-page,#contacts-page,#brands-page-v16,#perfect-page,#washexpert-page,#maxipower-page,#prachka-page,#antibak-page,#aromika-promos-page,.arp-section,.arb-section,.arc-section,.arg-section,.arpt-section,.arwb-section) :is(a,button,input,select,textarea):focus-visible {
+  outline:3px solid var(--aui-accent)!important; outline-offset:4px; box-shadow:none;
+}
+html[data-aromika-ui="1"] #aromika-hero .ar-header { height:88px; background:var(--aui-bg)!important; border-color:var(--aui-line)!important; }
+html[data-aromika-ui="1"] #aromika-hero .ar-header * { font-family:var(--aui-font); }
+html[data-aromika-ui="1"] #aromika-hero .ar-header-row { gap:14px; }
+html[data-aromika-ui="1"] #aromika-hero .ar-logo { flex-shrink:0; }
+html[data-aromika-ui="1"] #aromika-hero .ar-logo img { width:144px; }
+html[data-aromika-ui="1"] #aromika-hero .ar-nav { margin-left:auto; gap:2px; }
+html[data-aromika-ui="1"] #aromika-hero .ar-nav a { min-height:44px; display:inline-flex; align-items:center; padding:0 12px; font-size:14px; line-height:1.35; font-weight:600; color:var(--aui-ink); border-radius:10px; transition:background-color .18s,color .18s; }
+html[data-aromika-ui="1"] #aromika-hero .ar-nav a:hover { background:var(--aui-soft); color:var(--aui-accent)!important; transform:none; box-shadow:none; }
+html[data-aromika-ui="1"] #aromika-hero .ar-nav a[aria-current] { color:var(--aui-accent); text-decoration:underline; text-underline-offset:7px; text-decoration-thickness:2px; }
+html[data-aromika-ui="1"] #aromika-hero .ar-lang { display:flex; margin-left:0; gap:0; }
+html[data-aromika-ui="1"] #aromika-hero .ar-lang span { display:none; }
+html[data-aromika-ui="1"] :is(#aromika-hero .ar-lang,#aromika-hero .ar-menu-lang,#aromika-footer .arf-lang) button { min-width:44px; min-height:44px; padding:8px; font-size:13px; line-height:1.2; opacity:1!important; color:var(--aui-muted)!important; border-radius:9px; cursor:pointer; }
+html[data-aromika-ui="1"] :is(#aromika-hero .ar-lang,#aromika-hero .ar-menu-lang,#aromika-footer .arf-lang) button[aria-pressed="true"] { color:var(--aui-accent)!important; background:var(--aui-soft); text-decoration:underline; text-underline-offset:5px; }
+html[data-aromika-ui="1"] #aromika-hero .ar-theme-toggle { margin-left:0; width:44px; height:44px; flex:0 0 44px; background:var(--aui-surface)!important; color:var(--aui-ink)!important; border-color:var(--aui-line)!important; }
+html[data-aromika-ui="1"] #aromika-hero .ar-shop { margin-left:0; flex-shrink:0; padding:14px 20px; font-size:13px; min-height:46px; background:var(--aui-ink)!important; color:var(--aui-bg)!important; }
+html[data-aromika-ui="1"] #aromika-hero .ar-menu { visibility:hidden; overflow-y:auto; overscroll-behavior:contain; background:var(--aui-bg)!important; padding:90px 24px max(24px,env(safe-area-inset-bottom)); }
+html[data-aromika-ui="1"] #aromika-hero .ar-menu.open { visibility:visible; }
+html[data-aromika-ui="1"] #aromika-hero .ar-menu nav a { color:var(--aui-ink); font-size:22px; line-height:1.3; min-height:52px; padding:12px 8px; overflow-wrap:anywhere; }
+html[data-aromika-ui="1"] #aromika-hero .ar-ui-close { position:absolute; top:20px; right:22px; width:48px; height:48px; border:1px solid var(--aui-line); border-radius:50%; background:var(--aui-surface); color:var(--aui-ink); font-size:30px; cursor:pointer; }
+html[data-aromika-ui="1"] #aromika-hero .ar-menu-shop { background:#c81760!important; color:#fff!important; }
+html[data-aromika-ui="1"] #aromika-hero .ar-copy>p { font-size:18px; line-height:1.65; max-width:570px; color:var(--aui-muted)!important; }
+html[data-aromika-ui="1"] #aromika-hero h1 { letter-spacing:-.055em; }
+html[data-aromika-ui="1"] #aromika-hero h1 em { color:var(--aui-accent); }
+html[data-aromika-ui="1"] #aromika-hero .ar-eyebrow { color:var(--aui-accent); font-size:12px; }
+html[data-aromika-ui="1"] #aromika-hero .ar-btn { min-height:52px; font-size:15px; padding:16px 24px; border-radius:14px; }
+html[data-aromika-ui="1"] #aromika-hero .ar-btn-pink { background:#c81760!important; color:#fff!important; }
+html[data-aromika-ui="1"] #aromika-hero .ar-btn-light { border-color:var(--aui-line)!important; color:var(--aui-ink)!important; background:var(--aui-surface)!important; }
+html[data-aromika-ui="1"] #aromika-hero .ar-facts small { font-size:12px; line-height:1.5; color:var(--aui-muted)!important; }
+html[data-aromika-ui="1"] :is(.arp-section,.arb-section,.arc-section,.arg-section,.arpt-section,.arwb-section) h2 { font-size:clamp(32px,3.6vw,52px); line-height:1.12; letter-spacing:-.045em; text-wrap:balance; }
+html[data-aromika-ui="1"] :is(.arp-section,.arb-section,.arc-section,.arg-section,.arpt-section,.arwb-section) :is(.arp-head,.arb-head,.arc-head,.arg-head,.arpt-head,.arwb-head)>p { font-size:16px; line-height:1.65; color:var(--aui-muted); }
+html[data-aromika-ui="1"] :is(.arp-card,.arpt-card,.arc-stats article,.arwb-card) { border-radius:20px; border-color:var(--aui-line); }
+html[data-aromika-ui="1"] .arp-card { min-height:250px; padding:28px; }
+html[data-aromika-ui="1"] .arp-card .arp-copy h3 { font-size:23px; line-height:1.2; }
+html[data-aromika-ui="1"] .arp-card .arp-copy p { font-size:15px; line-height:1.6; color:var(--aui-muted); }
+html[data-aromika-ui="1"] .arp-card:hover { box-shadow:var(--aui-shadow); transform:translateY(-3px); }
+html[data-aromika-ui="1"] #geography .arg-city-btn { min-height:44px; padding:10px 16px; font-size:14px; }
+html[data-aromika-ui="1"] #aromika-footer .arf-col a { min-height:38px; font-size:14px; line-height:1.5; padding-block:8px; }
+html[data-aromika-ui="1"] #aromika-footer .arf-logo { width:144px; height:auto!important; object-fit:contain; }
+html[data-aromika-ui="1"] :is(#perfect-page,#washexpert-page,#maxipower-page,#prachka-page,#antibak-page) :is(button,.ab-volume-switch button) { min-height:44px; cursor:pointer; }
+html[data-aromika-ui="1"] .ar-ui-contact { margin:28px auto 0; padding:24px; max-width:1240px; border:1px solid var(--aui-line); border-radius:18px; background:var(--aui-surface); display:flex; gap:20px; align-items:center; justify-content:space-between; }
+html[data-aromika-ui="1"] .ar-ui-contact p { margin:0; font-size:15px; line-height:1.6; color:var(--aui-muted); }
+html[data-aromika-ui="1"] .ar-ui-contact a { min-height:48px; padding:13px 18px; border-radius:12px; background:#c81760; color:#fff!important; font-size:15px; line-height:1.5; font-weight:600; text-decoration:none; flex-shrink:0; }
+html[data-aromika-ui="1"] .ar-ui-skip { position:fixed; top:12px; left:12px; z-index:200000; padding:14px 22px; border-radius:12px; background:var(--aui-ink); color:var(--aui-bg); transform:translateY(-180%); }
+html[data-aromika-ui="1"] .ar-ui-skip:focus { transform:none; }
+html[data-aromika-ui="1"][data-aromika-theme="dark"] :is(#products,#about-company,#geography,#partners-home,#where-buy-home,#aromika-footer) { background:var(--aui-bg)!important; }
+html[data-aromika-ui="1"][data-aromika-theme="dark"] :is(.arp-card,.arpt-card,.arc-stats article,.arc-process article) { background:var(--aui-surface)!important; color:var(--aui-ink)!important; border-color:var(--aui-line)!important; }
+html[data-aromika-ui="1"][data-aromika-theme="dark"] #antibak-page { --ab-blue:#80b7ff; --ab-navy:#b7d5ff; --ab-red:#ff8796; }
+@media(max-width:1199px) {
+  html[data-aromika-ui="1"] #aromika-hero .ar-nav { display:none!important; }
+  html[data-aromika-ui="1"] #aromika-hero .ar-burger { display:block; margin-left:0; flex:0 0 44px; }
+  html[data-aromika-ui="1"] #aromika-hero .ar-lang { margin-left:auto; }
+}
+@media(max-width:1380px) {
+  html[data-aromika-ui="1"][lang="kk"] #aromika-hero .ar-nav { display:none!important; }
+  html[data-aromika-ui="1"][lang="kk"] #aromika-hero .ar-burger { display:block; margin-left:0; flex:0 0 44px; }
+  html[data-aromika-ui="1"][lang="kk"] #aromika-hero .ar-lang { margin-left:auto; }
+}
+@media(max-width:767px) {
+  html[data-aromika-ui="1"] #aromika-hero .ar-wrap { width:calc(100% - 32px); }
+  html[data-aromika-ui="1"] #aromika-hero .ar-header { height:76px; }
+  html[data-aromika-ui="1"] #aromika-hero .ar-header-row { gap:8px; }
+  html[data-aromika-ui="1"] #aromika-hero .ar-logo img { width:122px; }
+  html[data-aromika-ui="1"] #aromika-hero .ar-header-row>.ar-shop { display:none; }
+  html[data-aromika-ui="1"] #aromika-hero .ar-copy>p { font-size:16px; line-height:1.6; }
+  html[data-aromika-ui="1"] #aromika-hero .ar-actions { gap:10px; }
+  html[data-aromika-ui="1"] #aromika-hero .ar-actions .ar-btn { flex:1 1 190px; justify-content:center; }
+  html[data-aromika-ui="1"] :is(.arp-card,.arpt-card) { padding:24px; }
+  html[data-aromika-ui="1"] .ar-ui-contact { margin-inline:16px; flex-direction:column; align-items:stretch; }
+  html[data-aromika-ui="1"] .ar-ui-contact a { flex-shrink:1; text-align:center; }
+  html[data-aromika-ui="1"] #aromika-footer .arf-col a { min-height:44px; }
+}
+@media(max-width:359px) {
+  html[data-aromika-ui="1"] #aromika-hero .ar-logo img { width:96px; }
+  html[data-aromika-ui="1"] #aromika-hero .ar-header-row { gap:4px; }
+}
+@media(prefers-reduced-motion:reduce) {
+  html[data-aromika-ui="1"] { scroll-behavior:auto!important; }
+  html[data-aromika-ui="1"] :is(#aromika-hero,#aromika-footer,#products,#brands,#about-company,#geography,#partners-home,#where-buy-home,#company-coop-page,#careers-page,#contacts-page,#perfect-page,#washexpert-page,#maxipower-page,#prachka-page,#antibak-page) *,
+  html[data-aromika-ui="1"] :is(#aromika-hero,#aromika-footer,#products,#brands) *::before,
+  html[data-aromika-ui="1"] :is(#aromika-hero,#aromika-footer,#products,#brands) *::after { animation:none!important; transition:none!important; scroll-behavior:auto!important; }
+  html[data-aromika-ui="1"] #aromika-hero .ar-stage { display:flex; align-items:center; justify-content:center; gap:10px; }
+  html[data-aromika-ui="1"] #aromika-hero .ar-product { position:relative; inset:auto; width:22%; height:75%; margin:0; transform:none!important; filter:none!important; opacity:1!important; }
+  html[data-aromika-ui="1"] #aromika-hero .ar-product img { width:100%; height:100%; object-fit:contain; }
+}
