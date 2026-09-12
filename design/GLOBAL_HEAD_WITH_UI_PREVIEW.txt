@@ -1,0 +1,124 @@
+<!-- AROMIKA.INFO · GLOBAL HEAD · ROMI 1.0.50.38 + UI PREVIEW -->
+
+<!-- ROMI: единый загрузчик -->
+<script src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/romi/romi-info-live-v2.js?v=1.0.50.38" defer></script>
+
+<!-- Общая навигация -->
+<script src="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/aromika-common-nav-final-v2.js?v=2.0.0" defer></script>
+
+<!-- Тёмная тема -->
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/aromika-dark-contrast-v4.css?v=4.0.0">
+
+<!-- SEO: существующая конфигурация -->
+<script>
+window.AROMIKA_SEO_CONFIG = {
+  enableH1: false,
+  enableKz: false
+};
+</script>
+
+<!-- Google Analytics -->
+<script async src="https://www.googletagmanager.com/gtag/js?id=G-E95C867LJM"></script>
+<script>
+window.dataLayer = window.dataLayer || [];
+function gtag() {
+  dataLayer.push(arguments);
+}
+gtag('js', new Date());
+gtag('config', 'G-E95C867LJM');
+</script>
+
+<!-- Яндекс.Метрика -->
+<script>
+(function(m, e, t, r, i, k, a) {
+  m[i] = m[i] || function() {
+    (m[i].a = m[i].a || []).push(arguments);
+  };
+  m[i].l = 1 * new Date();
+  for (var j = 0; j < document.scripts.length; j++) {
+    if (document.scripts[j].src === r) return;
+  }
+  k = e.createElement(t);
+  a = e.getElementsByTagName(t)[0];
+  k.async = 1;
+  k.src = r;
+  a.parentNode.insertBefore(k, a);
+})(window, document, "script", "https://mc.yandex.ru/metrika/tag.js", "ym");
+
+ym(96747177, "init", {
+  clickmap: true,
+  trackLinks: true,
+  accurateTrackBounce: true,
+  webvisor: true
+});
+</script>
+<noscript>
+  <div>
+    <img src="https://mc.yandex.ru/watch/96747177" style="position:absolute; left:-9999px;" alt="">
+  </div>
+</noscript>
+
+<!-- Meta Pixel -->
+<script>
+!function(f, b, e, v, n, t, s) {
+  if (f.fbq) return;
+  n = f.fbq = function() {
+    n.callMethod
+      ? n.callMethod.apply(n, arguments)
+      : n.queue.push(arguments);
+  };
+  if (!f._fbq) f._fbq = n;
+  n.push = n;
+  n.loaded = true;
+  n.version = '2.0';
+  n.queue = [];
+  t = b.createElement(e);
+  t.async = true;
+  t.src = v;
+  s = b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t, s);
+}(window, document, 'script', 'https://connect.facebook.net/en_US/fbevents.js');
+
+fbq('init', '1053234175441040');
+fbq('track', 'PageView');
+</script>
+<noscript>
+  <img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1053234175441040&ev=PageView&noscript=1" alt="">
+</noscript>
+
+<!-- Antibak: цена в тёмной теме -->
+<style>
+html[data-aromika-theme="dark"] #antibak-page .ab-product-price-row {
+  background: #1d2228 !important;
+  background-image: none !important;
+  border-color: rgba(255,255,255,.14) !important;
+  box-shadow: none !important;
+}
+html[data-aromika-theme="dark"] #antibak-page .ab-product-price-box {
+  background: transparent !important;
+  border: 0 !important;
+  box-shadow: none !important;
+}
+html[data-aromika-theme="dark"] #antibak-page .ab-product-price-label,
+html[data-aromika-theme="dark"] #antibak-page .ab-product-price-value,
+html[data-aromika-theme="dark"] #antibak-page .ab-product-price-note {
+  color: #ffffff !important;
+  -webkit-text-fill-color: #ffffff !important;
+}
+</style>
+
+<!-- Аналитика Aromika Info -->
+<script src="https://aromika.shop/js/addons/aromika_info_center/aromika-info-tracker-v1.js?v=2.0.0" defer></script>
+
+<!-- Новый дизайн: включается только с ?aromika_ui=preview -->
+<script>
+(function () {
+  if (new URLSearchParams(location.search).get('aromika_ui') !== 'preview') return;
+  if (document.getElementById('aromika-ui-preview-script')) return;
+  var s = document.createElement('script');
+  s.id = 'aromika-ui-preview-script';
+  s.src = 'https://cdn.jsdelivr.net/gh/dickort/aromika-site@5c17fe3d8d342c90ef7e8fd1ae8f9b0736dfaecb/design/aromika-ui-v1.js';
+  s.async = false;
+  document.head.appendChild(s);
+})();
+</script>
