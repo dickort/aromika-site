@@ -1,0 +1,12 @@
+<!-- AROMIKA: дизайн включается только с ?aromika_ui=preview -->
+<script>
+(function () {
+  if (new URLSearchParams(location.search).get('aromika_ui') !== 'preview') return;
+  if (document.getElementById('aromika-ui-preview-script')) return;
+  var s = document.createElement('script');
+  s.id = 'aromika-ui-preview-script';
+  s.src = 'https://cdn.jsdelivr.net/gh/dickort/aromika-site@5c17fe3d8d342c90ef7e8fd1ae8f9b0736dfaecb/design/aromika-ui-v1.js';
+  s.async = false;
+  document.head.appendChild(s);
+})();
+</script>
