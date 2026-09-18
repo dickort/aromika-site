@@ -1,4 +1,4 @@
-/* AROMIKA.INFO · ROMI LIVE LOADER V2 · 1.0.50.38
+/* AROMIKA.INFO · ROMI LIVE LOADER V2 · 1.0.50.39
  * Clean INFO bootstrap for the full backup-restore build.
  * Loads the same shell/functionality from aromika.shop and the common stable-window CSS.
  */
@@ -13,7 +13,7 @@ window.__AROMIKA_ROMI_INFO_LIVE_V2__=true;
 var SHOP='https://aromika.shop';
 var BASE=SHOP+'/js/addons/romi_connector/';
 var STATIC='https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/romi/';
-var BUILD='1.0.50.38';
+var BUILD='1.0.50.39';
 
 window.AROMIKA_ASSISTANT_ASSET_BASE=STATIC;
 window.ROMI_V8_CONFIG=Object.assign({},window.ROMI_V8_CONFIG||{}, {
@@ -86,6 +86,14 @@ async function boot(){
   await js('romi-full-function-10502.js');
   await js('romi-info-cooperation-v2.js');
   await js('romi-ui-stable-patch-v1.js');
+  // CRM requests: form handles acknowledgement and retry; no client credentials.
+  await new Promise(function(resolve){
+    var s=document.createElement('script');
+    s.src='https://crm.aromika.info/romi39-bridge.js?v=39';
+    s.onload=resolve;
+    s.onerror=function(){console.error('[ROMI] CRM request form unavailable');resolve();};
+    (document.head||document.documentElement).appendChild(s);
+  });
 
   window.__ROMI_INFO_FRONTEND_SOURCE__='shop-module-v2';
   window.__ROMI_INFO_FRONTEND_BUILD__=BUILD;
