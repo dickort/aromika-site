@@ -1,0 +1,14 @@
+msgid ""
+msgstr ""
+"Project-Id-Version: tygh\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Language-Team: Russian\n"
+"Language: ru_RU\n"
+
+msgctxt "Addons::name::aromika_info_admin"
+msgid "AROMIKA.INFO Admin"
+msgstr "AROMIKA.INFO Admin"
+
+msgctxt "Addons::description::aromika_info_admin"
+msgid "Administrative panel, analytics and settings for aromika.info."
+msgstr "Административная панель, аналитика и настройки aromika.info."
