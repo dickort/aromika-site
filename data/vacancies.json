@@ -2,8 +2,8 @@
   "schema": 1,
   "source": "hh.kz/rss",
   "employer_id": "1009681",
-  "updated_at": "2026-09-20T05:16:57.928210+00:00",
-  "found": 4,
+  "updated_at": "2026-09-20T11:44:28.192902+00:00",
+  "found": 3,
   "items": [
     {
       "id": "137287190",
@@ -74,27 +74,6 @@
       },
       "alternate_url": "https://hh.kz/vacancy/134554652",
       "published_at": "2026-08-24T08:23:50.437+03:00",
-      "archived": false
-    },
-    {
-      "id": "135454098",
-      "name": "Водитель-экспедитор",
-      "area": {
-        "name": "Петропавловск"
-      },
-      "salary": null,
-      "experience": null,
-      "schedule": null,
-      "employment": null,
-      "employer": {
-        "id": "1009681",
-        "name": "ТК АРОМИКА"
-      },
-      "snippet": {
-        "responsibility": "Открытая вакансия компании ТК АРОМИКА в городе Петропавловск. Подробные обязанности и условия доступны на hh.kz."
-      },
-      "alternate_url": "https://hh.kz/vacancy/135454098",
-      "published_at": "2026-08-21T08:55:33.730+03:00",
       "archived": false
     }
   ]
