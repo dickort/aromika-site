@@ -2,8 +2,8 @@
   "schema": 1,
   "source": "hh.kz/rss",
   "employer_id": "1009681",
-  "updated_at": "2026-09-23T00:52:15.684921+00:00",
-  "found": 3,
+  "updated_at": "2026-09-23T13:48:25.074909+00:00",
+  "found": 2,
   "items": [
     {
       "id": "137287190",
@@ -53,27 +53,6 @@
       },
       "alternate_url": "https://hh.kz/vacancy/136058198",
       "published_at": "2026-09-09T07:33:37.066+03:00",
-      "archived": false
-    },
-    {
-      "id": "134554652",
-      "name": "Водитель-экспедитор",
-      "area": {
-        "name": "Павлодар"
-      },
-      "salary": null,
-      "experience": null,
-      "schedule": null,
-      "employment": null,
-      "employer": {
-        "id": "1009681",
-        "name": "ТК АРОМИКА"
-      },
-      "snippet": {
-        "responsibility": "Открытая вакансия компании ТК АРОМИКА в городе Павлодар. Подробные обязанности и условия доступны на hh.kz."
-      },
-      "alternate_url": "https://hh.kz/vacancy/134554652",
-      "published_at": "2026-08-24T08:23:50.437+03:00",
       "archived": false
     }
   ]
