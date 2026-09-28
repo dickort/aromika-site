@@ -2,9 +2,87 @@
   "schema": 1,
   "source": "hh.kz/rss",
   "employer_id": "1009681",
-  "updated_at": "2026-09-28T01:05:02.692966+00:00",
-  "found": 3,
+  "updated_at": "2026-09-28T08:54:44.371987+00:00",
+  "found": 6,
   "items": [
+    {
+      "id": "137842004",
+      "name": "Контент-менеджер",
+      "area": {
+        "name": "Шымкент"
+      },
+      "salary": {
+        "currency": "KZT",
+        "gross": null,
+        "from": 300000,
+        "to": 350000
+      },
+      "experience": null,
+      "schedule": null,
+      "employment": null,
+      "employer": {
+        "id": "1009681",
+        "name": "ТК АРОМИКА"
+      },
+      "snippet": {
+        "responsibility": "Открытая вакансия компании ТК АРОМИКА в городе Шымкент. Подробные обязанности и условия доступны на hh.kz."
+      },
+      "alternate_url": "https://hh.kz/vacancy/137842004",
+      "published_at": "2026-09-28T09:32:00.436+03:00",
+      "archived": false
+    },
+    {
+      "id": "137841950",
+      "name": "Контент-менеджер",
+      "area": {
+        "name": "Астана"
+      },
+      "salary": {
+        "currency": "KZT",
+        "gross": null,
+        "from": 300000,
+        "to": 350000
+      },
+      "experience": null,
+      "schedule": null,
+      "employment": null,
+      "employer": {
+        "id": "1009681",
+        "name": "ТК АРОМИКА"
+      },
+      "snippet": {
+        "responsibility": "Открытая вакансия компании ТК АРОМИКА в городе Астана. Подробные обязанности и условия доступны на hh.kz."
+      },
+      "alternate_url": "https://hh.kz/vacancy/137841950",
+      "published_at": "2026-09-28T09:30:50.868+03:00",
+      "archived": false
+    },
+    {
+      "id": "137841794",
+      "name": "Контент-менеджер",
+      "area": {
+        "name": "Алматы"
+      },
+      "salary": {
+        "currency": "KZT",
+        "gross": null,
+        "from": 300000,
+        "to": 350000
+      },
+      "experience": null,
+      "schedule": null,
+      "employment": null,
+      "employer": {
+        "id": "1009681",
+        "name": "ТК АРОМИКА"
+      },
+      "snippet": {
+        "responsibility": "Открытая вакансия компании ТК АРОМИКА в городе Алматы. Подробные обязанности и условия доступны на hh.kz."
+      },
+      "alternate_url": "https://hh.kz/vacancy/137841794",
+      "published_at": "2026-09-28T09:28:21.778+03:00",
+      "archived": false
+    },
     {
       "id": "137789612",
       "name": "Водитель-дальнобойщик",
