@@ -2,9 +2,35 @@
   "schema": 1,
   "source": "hh.kz/rss",
   "employer_id": "1009681",
-  "updated_at": "2026-10-06T09:18:39.382486+00:00",
-  "found": 6,
+  "updated_at": "2026-10-06T16:53:56.408111+00:00",
+  "found": 7,
   "items": [
+    {
+      "id": "138176766",
+      "name": "Менеджер по закупу и таможенному оформлению",
+      "area": {
+        "name": "Костанай"
+      },
+      "salary": {
+        "currency": "KZT",
+        "gross": null,
+        "from": 350000,
+        "to": 400000
+      },
+      "experience": null,
+      "schedule": null,
+      "employment": null,
+      "employer": {
+        "id": "1009681",
+        "name": "ТК АРОМИКА"
+      },
+      "snippet": {
+        "responsibility": "Открытая вакансия компании ТК АРОМИКА в городе Костанай. Подробные обязанности и условия доступны на hh.kz."
+      },
+      "alternate_url": "https://hh.kz/vacancy/138176766",
+      "published_at": "2026-10-06T14:35:28.232+03:00",
+      "archived": false
+    },
     {
       "id": "137842004",
       "name": "UGC креатор",
