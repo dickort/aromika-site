@@ -2,8 +2,8 @@
   "schema": 1,
   "source": "hh.kz/rss",
   "employer_id": "1009681",
-  "updated_at": "2026-10-09T00:35:08.758378+00:00",
-  "found": 7,
+  "updated_at": "2026-10-09T06:36:50.806228+00:00",
+  "found": 6,
   "items": [
     {
       "id": "138176766",
@@ -158,31 +158,6 @@
       },
       "alternate_url": "https://hh.kz/vacancy/137287190",
       "published_at": "2026-09-14T08:33:01.401+03:00",
-      "archived": false
-    },
-    {
-      "id": "136058198",
-      "name": "Карщик (водитель автопогрузчика)",
-      "area": {
-        "name": "Костанай"
-      },
-      "salary": {
-        "currency": "KZT",
-        "gross": null,
-        "from": 350000
-      },
-      "experience": null,
-      "schedule": null,
-      "employment": null,
-      "employer": {
-        "id": "1009681",
-        "name": "ТК АРОМИКА"
-      },
-      "snippet": {
-        "responsibility": "Открытая вакансия компании ТК АРОМИКА в городе Костанай. Подробные обязанности и условия доступны на hh.kz."
-      },
-      "alternate_url": "https://hh.kz/vacancy/136058198",
-      "published_at": "2026-09-09T07:33:37.066+03:00",
       "archived": false
     }
   ]
