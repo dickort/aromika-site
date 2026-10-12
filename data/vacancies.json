@@ -2,7 +2,7 @@
   "schema": 1,
   "source": "hh.kz/rss",
   "employer_id": "1009681",
-  "updated_at": "2026-10-12T06:23:32.451004+00:00",
+  "updated_at": "2026-10-12T15:57:39.125132+00:00",
   "found": 7,
   "items": [
     {
@@ -59,15 +59,15 @@
     },
     {
       "id": "137842004",
-      "name": "UGC креатор",
+      "name": "UGC креатор/Лицо бренда - казахоязычный контент",
       "area": {
         "name": "Шымкент"
       },
       "salary": {
         "currency": "KZT",
         "gross": null,
-        "from": 300000,
-        "to": 350000
+        "from": 250000,
+        "to": 300000
       },
       "experience": null,
       "schedule": null,
@@ -85,14 +85,14 @@
     },
     {
       "id": "137841950",
-      "name": "UGC креатор",
+      "name": "UGC креатор/Лицо бренда (бытовая химия)",
       "area": {
         "name": "Астана"
       },
       "salary": {
         "currency": "KZT",
         "gross": null,
-        "from": 300000,
+        "from": 250000,
         "to": 350000
       },
       "experience": null,
