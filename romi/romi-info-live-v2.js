@@ -1,4 +1,4 @@
-/* AROMIKA.INFO · ROMI LIVE LOADER V2 · 1.0.50.39
+/* AROMIKA.INFO · ROMI LIVE LOADER V2 · 1.0.50.40
  * Clean INFO bootstrap for the full backup-restore build.
  * Loads the same shell/functionality from aromika.shop and the common stable-window CSS.
  */
@@ -13,7 +13,7 @@ window.__AROMIKA_ROMI_INFO_LIVE_V2__=true;
 var SHOP='https://aromika.shop';
 var BASE=SHOP+'/js/addons/romi_connector/';
 var STATIC='https://cdn.jsdelivr.net/gh/dickort/aromika-site@main/romi/';
-var BUILD='1.0.50.39';
+var BUILD='1.0.50.40';
 
 window.AROMIKA_ASSISTANT_ASSET_BASE=STATIC;
 window.ROMI_V8_CONFIG=Object.assign({},window.ROMI_V8_CONFIG||{}, {
@@ -78,8 +78,10 @@ async function boot(){
   purgeLegacy();
   css('romi-v9-3-ui.css');
   css('romi-window-stable-105033.css');
+  css('romi-drag-noauto-105039.css');
 
   await js('romi-crosssite-v1.js');
+  await js('romi-drag-noauto-105039.js');
   await js('assistant-v9-3.js');
   await js('romi-chat-v10-core.js');
   await js('romi-living-v2.js');
