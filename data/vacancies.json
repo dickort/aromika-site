@@ -2,8 +2,8 @@
   "schema": 1,
   "source": "hh.kz/rss",
   "employer_id": "1009681",
-  "updated_at": "2026-10-14T01:20:42.537233+00:00",
-  "found": 7,
+  "updated_at": "2026-10-14T07:57:02.211083+00:00",
+  "found": 6,
   "items": [
     {
       "id": "138296581",
@@ -159,31 +159,6 @@
       },
       "alternate_url": "https://hh.kz/vacancy/137789612",
       "published_at": "2026-09-25T12:06:45.565+03:00",
-      "archived": false
-    },
-    {
-      "id": "137287190",
-      "name": "Грузчик",
-      "area": {
-        "name": "Костанай"
-      },
-      "salary": {
-        "currency": "KZT",
-        "gross": null,
-        "from": 400000
-      },
-      "experience": null,
-      "schedule": null,
-      "employment": null,
-      "employer": {
-        "id": "1009681",
-        "name": "ТК АРОМИКА"
-      },
-      "snippet": {
-        "responsibility": "Открытая вакансия компании ТК АРОМИКА в городе Костанай. Подробные обязанности и условия доступны на hh.kz."
-      },
-      "alternate_url": "https://hh.kz/vacancy/137287190",
-      "published_at": "2026-09-14T08:33:01.401+03:00",
       "archived": false
     }
   ]
