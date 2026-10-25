@@ -1,0 +1,32 @@
+name: Build AROMIKA.INFO Admin V1
+
+on:
+  push:
+    branches:
+      - feature/aromika-info-admin-v1
+    paths:
+      - 'cs-cart-aromika-info-admin/**'
+      - '.github/workflows/build-aromika-info-admin-v1.yml'
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Build CS-Cart add-on ZIP
+        run: |
+          set -e
+          cd cs-cart-aromika-info-admin
+          zip -r ../AROMIKA_INFO_ADMIN_V1.zip app design js var README.md
+          cd ..
+          unzip -l AROMIKA_INFO_ADMIN_V1.zip
+
+      - name: Upload artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: AROMIKA_INFO_ADMIN_V1
+          path: AROMIKA_INFO_ADMIN_V1.zip
+          if-no-files-found: error
