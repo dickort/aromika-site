@@ -1,18 +1,18 @@
 {
   "schema": 3,
-  "updated_at": "2026-11-08T16:43:56.859687+00:00",
+  "updated_at": "2026-11-08T22:05:17.894009+00:00",
   "demo": false,
   "sources": {
     "aromika": {
       "status": "ok",
-      "count": 45,
-      "last_success": "2026-11-08T16:43:42.539357+00:00",
+      "count": 46,
+      "last_success": "2026-11-08T22:05:03.223418+00:00",
       "message": "Live discounted products detected."
     },
     "kaspi": {
       "status": "empty",
       "count": 0,
-      "last_success": "2026-11-08T16:43:56.859255+00:00",
+      "last_success": "2026-11-08T22:05:17.893404+00:00",
       "message": "Live scan completed; no discounted cards detected.",
       "merchant_id": "1359004"
     }
@@ -20,43 +20,53 @@
   "products": [
     {
       "source": "aromika",
-      "name": "Гель-белизна «Aromika» 750 мл",
+      "name": "Гель для чистки унитазов \"Aromika\" Кислотный 750 мл",
       "brand": "",
       "old_price": 851,
       "price": 681,
       "discount": 20,
-      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/CG_Belizna_500_750_4870205229485_4870205229140_f60v-ua.png.webp",
-      "url": "https://aromika.shop/vse-tovary/gel-belizna-aromika-750-ml/"
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/CG_Kislotnyy_500_750_4870205229621_4870205229614_w07q-fy.png.webp",
+      "url": "https://aromika.shop/vse-tovary/gel-dlya-chistki-unitazov-aromika-kislotnyy-750-ml/"
     },
     {
       "source": "aromika",
-      "name": "Гель для душа «Aromika» Индийский хлопок 800 мл",
+      "name": "Крем-мыло для душа «Aromika» Гранат 800 мл",
       "brand": "",
-      "old_price": 1508,
-      "price": 1206,
+      "old_price": 1510,
+      "price": 1208,
       "discount": 20,
-      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/Aromika_SG_IndianCotton_800_2.webp.webp",
-      "url": "https://aromika.shop/vse-tovary/gel-dlya-dusha-aromika-indiyskiy-hlopok-800-ml/"
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/Aromika_CSSG_Pomegranate_800_2.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/gel-dlya-dusha-krem-mylo-2v1-aromika-granatovyy-grenadin-800-ml/"
     },
     {
       "source": "aromika",
-      "name": "Кондиционеры Perefct в гранулах Озон",
+      "name": "Крем-мыло для душа «Aromika» Виноград 800 мл",
+      "brand": "",
+      "old_price": 1510,
+      "price": 1208,
+      "discount": 20,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/Aromika_CSSG_Grapes_800_2.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/gel-dlya-dusha-krem-mylo-2v1-aromika-vinogradnyy-muss-800-ml/"
+    },
+    {
+      "source": "aromika",
+      "name": "Кондиционеры Perefct в гранулах Релакс",
       "brand": "",
       "old_price": 2550,
       "price": 2040,
       "discount": 20,
-      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/GCND_Perfect_Oz.webp.webp",
-      "url": "https://aromika.shop/vse-tovary/kondicionery-perefct-v-granulah-ozon/"
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/GCND_Perfect_Rlx.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/kondicionery-perefct-v-granulah-relaks/"
     },
     {
       "source": "aromika",
-      "name": "Капсулы для стирки Prachka  Universal 45 шт",
+      "name": "Капсулы для стирки Prachka Black 45 шт",
       "brand": "",
       "old_price": 2601,
       "price": 2081,
       "discount": 20,
-      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/Capsules_Prachka_Uni_Front.webp.webp",
-      "url": "https://aromika.shop/vse-tovary/kapsuly-dlya-stirki-prachka-45-sht/"
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/Capsules_Prachka_Blak_Front.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/kapsuly-dlya-stirki-prachka-black-45-sht/"
     },
     {
       "source": "aromika",
