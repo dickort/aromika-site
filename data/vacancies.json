@@ -2,8 +2,8 @@
   "schema": 1,
   "source": "hh.kz/rss",
   "employer_id": "1009681",
-  "updated_at": "2026-11-08T06:34:20.753920+00:00",
-  "found": 2,
+  "updated_at": "2026-11-08T13:47:56.295748+00:00",
+  "found": 1,
   "items": [
     {
       "id": "137789612",
@@ -29,32 +29,6 @@
       },
       "alternate_url": "https://hh.kz/vacancy/137789612",
       "published_at": "2026-10-25T12:06:51.648+03:00",
-      "archived": false
-    },
-    {
-      "id": "138296581",
-      "name": "Менеджер",
-      "area": {
-        "name": "Костанай"
-      },
-      "salary": {
-        "currency": "KZT",
-        "gross": null,
-        "from": 350000,
-        "to": 400000
-      },
-      "experience": null,
-      "schedule": null,
-      "employment": null,
-      "employer": {
-        "id": "1009681",
-        "name": "ТК АРОМИКА"
-      },
-      "snippet": {
-        "responsibility": "Открытая вакансия компании ТК АРОМИКА в городе Костанай. Подробные обязанности и условия доступны на hh.kz."
-      },
-      "alternate_url": "https://hh.kz/vacancy/138296581",
-      "published_at": "2026-10-09T11:38:52.807+03:00",
       "archived": false
     }
   ]
