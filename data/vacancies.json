@@ -2,9 +2,35 @@
   "schema": 1,
   "source": "hh.kz/rss",
   "employer_id": "1009681",
-  "updated_at": "2026-11-13T07:06:57.630542+00:00",
-  "found": 1,
+  "updated_at": "2026-11-13T16:41:06.908926+00:00",
+  "found": 2,
   "items": [
+    {
+      "id": "139463708",
+      "name": "Продюсер контент-завода",
+      "area": {
+        "name": "Алматы"
+      },
+      "salary": {
+        "currency": "KZT",
+        "gross": null,
+        "from": 300000,
+        "to": 450000
+      },
+      "experience": null,
+      "schedule": null,
+      "employment": null,
+      "employer": {
+        "id": "1009681",
+        "name": "ТК АРОМИКА"
+      },
+      "snippet": {
+        "responsibility": "Открытая вакансия компании ТК АРОМИКА в городе Алматы. Подробные обязанности и условия доступны на hh.kz."
+      },
+      "alternate_url": "https://hh.kz/vacancy/139463708",
+      "published_at": "2026-11-13T12:10:38.992+03:00",
+      "archived": false
+    },
     {
       "id": "137789612",
       "name": "Водитель-дальнобойщик",
