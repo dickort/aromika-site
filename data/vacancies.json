@@ -2,9 +2,35 @@
   "schema": 1,
   "source": "hh.kz/rss",
   "employer_id": "1009681",
-  "updated_at": "2026-11-17T03:04:43.076733+00:00",
-  "found": 2,
+  "updated_at": "2026-11-17T13:45:24.032458+00:00",
+  "found": 3,
   "items": [
+    {
+      "id": "139553575",
+      "name": "Продюсер контент-завода",
+      "area": {
+        "name": "Москва"
+      },
+      "salary": {
+        "currency": "KZT",
+        "gross": null,
+        "from": 100000,
+        "to": 100001
+      },
+      "experience": null,
+      "schedule": null,
+      "employment": null,
+      "employer": {
+        "id": "1009681",
+        "name": "ТК АРОМИКА"
+      },
+      "snippet": {
+        "responsibility": "Открытая вакансия компании ТК АРОМИКА в городе Москва. Подробные обязанности и условия доступны на hh.kz."
+      },
+      "alternate_url": "https://hh.kz/vacancy/139553575",
+      "published_at": "2026-11-17T06:26:11.408+03:00",
+      "archived": false
+    },
     {
       "id": "139463708",
       "name": "Продюсер контент-завода",
