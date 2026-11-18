@@ -2,9 +2,35 @@
   "schema": 1,
   "source": "hh.kz/rss",
   "employer_id": "1009681",
-  "updated_at": "2026-11-18T03:49:19.757151+00:00",
-  "found": 3,
+  "updated_at": "2026-11-18T13:20:41.564901+00:00",
+  "found": 4,
   "items": [
+    {
+      "id": "139598968",
+      "name": "Дизайнер",
+      "area": {
+        "name": "Костанай"
+      },
+      "salary": {
+        "currency": "KZT",
+        "gross": null,
+        "from": 250000,
+        "to": 300000
+      },
+      "experience": null,
+      "schedule": null,
+      "employment": null,
+      "employer": {
+        "id": "1009681",
+        "name": "ТК АРОМИКА"
+      },
+      "snippet": {
+        "responsibility": "Открытая вакансия компании ТК АРОМИКА в городе Костанай. Подробные обязанности и условия доступны на hh.kz."
+      },
+      "alternate_url": "https://hh.kz/vacancy/139598968",
+      "published_at": "2026-11-18T09:17:18.161+03:00",
+      "archived": false
+    },
     {
       "id": "139553575",
       "name": "Продюсер контент-завода",
