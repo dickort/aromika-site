@@ -2,9 +2,35 @@
   "schema": 1,
   "source": "hh.kz/rss",
   "employer_id": "1009681",
-  "updated_at": "2026-11-24T04:55:33.296083+00:00",
+  "updated_at": "2026-11-24T18:09:37.036766+00:00",
   "found": 4,
   "items": [
+    {
+      "id": "137789612",
+      "name": "Водитель-дальнобойщик",
+      "area": {
+        "name": "Костанай"
+      },
+      "salary": {
+        "currency": "KZT",
+        "gross": null,
+        "from": 700000,
+        "to": 1000000
+      },
+      "experience": null,
+      "schedule": null,
+      "employment": null,
+      "employer": {
+        "id": "1009681",
+        "name": "ТК АРОМИКА"
+      },
+      "snippet": {
+        "responsibility": "Открытая вакансия компании ТК АРОМИКА в городе Костанай. Подробные обязанности и условия доступны на hh.kz."
+      },
+      "alternate_url": "https://hh.kz/vacancy/137789612",
+      "published_at": "2026-11-24T12:06:57.698+03:00",
+      "archived": false
+    },
     {
       "id": "139598968",
       "name": "Дизайнер",
@@ -81,32 +107,6 @@
       },
       "alternate_url": "https://hh.kz/vacancy/139463708",
       "published_at": "2026-11-13T12:10:38.992+03:00",
-      "archived": false
-    },
-    {
-      "id": "137789612",
-      "name": "Водитель-дальнобойщик",
-      "area": {
-        "name": "Костанай"
-      },
-      "salary": {
-        "currency": "KZT",
-        "gross": null,
-        "from": 700000,
-        "to": 1000000
-      },
-      "experience": null,
-      "schedule": null,
-      "employment": null,
-      "employer": {
-        "id": "1009681",
-        "name": "ТК АРОМИКА"
-      },
-      "snippet": {
-        "responsibility": "Открытая вакансия компании ТК АРОМИКА в городе Костанай. Подробные обязанности и условия доступны на hh.kz."
-      },
-      "alternate_url": "https://hh.kz/vacancy/137789612",
-      "published_at": "2026-10-25T12:06:51.648+03:00",
       "archived": false
     }
   ]
