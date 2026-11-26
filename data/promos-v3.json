@@ -1,23 +1,63 @@
 {
   "schema": 3,
-  "updated_at": "2026-11-26T04:13:38.932392+00:00",
+  "updated_at": "2026-11-26T13:55:56.438739+00:00",
   "demo": false,
   "sources": {
     "aromika": {
       "status": "ok",
-      "count": 46,
-      "last_success": "2026-11-26T04:13:25.884690+00:00",
+      "count": 50,
+      "last_success": "2026-11-26T13:55:43.238459+00:00",
       "message": "Live discounted products detected."
     },
     "kaspi": {
       "status": "empty",
       "count": 0,
-      "last_success": "2026-11-26T04:13:38.932042+00:00",
+      "last_success": "2026-11-26T13:55:56.438294+00:00",
       "message": "Live scan completed; no discounted cards detected.",
       "merchant_id": "1359004"
     }
   },
   "products": [
+    {
+      "source": "aromika",
+      "name": "Парфюм-кондиционер для белья Telmi 10.03 Чёрный перец, амбра и нероли",
+      "brand": "",
+      "old_price": 2500,
+      "price": 1750,
+      "discount": 30,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/04.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/parfyum-kondicioner-dlya-belya-telmi-10-03-chernyy-perec-ambra-i-neroli/"
+    },
+    {
+      "source": "aromika",
+      "name": "Парфюм-кондиционер для белья Telmi 10.03 Цитрус, ананас и кедр",
+      "brand": "",
+      "old_price": 2500,
+      "price": 1750,
+      "discount": 30,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/03.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/parfyum-kondicioner-dlya-belya-telmi-10-01-citrus-ananas-i-kedr/"
+    },
+    {
+      "source": "aromika",
+      "name": "Парфюм-кондиционер для белья Telmi 10.02 Вишнёвый ликёр и миндаль",
+      "brand": "",
+      "old_price": 2500,
+      "price": 1750,
+      "discount": 30,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/02.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/parfyum-kondicioner-dlya-belya-telmi-10-02-vishnevyy-liker-i-mindal/"
+    },
+    {
+      "source": "aromika",
+      "name": "Парфюм-кондиционер для белья Telmi 10.01 Бурбонская ваниль и табак",
+      "brand": "",
+      "old_price": 2500,
+      "price": 1750,
+      "discount": 30,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/01.webp.webp",
+      "url": "https://aromika.shop/vse-tovary/parfyum-kondicioner-dlya-belya-telmi-10-01-burbonskaya-vanil-i-tabak/"
+    },
     {
       "source": "aromika",
       "name": "Гель для чистки унитазов \"Aromika\" Кислотный 750 мл",
@@ -190,16 +230,6 @@
     },
     {
       "source": "aromika",
-      "name": "Гель для душа Perfect for men Herbal code 300 мл",
-      "brand": "",
-      "old_price": 1065,
-      "price": 905,
-      "discount": 15,
-      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/SG_Perfect_Herbal_Code_300_4870007229393.png.webp",
-      "url": "https://aromika.shop/vse-tovary/gel-dlya-dusha-perfect-for-men-herbal-code-300-ml/"
-    },
-    {
-      "source": "aromika",
       "name": "Гель для душа Perfect for men Frost Impulse 300 мл",
       "brand": "",
       "old_price": 1065,
@@ -207,6 +237,16 @@
       "discount": 15,
       "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/SG_Perfect_Frost_Impulse_300_4870007229409.png.webp",
       "url": "https://aromika.shop/vse-tovary/gel-dlya-dusha-perfect-for-men-frost-impulse-300-ml/"
+    },
+    {
+      "source": "aromika",
+      "name": "Гель для душа Perfect for men Herbal code 300 мл",
+      "brand": "",
+      "old_price": 1065,
+      "price": 905,
+      "discount": 15,
+      "image": "https://aromika.shop/images/thumbnails/240/290/detailed/138/SG_Perfect_Herbal_Code_300_4870007229393.png.webp",
+      "url": "https://aromika.shop/vse-tovary/gel-dlya-dusha-perfect-for-men-herbal-code-300-ml/"
     },
     {
       "source": "aromika",
